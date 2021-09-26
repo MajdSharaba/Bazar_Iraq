@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "599854194693",
+    "project_id": "iraqbazar-fb0d3",
+    "storage_bucket": "iraqbazar-fb0d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599854194693:android:4380317902c311246b7c6c",
+        "android_client_info": {
+          "package_name": "com.example.pazar_iraq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599854194693-vfk7bqsc93f45i6ub1rp8s5llsoehq9k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pazar_iraq",
+            "certificate_hash": "27c916377926e38e775ec38de50f7725c51640b0"
+          }
+        },
+        {
+          "client_id": "599854194693-fkhf5trfsu1e86p42elttbcvktr5jboa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBesZ0NPzUxi4kWyRXnHrzeWn8VfVix3_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "599854194693-fkhf5trfsu1e86p42elttbcvktr5jboa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "599854194693-otgkeujev1k9a55me77u7bif7h3g8896.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pazariraq"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
