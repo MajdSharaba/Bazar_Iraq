@@ -4,6 +4,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/core/data.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/categorywidget.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/productwidget.dart';
@@ -64,11 +65,9 @@ class _HomePageState extends State<HomePage> {
                   const ProductWidget(),
 
                   CategoryWidget(title: "category",categories: AppData.categories)]),
-
-
             bottomNavigationBar: ConvexAppBar(
-              color: Colors.black,
-              backgroundColor: Colors.deepOrangeAccent,
+              color: Colors.white,
+              gradient: linearGradientColor,
               items: const [
                 TabItem(icon: Icons.home, title: 'Home'),
                 TabItem(icon: Icons.map, title: 'Discovery'),

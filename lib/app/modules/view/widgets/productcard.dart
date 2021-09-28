@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pazar_iraq/app/core/constants.dart';
 
 import 'package:pazar_iraq/app/core/light_color.dart';
 import 'package:pazar_iraq/app/model/product.dart';
@@ -55,16 +56,12 @@ class ProductCard extends StatelessWidget {
               children: <Widget>[
                /// SizedBox(height: product!.isSelected! ? 15 : 0),
                 Expanded(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: <Widget>[
-                      const CircleAvatar(
-                        radius: 40,
-                        backgroundColor: Color(0xfffbb448),
-                      ),
-                      Image.asset(product!.image!)
-                    ],
-                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: linearGradientColor,borderRadius: BorderRadius.circular(360)
+                    ),
+                    child:Image.asset(product!.image!) ,
+                  )
                 ),
                 // SizedBox(height: 5),
                 TitleText(
