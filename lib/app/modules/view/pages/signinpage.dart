@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/bezierContainer.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/buttonwidget.dart';
@@ -64,10 +65,37 @@ class _SigninPageState extends State<SigninPage> {
     );
   }
 
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+ print(googleAuth.accessToken);
+ print(googleAuth.idToken);
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+  Future<UserCredential> signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+print(loginResult.accessToken);
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+    // Once signed in, return the UserCredential
+    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+  }
   Widget _signinWithGoogleButton() {
     return InkWell(
       onTap: (){
-
+        signInWithFacebook();
       },
       child: Container(
         height: 60,
@@ -123,7 +151,9 @@ class _SigninPageState extends State<SigninPage> {
                     _emailPasswordWidget(),
                     SizedBox(height: deviceHeight /30),
                     ButtonWidget(
-                        title: "Signin with Phone Number", function: () {}),
+                        title: "Signin with Phone Number", function: () {
+
+                    }),
                     SizedBox(height: deviceHeight/30),
                     _divider(),
                     SizedBox(height: deviceHeight/30),

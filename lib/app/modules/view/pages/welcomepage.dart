@@ -73,7 +73,6 @@ class _WelcomePageState extends State<WelcomePage> {
             SizedBox(
               height: 20,
             ),
-            Icon(Icons.fingerprint, size: 90, color: Colors.white),
             SizedBox(
               height: 20,
             ),
