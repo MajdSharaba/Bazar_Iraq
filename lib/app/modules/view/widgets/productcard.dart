@@ -14,10 +14,18 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        decoration: const BoxDecoration(
+
+
+        decoration:  BoxDecoration(
+          border: Border.all(
+            width: 2.0,
+            color: Color(0xffdf8e33).withAlpha(100),
+            style: BorderStyle.solid
+
+          ),
           color: LightColor.background,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          boxShadow: <BoxShadow>[
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          boxShadow: const <BoxShadow>[
             BoxShadow(color: Color(0xfff8f8f8), blurRadius: 15, spreadRadius: 10),
           ],
         ),

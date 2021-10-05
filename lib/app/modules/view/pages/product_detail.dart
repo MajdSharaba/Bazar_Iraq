@@ -22,7 +22,7 @@ final List<String> exampleImage = [
 
 
 class ProductDetailPage extends StatefulWidget {
-  Product? product;
+   Product? product;
   ProductDetailPage({Key? key,this.product}) : super(key: key);
 
   @override
@@ -56,7 +56,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          BackButton(),
+          const BackButton(),
           _icon(isLiked ? Icons.favorite : Icons.favorite_border,
               color: isLiked ? LightColor.red : LightColor.lightGrey,
               size: 15,
@@ -110,30 +110,32 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   }
 //// productImage
   Widget _productImage() {
-    return AnimatedBuilder(
-      builder: (context, child) {
-        return AnimatedOpacity(
-          duration: const Duration(milliseconds: 500),
-          opacity: animation!.value,
-          child: child,
-        );
-      },
-      animation: animation!,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: <Widget>[
+    return Expanded(
+      child: AnimatedBuilder(
+        builder: (context, child) {
+          return AnimatedOpacity(
+            duration: const Duration(milliseconds: 500),
+            opacity: animation!.value,
+            child: child,
+          );
+        },
+        animation: animation!,
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: <Widget>[
 
-     CarouselSlider(
-    options: CarouselOptions(
-    aspectRatio: 2.0,
-    enlargeCenterPage: true,
-    autoPlay: false,
-    ),
-    items: CarouselSliderDetails,
-    ),
+       CarouselSlider(
+      options: CarouselOptions(
+      aspectRatio: 2.0,
+      enlargeCenterPage: true,
+      autoPlay: false,
+      ),
+      items: CarouselSliderDetails,
+      ),
 
-          // Image.asset(widget.product!.image!)
-        ],
+            // Image.asset(widget.product!.image!)
+          ],
+        ),
       ),
     );
   }
@@ -142,7 +144,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     return DraggableScrollableSheet(
       maxChildSize: .8,
       initialChildSize: .53,
-      minChildSize: .53,
+      minChildSize: .1,
       builder: (context, scrollController) {
         return Container(
           padding: padding.copyWith(bottom: 0),
@@ -374,9 +376,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           child: Stack(
             children: <Widget>[
               Column(
+                
                 children: <Widget>[
+                  
                   _appBar(),
                   _productImage(),
+                  
                   // _categoryWidget(),
                 ],
               ),

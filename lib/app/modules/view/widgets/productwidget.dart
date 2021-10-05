@@ -32,19 +32,17 @@ class ProductWidget extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              width: deviceWidth,
-              height: deviceHeight * .7,
-              child: GridView(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    childAspectRatio: 4 / 3,
-                    mainAxisSpacing: 30,
-                    crossAxisSpacing: 20),
-                padding: const EdgeInsets.only(left: 20),
-                scrollDirection: Axis.horizontal,
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10),
+            height: deviceHeight * .25 < 300 ? deviceHeight * .25 : 300,
+            child: GridView(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                  childAspectRatio: 4 / 3,
+                  mainAxisSpacing: 30,
+                  crossAxisSpacing: 20),
+              padding: const EdgeInsets.only(left: 20),
+              scrollDirection: Axis.horizontal,
     children: AppData.productList!
         .map(
     (product) => ProductCard(
@@ -55,8 +53,7 @@ class ProductWidget extends StatelessWidget {
     },
     ),
     )
-                    .toList(),
-              ),
+                  .toList(),
             ),
           )]);
   }
