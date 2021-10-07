@@ -10,7 +10,6 @@ import 'package:pazar_iraq/app/modules/view/widgets/fieldwidget.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
 
-
 class SigninPage extends StatefulWidget {
   const SigninPage({Key? key, required this.title}) : super(key: key);
 
@@ -37,7 +36,10 @@ class _SigninPageState extends State<SigninPage> {
               ),
             ),
           ),
-          Text('or',style: TextStyle(fontSize: 20),),
+          Text(
+            'or',
+            style: TextStyle(fontSize: 20),
+          ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -54,7 +56,7 @@ class _SigninPageState extends State<SigninPage> {
     );
   }
 
-  Widget _emailPasswordWidget() {
+  Widget _phoneWidget() {
     return Column(
       children: const <Widget>[
         FieldWidget(
@@ -70,9 +72,8 @@ class _SigninPageState extends State<SigninPage> {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
- print(googleAuth.accessToken);
- print(googleAuth.idToken);
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
@@ -82,20 +83,25 @@ class _SigninPageState extends State<SigninPage> {
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
+
   Future<UserCredential> signInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult loginResult = await FacebookAuth.instance.login();
-print(loginResult.accessToken);
     // Create a credential from the access token
-    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
     // Once signed in, return the UserCredential
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
+
   Widget _signinWithGoogleButton() {
     return InkWell(
-      onTap: (){
-        signInWithFacebook();
+      onTap: () async {
+       await signInWithGoogle();
+       User? user =FirebaseAuth.instance.currentUser;
+       var d=await user!.getIdTokenResult();
+       print(d.toString());
       },
       child: Container(
         height: 60,
@@ -103,7 +109,8 @@ print(loginResult.accessToken);
         padding: const EdgeInsets.symmetric(vertical: 15),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(5)),color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          color: Colors.white,
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: Colors.grey.shade200,
@@ -115,11 +122,63 @@ print(loginResult.accessToken);
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/google_logo.png",fit: BoxFit.contain,width: 30,),
-            const SizedBox(width: 10,),
+            Image.asset(
+              "assets/google_logo.png",
+              fit: BoxFit.contain,
+              width: 30,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
             const Text(
               "Signin With Google",
-              style:  TextStyle(fontSize: 19, color: Color(0xfffbb448)),
+              style: TextStyle(fontSize: 19, color: Color(0xfffbb448)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _signinWithFacebookButton() {
+    return InkWell(
+      onTap: () async {
+      await signInWithFacebook();
+      User? user =FirebaseAuth.instance.currentUser;
+      var d=await user!.getIdToken();
+      print(d.toString());
+
+      },
+      child: Container(
+        height: 60,
+        width: deviceWidth,
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          color:const Color(0xFF1877f2),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Colors.grey.shade200,
+                offset: const Offset(2, 4),
+                blurRadius: 5,
+                spreadRadius: 2)
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/facebook_logo.png",
+              fit: BoxFit.contain,
+              width: 30,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const Text(
+              "Signin With Facebook",
+              style: TextStyle(fontSize: 19, color: Colors.white),
             ),
           ],
         ),
@@ -147,18 +206,17 @@ print(loginResult.accessToken);
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: deviceHeight/30),
-                    _emailPasswordWidget(),
-                    SizedBox(height: deviceHeight /30),
+                    SizedBox(height: deviceHeight / 30),
+                    _phoneWidget(),
+                    SizedBox(height: deviceHeight / 30),
                     ButtonWidget(
-                        title: "Signin with Phone Number", function: () {
-
-                    }),
-                    SizedBox(height: deviceHeight/30),
+                        title: "Signin with Phone Number", function: () {}),
+                    SizedBox(height: deviceHeight / 30),
                     _divider(),
-                    SizedBox(height: deviceHeight/30),
+                    SizedBox(height: deviceHeight / 30),
                     _signinWithGoogleButton(),
-
+                    SizedBox(height: deviceHeight / 30),
+                    _signinWithFacebookButton()
                   ],
                 ),
               ),

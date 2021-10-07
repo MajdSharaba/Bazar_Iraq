@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pazar_iraq/app/modules/view/pages/signinpage.dart';
+import 'package:pazar_iraq/app/modules/view/pages/welcomepage.dart';
 import 'app/modules/view/pages/homepage.dart';
 
 Future<void> main() async {
@@ -19,12 +21,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
-   
         primarySwatch: Colors.blue,
       ),
-
-      home: HomePage(),
-      // home: const SigninPage(title: "welcome"),
+      home: const SigninPage(title: '',),
     );
   }
 }

@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>599854194693-otgkeujev1k9a55me77u7bif7h3g8896.apps.googleusercontent.com</string>
+	<string>21715591397-ggteb6p5pun1mkrls9pbpkn2e56ara6q.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.599854194693-otgkeujev1k9a55me77u7bif7h3g8896</string>
+	<string>com.googleusercontent.apps.21715591397-ggteb6p5pun1mkrls9pbpkn2e56ara6q</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>21715591397-aqllebcvlh5t5a8m52f9fha092cn2ejf.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAJ3e9Lr3SfDnPcGY-EeqC0yWLx-xSTkFw</string>
+	<string>AIzaSyDN5WbXao2jii-Npvivfm3VdVh5q3GmmHk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>599854194693</string>
+	<string>21715591397</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.pazariraq</string>
+	<string>com.example.pazarIraq</string>
 	<key>PROJECT_ID</key>
-	<string>iraqbazar-fb0d3</string>
+	<string>bazar-iraq-f9051</string>
 	<key>STORAGE_BUCKET</key>
-	<string>iraqbazar-fb0d3.appspot.com</string>
+	<string>bazar-iraq-f9051.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:599854194693:ios:83a42a5cb2f77e456b7c6c</string>
+	<string>1:21715591397:ios:6aa0cb3d91b9149558b40c</string>
 </dict>
 </plist>

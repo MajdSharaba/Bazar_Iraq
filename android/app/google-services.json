@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "599854194693",
-    "project_id": "iraqbazar-fb0d3",
-    "storage_bucket": "iraqbazar-fb0d3.appspot.com"
+    "project_number": "21715591397",
+    "project_id": "bazar-iraq-f9051",
+    "storage_bucket": "bazar-iraq-f9051.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:599854194693:android:4380317902c311246b7c6c",
+        "mobilesdk_app_id": "1:21715591397:android:bbd20d49c3dae43158b40c",
         "android_client_info": {
           "package_name": "com.example.pazar_iraq"
         }
       },
       "oauth_client": [
         {
-          "client_id": "599854194693-vfk7bqsc93f45i6ub1rp8s5llsoehq9k.apps.googleusercontent.com",
+          "client_id": "21715591397-aqllebcvlh5t5a8m52f9fha092cn2ejf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.pazar_iraq",
@@ -22,27 +22,27 @@
           }
         },
         {
-          "client_id": "599854194693-fkhf5trfsu1e86p42elttbcvktr5jboa.apps.googleusercontent.com",
+          "client_id": "21715591397-4t1ht8euvqger3kimsjd4n6kefdnr6ot.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBesZ0NPzUxi4kWyRXnHrzeWn8VfVix3_Q"
+          "current_key": "AIzaSyB5kYE58MZfVwYjusoBghdETrF94V8YYtQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "599854194693-fkhf5trfsu1e86p42elttbcvktr5jboa.apps.googleusercontent.com",
+              "client_id": "21715591397-4t1ht8euvqger3kimsjd4n6kefdnr6ot.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "599854194693-otgkeujev1k9a55me77u7bif7h3g8896.apps.googleusercontent.com",
+              "client_id": "21715591397-ggteb6p5pun1mkrls9pbpkn2e56ara6q.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.pazariraq"
+                "bundle_id": "com.example.pazarIraq"
               }
             }
           ]

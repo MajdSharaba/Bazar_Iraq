@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
+import 'package:pazar_iraq/app/modules/view/widgets/borderedbutton.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key, required this.title}) : super(key: key);
@@ -13,98 +14,24 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  Widget _submitButton() {
-    return InkWell(
-      onTap: () {
 
-      },
-      child: Container(
-        width: deviceHeight,
-        padding: const EdgeInsets.symmetric(vertical: 13),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: const Color(0xffdf8e33).withAlpha(100),
-                  offset: const Offset(2, 4),
-                  blurRadius: 8,
-                  spreadRadius: 2)
-            ],
-            color: Colors.white),
-        child: const Text(
-          'Login',
-          style: TextStyle(fontSize: 20, color: Color(0xfff7892b)),
-        ),
-      ),
-    );
-  }
 
-  Widget _signUpButton() {
-    return InkWell(
-      onTap: () {
 
-      },
-      child: Container(
-        width:deviceWidth,
-        padding: const EdgeInsets.symmetric(vertical: 13),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
-          border: Border.all(color: Colors.white, width: 2),
-        ),
-        child: const Text(
-          'Register now',
-          style: TextStyle(fontSize: 20, color: Colors.white),
-        ),
-      ),
-    );
-  }
 
-  Widget _label() {
-    return Container(
-        margin: const EdgeInsets.only(top: 40, bottom: 20),
-        child: Column(
-          children: const <Widget>[
-            Text(
-              'Quick login with Touch ID',
-              style: TextStyle(color: Colors.white, fontSize: 17),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Touch ID',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          ],
-        ));
-  }
 
   Widget _title() {
     return RichText(
       textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'd',
-          style: GoogleFonts.portLligatSans(
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-          ),
-          children: const [
+      text: const TextSpan(
+
+
+          children: [
             TextSpan(
-              text: 'ev',
+              text: 'IQ',
               style: TextStyle(color: Colors.black, fontSize: 30),
             ),
             TextSpan(
-              text: 'rnz',
+              text: 'pazar',
               style: TextStyle(color: Colors.white, fontSize: 30),
             ),
           ]),
@@ -139,15 +66,27 @@ class _WelcomePageState extends State<WelcomePage> {
               const SizedBox(
                 height: 80,
               ),
-              _submitButton(),
+
               const SizedBox(
                 height: 20,
               ),
-              _signUpButton(),
+              BorderedButton(buttonText: "English", function: (){
+                print("dd");
+              }),
               const SizedBox(
                 height: 20,
               ),
-              _label()
+              BorderedButton(buttonText: "عربي", function: (){
+                print("dd");
+              }),
+              const SizedBox(
+                height: 20,
+              ),
+
+              BorderedButton(buttonText: "كورد", function: (){
+                print("dd");
+              })
+
             ],
           ),
         ),
