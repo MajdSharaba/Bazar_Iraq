@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/light_color.dart';
 import 'package:pazar_iraq/app/model/product.dart';
 import 'package:pazar_iraq/app/modules/view/pages/product_detail.dart';
-
 import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 
 class ProductCard extends StatelessWidget {
@@ -15,13 +14,12 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        decoration:  BoxDecoration(
+        decoration: const BoxDecoration(
           color: LightColor.background,
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-          boxShadow: const <BoxShadow>[
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          boxShadow: <BoxShadow>[
             BoxShadow(color: Color(0xfff8f8f8), blurRadius: 15, spreadRadius: 10),
           ],
-          border: Border.all(color: const Color(0xfff7892b))
         ),
         // margin: EdgeInsets.symmetric(vertical: product!.isSelected! ? 20 : 0),
         child: Container(

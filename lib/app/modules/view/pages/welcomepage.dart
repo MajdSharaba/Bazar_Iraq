@@ -5,9 +5,9 @@ import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/borderedbutton.dart';
 
 class WelcomePage extends StatefulWidget {
-  const WelcomePage({Key? key, required this.title}) : super(key: key);
+  const WelcomePage({Key? key,  this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _WelcomePageState createState() => _WelcomePageState();

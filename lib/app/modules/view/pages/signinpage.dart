@@ -11,9 +11,9 @@ import 'package:pazar_iraq/app/modules/view/widgets/fieldwidget.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class SigninPage extends StatefulWidget {
-  const SigninPage({Key? key, required this.title}) : super(key: key);
+  const SigninPage({Key? key,  this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _SigninPageState createState() => _SigninPageState();

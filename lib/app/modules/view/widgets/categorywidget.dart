@@ -35,7 +35,7 @@ class CategoryWidget extends StatelessWidget {
           ),
         ),
         Container(
-          height: deviceHeight * .25 < 170 ? deviceHeight * .25 : 170,
+          height: deviceHeight * .25 < 300 ? deviceHeight * .25 : 300,
           //height: height! * .25 < 300 ? height! * .25 : 300,
           // child:
           // ConstrainedBox(
@@ -46,8 +46,7 @@ class CategoryWidget extends StatelessWidget {
               padding: const EdgeInsets.all(0.0),
               itemCount: categories!.length,
               scrollDirection: Axis.horizontal),
-        ),
-      ],
+        )],
     );
   }
 }
