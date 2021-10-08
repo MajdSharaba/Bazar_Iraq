@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:pazar_iraq/app/modules/view/pages/homepage.dart';
-import 'package:pazar_iraq/app/modules/view/pages/product_detail.dart';
 import 'package:pazar_iraq/app/modules/view/pages/signinpage.dart';
 import 'package:pazar_iraq/app/modules/view/pages/subcategorypage.dart';
 import 'package:pazar_iraq/app/modules/view/pages/welcomepage.dart';
@@ -16,7 +15,7 @@ class AppRoutes {
   static final routes = [
     GetPage(name: Routes.welcomePage , page: () => const WelcomePage()),
     GetPage(name: Routes.home , page: () => const HomePage()),
-    GetPage(name: Routes.productDetails , page: () => ProductDetailPage()),
+    // GetPage(name: Routes.productDetails , page: () => ProductDetailPage()),
     GetPage(name: Routes.signInPage, page: () => const SigninPage()),
     GetPage(name: Routes.subCategory, page: () =>  const SubCategoryPage()),
   ];

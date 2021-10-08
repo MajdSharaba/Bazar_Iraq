@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                             items: imageSliders,
                           ),
                 ),
-                const ProductWidget(),
+                 ProductWidget(),
                 CategoryWidget(title: "vehicles",categories: AppData.categories),
                 CategoryWidget(title: "service",categories: AppData.categories2),
               ],

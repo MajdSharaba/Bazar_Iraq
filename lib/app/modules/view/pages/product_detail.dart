@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 
 import 'package:carousel_slider/carousel_options.dart';
+import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/core/light_color.dart';
-import 'package:pazar_iraq/app/model/product.dart';
+import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 
 
@@ -22,8 +23,8 @@ final List<String> exampleImage = [
 
 
 class ProductDetailPage extends StatefulWidget {
-   Product? product;
-  ProductDetailPage({Key? key,this.product}) : super(key: key);
+   //Product? product;
+  ProductDetailPage({Key? key}) : super(key: key);
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -31,6 +32,8 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage>
     with TickerProviderStateMixin {
+  final ProductController productController = Get.find();
+
   AnimationController? controller;
   Animation<double>? animation;
   @override
@@ -176,7 +179,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    TitleText(text: widget.product!.name, fontSize: 25),
+                    TitleText(text:productController.productData!.name, fontSize: 25),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
@@ -189,7 +192,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                               color: LightColor.red,
                             ),
                             TitleText(
-                              text:  widget.product!.price.toString(),
+                              text:  productController.productData!.price.toString(),
                               fontSize: 25,
                             ),
                           ],
@@ -218,11 +221,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 const SizedBox(
                   height: 20,
                 ),
-
-
-
-
-
                 const SizedBox(
                   height: 20,
                 ),
@@ -341,7 +339,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           fontSize: 14,
         ),
         const SizedBox(height: 20),
-        Text( widget.product!.category.toString()),
+        // Text( widget.product!.category.toString()),
       ],
     );
   }
@@ -376,12 +374,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           child: Stack(
             children: <Widget>[
               Column(
-                
+
                 children: <Widget>[
-                  
+
                   _appBar(),
                   _productImage(),
-                  
+
                   // _categoryWidget(),
                 ],
               ),

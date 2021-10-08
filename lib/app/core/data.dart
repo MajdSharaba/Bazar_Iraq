@@ -2,36 +2,36 @@ import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/model/product.dart';
 
 class AppData {
-  static List<Product>? productList = [
-    Product(
-        id: 2,
-        name: 'Nike Air Max 97',
-        price: 220.00,
-        isliked: false,
-        image: 'assets/jacket.png',
-        category: "Trending Now"),
-    Product(
-        id: 3,
-        name: 'Nike Air Max 200',
-        price: 220.00,
-        isliked: false,
-        image: 'assets/shoe_tilt_2.png',
-        category: "Trending Now"),
-    Product(
-        id: 3,
-        name: 'Nike Air Max 200',
-        price: 220.00,
-        isliked: false,
-        image: 'assets/shoe_tilt_2.png',
-        category: "Trending Now"),
-    Product(
-          id: 2,
-          name: 'Nike Air Max 200',
-          price: 220.00,
-          isliked: false,
-          image: 'assets/small_tilt_shoe_1.png',
-          category: "Trending Now"),
-  ];
+  // static List<Product>? productList = [
+  //   Product(
+  //       id: 2,
+  //       name: 'Nike Air Max 97',
+  //       price: 220.00,
+  //       isliked: false,
+  //       image: 'assets/jacket.png',
+  //       category: "Trending Now"),
+  //   Product(
+  //       id: 3,
+  //       name: 'Nike Air Max 200',
+  //       price: 220.00,
+  //       isliked: false,
+  //       image: 'assets/shoe_tilt_2.png',
+  //       category: "Trending Now"),
+  //   Product(
+  //       id: 3,
+  //       name: 'Nike Air Max 200',
+  //       price: 220.00,
+  //       isliked: false,
+  //       image: 'assets/shoe_tilt_2.png',
+  //       category: "Trending Now"),
+  //   Product(
+  //         id: 2,
+  //         name: 'Nike Air Max 200',
+  //         price: 220.00,
+  //         isliked: false,
+  //         image: 'assets/small_tilt_shoe_1.png',
+  //         category: "Trending Now"),
+  // ];
   static List<Category> categories = [
     const Category(
       image: "http://www.newdesignfile.com/postpic/2013/07/car-icon_76093.png",
