@@ -6,6 +6,7 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/core/light_color.dart';
+import 'package:pazar_iraq/app/model/product.dart';
 import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 
