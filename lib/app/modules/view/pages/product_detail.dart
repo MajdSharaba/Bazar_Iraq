@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 
 
 import 'package:carousel_slider/carousel_options.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/core/light_color.dart';
 import 'package:pazar_iraq/app/model/product.dart';
 import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
+import 'package:pazar_iraq/app/modules/controller/productdetail_controller.dart';
+import 'package:pazar_iraq/app/modules/view/widgets/commint_widget/comments_list.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 
 
@@ -33,7 +36,7 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage>
     with TickerProviderStateMixin {
-  final ProductController productController = Get.find();
+  static ProductDetailController _productDetailController = Get.find();
 
   AnimationController? controller;
   Animation<double>? animation;
@@ -180,7 +183,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    TitleText(text:productController.productData!.name, fontSize: 25),
+                Obx(() {
+                   if (_productDetailController.isLoading.value) {
+                     return Center(child: const CircularProgressIndicator());
+                   } else {
+                     return TitleText
+                    (text:_productDetailController.productDetailData!.nameEn, fontSize: 25);
+                   }}),
+                    //productController.productData!.name
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
@@ -192,25 +202,48 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                               fontSize: 18,
                               color: LightColor.red,
                             ),
-                            TitleText(
-                              text:  productController.productData!.price.toString(),
-                              fontSize: 25,
-                            ),
+                            Obx(() {
+                              if (_productDetailController.isLoading.value) {
+                                return Center(child: const CircularProgressIndicator());
+                              } else {
+                                return  TitleText(
+                                  text: _productDetailController.productDetailData!.price.toString(),
+
+                                  fontSize: 25,
+                                );
+                              }})
+
                           ],
                         ),
-                        Row(
-                          children: const <Widget>[
-                            Icon(Icons.star,
-                                color: LightColor.yellowColor, size: 17),
-                            Icon(Icons.star,
-                                color: LightColor.yellowColor, size: 17),
-                            Icon(Icons.star,
-                                color: LightColor.yellowColor, size: 17),
-                            Icon(Icons.star,
-                                color: LightColor.yellowColor, size: 17),
-                            Icon(Icons.star_border, size: 17),
-                          ],
-                        ),
+                        // Obx(() {
+                        //   if (productDetailController.isLoading.value) {
+                        //     return Center(child: const CircularProgressIndicator());
+                        //   } else {
+                        //     return  RatingBarIndicator(
+                        //       rating: 2.75,
+                        //       itemBuilder: (context, index) => Icon(
+                        //         Icons.star,
+                        //         color: Colors.amber,
+                        //       ),
+                        //       itemCount: 5,
+                        //       itemSize: 20.0,
+                        //       direction: Axis.horizontal,
+                        //     );
+                        //   }})
+
+                        // Row(
+                        //   children: const <Widget>[
+                        //     Icon(Icons.star,
+                        //         color: LightColor.yellowColor, size: 17),
+                        //     Icon(Icons.star,
+                        //         color: LightColor.yellowColor, size: 17),
+                        //     Icon(Icons.star,
+                        //         color: LightColor.yellowColor, size: 17),
+                        //     Icon(Icons.star,
+                        //         color: LightColor.yellowColor, size: 17),
+                        //     Icon(Icons.star_border, size: 17),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ],
@@ -231,6 +264,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   height: 20,
                 ),
                 _description(),
+                CommentsList(),
+               // _addcomment(),
+
               ],
             ),
           ),
@@ -334,26 +370,104 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   Widget _description() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const TitleText(
+      children: const <Widget>[
+
+        TitleText(
           text: "Description",
           fontSize: 14,
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 20),
         // Text( widget.product!.category.toString()),
       ],
     );
   }
+  Widget _addcomment() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+
+      RatingBar.builder(
+      initialRating: 3,
+        minRating: 1,
+        direction: Axis.horizontal,
+        allowHalfRating: true,
+        itemCount: 5,
+        itemSize: 20,
+        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+        itemBuilder: (context, _) => const Icon(
+          Icons.star,
+          color: Colors.amber,
+        ),
+        onRatingUpdate: (rating) {
+          _productDetailController.rating=rating ;
+          print(rating);
+
+        },
+
+      ),
+          SizedBox(height: 15,),
+
+           Row(
+            children: <Widget>[
+              SizedBox(width: 15,),
+              Expanded(
+                child: TextFormField(
+                   controller: _productDetailController.commentController,
+                  decoration: const InputDecoration(
+                      hintText: "Write Comment...",
+                      hintStyle: TextStyle(color: Colors.black54),
+                      border: InputBorder.none
+                  ),
+                  onSaved: (text) {
+                    _productDetailController.comment.value=text!;
+                    //you can access nameController in its scope to get
+                    // the value of text entered as shown below
+                    //fullName = nameController.text;
+
+                  },
+                ),
+              ),
+              SizedBox(width: 15,),
+              Container(
+                height: 20,
+                width: 20,
+                child: FloatingActionButton(
+                  onPressed: (){
+                    _productDetailController.addcomment();
+                  },
+                  child: Icon(Icons.send,color: Colors.white,size: 10,),
+                  backgroundColor: Colors.blue,
+
+                  elevation: 0,
+                ),
+              ),
+            ],
+
+          ),
+          const SizedBox(height: 20),
+          // Text( widget.product!.category.toString()),
+        ],
+      ),
+    );
+  }
   //// widget for CarouselSliderDetails
   final List<Widget> CarouselSliderDetails = exampleImage
-      .map((item) => Container(
+      .map((item) =>
+      Container(
         margin: const EdgeInsets.all(5.0),
         child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5.0)),
             child: Stack(
               children: <Widget>[
-                Image.asset(item, fit: BoxFit.cover, width: 1000.0),
-              ],
+  Obx(() {
+  if (_productDetailController.isLoading.value) {
+  return Center(child: const CircularProgressIndicator());
+  } else {
+
+                return Image.network(_productDetailController.productDetailData!.images!.first.originalUrl!, fit: BoxFit.cover, width: 1000.0);}
+  })],
             )),
       ))
       .toList();
@@ -384,7 +498,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   // _categoryWidget(),
                 ],
               ),
-              _detailWidget()
+              _detailWidget(),
             ],
           ),
         ),

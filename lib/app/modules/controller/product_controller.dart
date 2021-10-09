@@ -28,9 +28,9 @@ class ProductController extends GetxController {
       isLoading(false);
     }
   }
-  void setproduct(){
-    productData!.setcomments([Comment(id: 1)]);
-    print(productData!.comments!.length.toString());
-  }
+  // void setproduct(){
+  //   productData!.setcomments([Comment(id: 1)]);
+  //   print(productData!.comments!.length.toString());
+  // }
 }
 

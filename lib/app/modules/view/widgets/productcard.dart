@@ -4,11 +4,12 @@ import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/light_color.dart';
 import 'package:pazar_iraq/app/model/product.dart';
 import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
+import 'package:pazar_iraq/app/modules/controller/productdetail_controller.dart';
 import 'package:pazar_iraq/app/modules/view/pages/product_detail.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 
 class ProductCard extends StatelessWidget {
-  final ProductController productController = Get.find();
+  final ProductDetailController productDetailController = Get.put(ProductDetailController());
 
   final ProductData? product;
   // final ValueChanged<Product>? onSelected;
@@ -54,12 +55,12 @@ class ProductCard extends StatelessWidget {
                     //   decoration: BoxDecoration(
                     //     gradient: linearGradientColor,borderRadius: BorderRadius.circular(360)
                     //   ),
-                      child:Image.asset("assets/jacket.png") ,
+                      child: Image.network(product!.images!.first.originalUrl!) ,
                     //)
                   ),
                   // SizedBox(height: 5),
                   TitleText(
-                    text: product!.name!,
+                    text: product!.nameAr!,
                     fontSize: 10,
                   ),
                   // TitleText(
@@ -77,8 +78,8 @@ class ProductCard extends StatelessWidget {
           ),
         )
       ),
-       onTap:() async { productController.productData=product;
-       productController.setproduct();
+       onTap:() async {
+       productDetailController.fetchProductsDetail(product!.id);
 
        Get.to(ProductDetailPage());
        },
