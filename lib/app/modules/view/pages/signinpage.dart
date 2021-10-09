@@ -77,7 +77,7 @@ class _SigninPageState extends State<SigninPage> {
   _dialog() async {
     authController.phoneVerification(phoneController.text);
     await Get.defaultDialog(
-      contentPadding: EdgeInsets.all(16),
+        contentPadding: EdgeInsets.all(16),
         title: "Confirm",
         content: PinPut(
           controller: otpController,
@@ -91,15 +91,13 @@ class _SigninPageState extends State<SigninPage> {
             borderRadius: BorderRadius.circular(20.0),
           ),
           followingFieldDecoration: BoxDecoration(
-           border: Border.all(color: Colors.orange),
-            borderRadius: BorderRadius.circular(360)
-          ),
-          onChanged:(otp){
-            if(otp.length==6){
-            authController.signIn(0, otp);
-            Get.to(HomePage());
+              border: Border.all(color: Colors.orange),
+              borderRadius: BorderRadius.circular(360)),
+          onChanged: (otp) {
+            if (otp.length == 6) {
+              authController.signIn(0, otp);
+              Get.to(HomePage());
             }
-
           },
           eachFieldWidth: 1,
           disabledDecoration: BoxDecoration(
@@ -113,38 +111,8 @@ class _SigninPageState extends State<SigninPage> {
         ));
   }
 
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
 
 
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
-
-  Future<UserCredential> signInWithFacebook() async {
-    // Trigger the sign-in flow
-    final LoginResult loginResult = await FacebookAuth.instance.login();
-    // Create a credential from the access token
-    final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
-
-    // Once signed in, return the UserCredential
-    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-  }
-
-  signInWithPhoneNumber() async {
-    authController.phoneVerification(phoneController.text);
-  }
 
   Widget _signinWithGoogleButton() {
     return InkWell(
@@ -179,8 +147,8 @@ class _SigninPageState extends State<SigninPage> {
               width: 10,
             ),
             const Text(
-              "Signin With Google",
-              style: TextStyle(fontSize: 19, color: Color(0xfffbb448)),
+              "Signin With Google     ",
+              style: TextStyle(fontSize: 19, color: Colors.black),
             ),
           ],
         ),
@@ -200,7 +168,7 @@ class _SigninPageState extends State<SigninPage> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(5)),
-          color: const Color(0xFF1877f2),
+          color: Colors.white,
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: Colors.grey.shade200,
@@ -222,7 +190,7 @@ class _SigninPageState extends State<SigninPage> {
             ),
             const Text(
               "Signin With Facebook",
-              style: TextStyle(fontSize: 19, color: Colors.white),
+              style: TextStyle(fontSize: 19, color: Colors.black),
             ),
           ],
         ),
@@ -238,7 +206,7 @@ class _SigninPageState extends State<SigninPage> {
       child: Stack(
         children: <Widget>[
           Positioned(
-              top: -deviceHeight * .15,
+              top: -deviceHeight * .20,
               right: -deviceWidth * .4,
               child: const BezierContainer()),
           Center(
@@ -251,9 +219,32 @@ class _SigninPageState extends State<SigninPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(height: deviceHeight / 30),
-                    FieldWidget(
-                      title: "Phone Number",
-                      controller: phoneController,
+                    Stack(
+                      children: [
+                        FieldWidget(
+                          title: "Phone Number",
+                          controller: phoneController,
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          right: 0,
+                          child: Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.zero,
+                                    bottomRight: Radius.circular(30),
+                                    topLeft: Radius.zero,
+                                    topRight: Radius.circular(30)),
+                                gradient: linearGradientColor),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                     SizedBox(height: deviceHeight / 30),
                     ButtonWidget(

@@ -23,7 +23,7 @@ class UserModel {
       name: json['name'],
       email: json['email'],
       phone: json['phone'],
-      photoUrl: json["PhotoUrl"],
+      photoUrl: json["photo"],
       address: json['address'],
       accessToken: json['access_token'],
     );

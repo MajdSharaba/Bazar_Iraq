@@ -7,29 +7,30 @@ import 'package:http/http.dart' as http;
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/model/user.dart';
 
-class Auth{
-  late String _verificationId;
+String _verificationId="";
+class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  late  AuthCredential credential;
+  late AuthCredential credential;
   late UserCredential userCredential;
-  Future<UserModel> signIn(int  signInTypeId,String otp) async {
-    switch (signInTypeId)
-        {
+  Future<UserModel> signIn(int signInTypeId, String otp) async {
+    switch (signInTypeId) {
       case 0:
-        userCredential=await otpConfirm(otp);
+        userCredential = await otpConfirm(otp);
         break;
       case 1:
-        userCredential=await signInWithGoogle();
+        userCredential = await signInWithGoogle();
         break;
       case 2:
-        userCredential=await signInWithFacebook();
+        userCredential = await signInWithFacebook();
         break;
     }
-   String token =await _auth.currentUser!.getIdToken();
-   var response=await http.post(Uri.parse(baseUrl+"firebaselogin"),body: jsonEncode({
-     "firebasetoken":token
-   }));
-   return UserModel.fromJson(jsonDecode(response.body));
+    String token = await _auth.currentUser!.getIdToken();
+    var response = await http.post(Uri.parse(baseUrl + "firebaselogin"),
+        body: jsonEncode({"firebasetoken": token}), headers: <String, String>{
+        'Content-Type': 'application/json',
+      },);
+
+    return UserModel.fromJson(jsonDecode(response.body));
   }
 
   Future<UserCredential> signInWithGoogle() async {
@@ -37,9 +38,9 @@ class Auth{
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     // Obtain the auth details from the request
     final GoogleSignInAuthentication googleAuth =
-    await googleUser!.authentication;
+        await googleUser!.authentication;
     // Create a new credential
-     credential = GoogleAuthProvider.credential(
+    credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
@@ -53,7 +54,7 @@ class Auth{
     final LoginResult loginResult = await FacebookAuth.instance.login();
     // Create a credential from the access token
     final OAuthCredential facebookAuthCredential =
-    FacebookAuthProvider.credential(loginResult.accessToken!.token);
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
     // Once signed in, return the UserCredential
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
@@ -65,23 +66,19 @@ class Auth{
       verificationCompleted: (PhoneAuthCredential credential) {},
       verificationFailed: (FirebaseAuthException e) {},
       codeSent: (String verificationId, int? resendToken) async {
-        _verificationId=verificationId;
+        _verificationId = verificationId;
+        print(_verificationId);
         // Create a PhoneAuthCredential with the code
-
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
 
-  Future<UserCredential>  otpConfirm(String otp) async {
-
-     credential = PhoneAuthProvider.credential(
-        verificationId: _verificationId,
-        smsCode: otp,
-      );
-      return await _auth.signInWithCredential(credential);
-
-
+  Future<UserCredential> otpConfirm(String otp) async {
+    credential = PhoneAuthProvider.credential(
+      verificationId: _verificationId,
+      smsCode: otp,
+    );
+    return await _auth.signInWithCredential(credential);
   }
-
 }

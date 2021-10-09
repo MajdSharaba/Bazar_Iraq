@@ -9,7 +9,6 @@ class ProductWidget extends StatelessWidget {
   ProductWidget({Key? key}) : super(key: key);
   final ProductController productController = Get.put(ProductController());
 
-
   @override
   Widget build(BuildContext context) {
     return Column(

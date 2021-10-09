@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pazar_iraq/app/modules/view/pages/profile_screen.dart';
 import 'app/modules/view/pages/homepage.dart';
+import 'app/modules/view/pages/signinpage.dart';
 
 Future<void> main() async {
    WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 
-      home: HomePage(),
+      home: const HomePage(),
       // home: const SigninPage(title: "welcome"),
     );
   }
