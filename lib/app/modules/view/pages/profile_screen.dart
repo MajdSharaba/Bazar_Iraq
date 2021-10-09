@@ -10,7 +10,7 @@ import 'package:pazar_iraq/app/modules/view/widgets/beziercontainer.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
-  final AuthController authController = Get.find();
+  final AuthController authController = Get.put(AuthController());
   Widget infoCard(String title, String information) {
     return Container(
       decoration: BoxDecoration(

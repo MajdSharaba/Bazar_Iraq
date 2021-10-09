@@ -7,7 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/model/user.dart';
 
-String _verificationId="";
+String _verificationId = "";
+
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late AuthCredential credential;
@@ -25,10 +26,13 @@ class Auth {
         break;
     }
     String token = await _auth.currentUser!.getIdToken();
-    var response = await http.post(Uri.parse(baseUrl + "firebaselogin"),
-        body: jsonEncode({"firebasetoken": token}), headers: <String, String>{
+    var response = await http.post(
+      Uri.parse(baseUrl + "firebaselogin"),
+      body: jsonEncode({"firebasetoken": token}),
+      headers: <String, String>{
         'Content-Type': 'application/json',
-      },);
+      },
+    );
 
     return UserModel.fromJson(jsonDecode(response.body));
   }
