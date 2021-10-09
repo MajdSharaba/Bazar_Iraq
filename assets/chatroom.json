@@ -1,0 +1,14 @@
+{
+  "data": [
+      {
+        "chat_id": 2,
+        "reciever_user_id": 3,
+        "reciever_user_name": "Ahmad"
+      },
+      {
+        "chat_id": 1,
+        "reciever_user_id": 2,
+        "reciever_user_name": "sami"
+      }
+    ]
+  }

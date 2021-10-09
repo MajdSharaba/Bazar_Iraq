@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
       ),
 
       home: const HomePage(),
+      debugShowCheckedModeBanner: false,
       // home: const SigninPage(title: "welcome"),
     );
   }

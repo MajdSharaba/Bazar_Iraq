@@ -1,0 +1,22 @@
+{
+  "data": [
+    {
+      "id": 2,
+      "chat_id": 1,
+      "sender_user_id": 2,
+      "reciever_user_id": 1,
+      "message_text": "hello1",
+      "seen": 1,
+      "datetime": "2021-09-29 03:52:13"
+    },
+    {
+      "id": 1,
+      "chat_id": 1,
+      "sender_user_id": 1,
+      "reciever_user_id": 2,
+      "message_text": "hello2",
+      "seen": 0,
+      "datetime": "2021-09-29 03:51:43"
+    }
+  ]
+}
