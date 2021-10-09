@@ -45,6 +45,8 @@ dependencies:
   convex_bottom_bar: ^3.0.0
   get_storage: ^2.0.3
   comment_box: ^0.0.16
+  pinput: ^1.2.0
+
 
 dev_dependencies:
   flutter_test:

@@ -29,7 +29,6 @@ class ProductController extends GetxController {
     }
   }
   void setproduct(){
-
     productData!.setcomments([Comment(id: 1)]);
     print(productData!.comments!.length.toString());
   }

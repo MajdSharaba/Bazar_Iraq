@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class FieldWidget extends StatelessWidget {
   final String title;
-  final bool isPassword;
-  const FieldWidget( {Key? key, required this.title, required this.isPassword}) : super(key: key);
+  final TextEditingController? controller;
+  const FieldWidget( {Key? key, required this.title, this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,8 @@ class FieldWidget extends StatelessWidget {
           height: 10,
         ),
         TextField(
-            obscureText: isPassword,
+
+            controller: controller,
             decoration: const InputDecoration(
                 border: InputBorder.none,
                 fillColor: Color(0xfff3f3f4),

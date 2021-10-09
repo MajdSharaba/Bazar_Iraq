@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
+String baseUrl='http://192.168.1.7:8080/bazar-iraq/public/api/';
+
 double deviceHeight = Get.height;
 double deviceWidth = Get.width;
 

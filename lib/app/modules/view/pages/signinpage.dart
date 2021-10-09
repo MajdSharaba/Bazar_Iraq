@@ -1,25 +1,30 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
+import 'package:pazar_iraq/app/modules/controller/auth_controller.dart';
+import 'package:pazar_iraq/app/modules/view/pages/homepage.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/bezierContainer.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/buttonwidget.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/fieldwidget.dart';
-
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:pinput/pin_put/pin_put.dart';
 
 class SigninPage extends StatefulWidget {
-  const SigninPage({Key? key,  this.title}) : super(key: key);
-
-  final String? title;
+  const SigninPage({Key? key}) : super(key: key);
 
   @override
   _SigninPageState createState() => _SigninPageState();
 }
 
 class _SigninPageState extends State<SigninPage> {
+  TextEditingController phoneController = TextEditingController(text: "+964");
+  TextEditingController otpController = TextEditingController();
+  late String _verificationId;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final AuthController authController = Get.put(AuthController());
   Widget _divider() {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -56,15 +61,56 @@ class _SigninPageState extends State<SigninPage> {
     );
   }
 
-  Widget _phoneWidget() {
-    return Column(
-      children: const <Widget>[
-        FieldWidget(
-          title: "Phone Number",
-          isPassword: false,
-        ),
-      ],
-    );
+  void otpConfirm() async {
+    try {
+      final AuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: _verificationId,
+        smsCode: otpController.text,
+      );
+      final User? user = (await _auth.signInWithCredential(credential)).user;
+      print(user!.phoneNumber);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  _dialog() async {
+    authController.phoneVerification(phoneController.text);
+    await Get.defaultDialog(
+      contentPadding: EdgeInsets.all(16),
+        title: "Confirm",
+        content: PinPut(
+          controller: otpController,
+          eachFieldHeight: 55.0,
+          selectedFieldDecoration: BoxDecoration(
+            gradient: linearGradientColor,
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          submittedFieldDecoration: BoxDecoration(
+            gradient: linearGradientColor,
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          followingFieldDecoration: BoxDecoration(
+           border: Border.all(color: Colors.orange),
+            borderRadius: BorderRadius.circular(360)
+          ),
+          onChanged:(otp){
+            if(otp.length==6){
+            authController.signIn(0, otp);
+            Get.to(HomePage());
+            }
+
+          },
+          eachFieldWidth: 1,
+          disabledDecoration: BoxDecoration(
+            border: Border.all(color: Colors.orange),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          withCursor: true,
+          fieldsCount: 6,
+          pinAnimationType: PinAnimationType.scale,
+          textStyle: TextStyle(color: Colors.white, fontSize: 20.0),
+        ));
   }
 
   Future<UserCredential> signInWithGoogle() async {
@@ -79,6 +125,7 @@ class _SigninPageState extends State<SigninPage> {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
+
 
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
@@ -95,13 +142,14 @@ class _SigninPageState extends State<SigninPage> {
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 
+  signInWithPhoneNumber() async {
+    authController.phoneVerification(phoneController.text);
+  }
+
   Widget _signinWithGoogleButton() {
     return InkWell(
       onTap: () async {
-       await signInWithGoogle();
-       User? user =FirebaseAuth.instance.currentUser;
-       var d=await user!.getIdTokenResult();
-       print(d.toString());
+        authController.signIn(1, "");
       },
       child: Container(
         height: 60,
@@ -143,11 +191,7 @@ class _SigninPageState extends State<SigninPage> {
   Widget _signinWithFacebookButton() {
     return InkWell(
       onTap: () async {
-      await signInWithFacebook();
-      User? user =FirebaseAuth.instance.currentUser;
-      var d=await user!.getIdToken();
-      print(d.toString());
-
+        authController.signIn(2, "");
       },
       child: Container(
         height: 60,
@@ -156,7 +200,7 @@ class _SigninPageState extends State<SigninPage> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(5)),
-          color:const Color(0xFF1877f2),
+          color: const Color(0xFF1877f2),
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: Colors.grey.shade200,
@@ -207,10 +251,13 @@ class _SigninPageState extends State<SigninPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(height: deviceHeight / 30),
-                    _phoneWidget(),
+                    FieldWidget(
+                      title: "Phone Number",
+                      controller: phoneController,
+                    ),
                     SizedBox(height: deviceHeight / 30),
                     ButtonWidget(
-                        title: "Signin with Phone Number", function: () {}),
+                        title: "Signin with Phone Number", function: _dialog),
                     SizedBox(height: deviceHeight / 30),
                     _divider(),
                     SizedBox(height: deviceHeight / 30),
