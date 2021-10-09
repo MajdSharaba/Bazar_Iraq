@@ -251,7 +251,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 const SizedBox(
                   height: 20,
                 ),
-                _availableSize(),
+                ///_availableSize(),
                 const SizedBox(
                   height: 20,
                 ),
@@ -321,30 +321,30 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const TitleText(
-          text: "Available Size",
+          text: "Available Color",
           fontSize: 14,
         ),
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            _colorWidget(LightColor.yellowColor, isSelected: true),
-            const SizedBox(
-              width: 30,
-            ),
-            _colorWidget(LightColor.lightBlue),
-            const SizedBox(
-              width: 30,
-            ),
-            _colorWidget(LightColor.black),
-            const SizedBox(
-              width: 30,
-            ),
+            // _colorWidget(LightColor.yellowColor, isSelected: true),
+            // const SizedBox(
+            //   width: 30,
+            // ),
+            // _colorWidget(LightColor.lightBlue),
+            // const SizedBox(
+            //   width: 30,
+            // ),
+            // _colorWidget(LightColor.black),
+            // const SizedBox(
+            //   width: 30,
+            // ),
             _colorWidget(LightColor.red),
             const SizedBox(
               width: 30,
             ),
-            _colorWidget(LightColor.skyBlue),
+            // _colorWidget(LightColor.skyBlue),
           ],
         )
       ],
@@ -377,7 +377,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           fontSize: 14,
         ),
         SizedBox(height: 20),
-        // Text( widget.product!.category.toString()),
+        Text( "2000 cc  automatic gearbox full option "),
       ],
     );
   }

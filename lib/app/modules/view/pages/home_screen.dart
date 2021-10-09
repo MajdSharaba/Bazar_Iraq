@@ -39,14 +39,14 @@ class HomeScreen extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.symmetric(
                     vertical: 10.0, horizontal: 20.0),
-                child: Text(
-                  'No. ${imgList.indexOf(item)} image',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                // child: Text(
+                //   'No. ${imgList.indexOf(item)} image',
+                //   style: const TextStyle(
+                //     color: Colors.white,
+                //     fontSize: 20.0,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
               ),
             ),
           ],
