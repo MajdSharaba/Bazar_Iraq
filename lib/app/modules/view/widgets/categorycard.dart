@@ -6,9 +6,9 @@ import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/modules/view/pages/subcategorypage.dart';
 
 class CategoryCard extends StatelessWidget {
-  Category category;
+  final CategoryElement? categoryElement;
 
-  CategoryCard({Key? key,required this.category}) : super(key: key);
+  CategoryCard({Key? key,required this.categoryElement}) : super(key: key);
 
 
 
@@ -31,7 +31,7 @@ class CategoryCard extends StatelessWidget {
                       //   child: Image.asset(image,fit: BoxFit.cover,)
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: NetworkImage(category.image!), scale: 1)),
+                              image: NetworkImage(categoryElement!.imageUrl!), scale: 1)),
                     ),
                   ),
                   Positioned(
@@ -65,7 +65,7 @@ class CategoryCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                category.name!,
+                                categoryElement!.nameEn!,
                                 style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -81,22 +81,22 @@ class CategoryCard extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Container(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              color: Colors.white,
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(10))),
-                          child: Text(
-                            category.discount! ,
-                            style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black),
-                          ),
-                        )
+                        // Container(
+                        //   padding:
+                        //   const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        //   decoration: const BoxDecoration(
+                        //       shape: BoxShape.rectangle,
+                        //       color: Colors.white,
+                        //       borderRadius:
+                        //       BorderRadius.all(Radius.circular(10))),
+                        //   child: Text(
+                        //     categoryElement.discount! ,
+                        //     style: const TextStyle(
+                        //         fontSize: 14,
+                        //         fontWeight: FontWeight.w400,
+                        //         color: Colors.black),
+                        //   ),
+                        // )
                       ],
                     ),
                     left: 10,
@@ -126,10 +126,10 @@ class CategoryCard extends StatelessWidget {
           // )
         ],
       ),
-      onTap: (){Navigator.of(context).push(
-    MaterialPageRoute(
-    builder: (context) => const SubCategoryPage()),
-    );},
+      onTap: (){ Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) => SubCategoryPage(categoryElemen:categoryElement)));
+      },
     );
   }
 }

@@ -39,13 +39,13 @@ class SubCategoryCard extends StatelessWidget {
                               alignment: Alignment.center,
                               children: <Widget>[
 
-                                Image.network(subCategory!.image!,scale: 1)
+                               // Image.network(subCategory!.!,scale: 1)
                               ],
                             ),
                           ),
                           // SizedBox(height: 5),
                           TitleText(
-                            text: subCategory!.name!,
+                           // text: subCategory!.name!,
                             fontSize: 20,
                           )],
                       ),

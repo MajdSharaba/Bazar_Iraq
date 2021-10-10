@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/core/data.dart';
 import 'package:pazar_iraq/app/model/category.dart';
+import 'package:pazar_iraq/app/modules/view/widgets/categorycard.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/subcategorycard.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 
 
 class SubCategoryPage extends StatelessWidget {
-  const SubCategoryPage({Key? key}) : super(key: key);
+  final CategoryElement? categoryElemen;
+  const SubCategoryPage({Key? key,this.categoryElemen}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,8 @@ class SubCategoryPage extends StatelessWidget {
          backgroundColor: Colors.transparent,
          leading:BackButton(),
          centerTitle: true,
-         title:  const TitleText(
-           text:"Cars",
+         title:   TitleText(
+           text:categoryElemen!.nameEn,
            fontSize: 30,
          ),
 
@@ -46,10 +48,10 @@ class SubCategoryPage extends StatelessWidget {
                       margin: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
-                          image: const DecorationImage(
+                          image:  DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                              "https://bellinghamautoacservice.com/wp-content/uploads/2019/10/what-is-the-cheapest-car-insurance.jpg", scale: 1.0
+                                categoryElemen!.imageUrl!, scale: 1.0
                             ),
                           ),
                           boxShadow: [
@@ -64,22 +66,24 @@ class SubCategoryPage extends StatelessWidget {
                 ],
               ),
             ),
-
+            categoryElemen!.children!.isEmpty?
+               Container(child:Text("bnbnbn"))
+            :
             GridView.builder(
               shrinkWrap: true,
-              itemCount: AppData.subCategure.length,
+              itemCount: categoryElemen!.children!.length,
               physics: const BouncingScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+                crossAxisCount: 2,
                 mainAxisSpacing: 10.0,
                 crossAxisSpacing: 10.0,
                 childAspectRatio: 0.8,
               ),
               itemBuilder: (context, index) {
-                Category subCategory = AppData.subCategure[index];
+                CategoryElement subCategory = categoryElemen!.children![index];
 
-                return SubCategoryCard(
-                  subCategory: subCategory,
+                return CategoryCard(
+                  categoryElement: subCategory,
                   // onSelected: (model) {
                   //   setState(() {
                   //     AppData.productList.forEach((item) {

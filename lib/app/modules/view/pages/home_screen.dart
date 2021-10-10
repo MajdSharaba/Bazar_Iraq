@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/core/data.dart';
+import 'package:pazar_iraq/app/modules/controller/categories_controller.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/categorywidget.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/productwidget.dart';
 final List<String> imgList = [
@@ -12,6 +14,7 @@ final List<String> imgList = [
 ];
 class HomeScreen extends StatelessWidget {
 
+  CategoryController categoryController = Get.put(CategoryController());
 
 
   final List<Widget> imageSliders = imgList
@@ -71,9 +74,28 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         ProductWidget(),
-        CategoryWidget(title: "vehicles",categories: AppData.categories),
-        CategoryWidget(title: "service",categories: AppData.categories2),
-      ],
+        Obx(() {
+    if (categoryController.isLoading.value)
+    return Center(child: CircularProgressIndicator());
+    return categoryController.categoryelement!=null?
+    ListView.builder(
+        shrinkWrap: true,
+        itemCount:categoryController.categoryelement!.length,
+        physics: const BouncingScrollPhysics(),
+        // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //   crossAxisCount: 1,
+        //   mainAxisSpacing: 10.0,
+        //   crossAxisSpacing: 10.0,
+        //   childAspectRatio: 0.8,
+        // ),
+    itemBuilder: (context, index) =>  CategoryWidget(categoryElement: categoryController.categoryelement![index]),
+    //categoryElement: categoryController.categoryelement![index].children!.first),
+    ):
+    Text(" ");
+    },
+       // CategoryWidget(title: "vehicles"),
+       // CategoryWidget(title: "service",categories: AppData.categories2),
+        )],
     );
   }
 
