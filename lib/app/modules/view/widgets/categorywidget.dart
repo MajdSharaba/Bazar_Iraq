@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/model/category.dart';
-import 'package:pazar_iraq/app/modules/controller/categories_controller.dart';
 import 'package:pazar_iraq/app/modules/view/pages/subcategorypage.dart';
 
 import 'categorycard.dart';
@@ -33,7 +31,7 @@ class CategoryWidget extends StatelessWidget {
                 //   width: width! * 0.05,
                 // ),
                 Text(
-                  categoryElement!.nameEn!,
+                  categoryElement!=null?categoryElement!.nameEn!:"cars",
                   style: const TextStyle(color: Colors.black, fontSize: 16,fontStyle: FontStyle.normal),
                 ),
                 const Spacer(),
@@ -59,15 +57,15 @@ class CategoryWidget extends StatelessWidget {
             //     itemCount: categories!.length,
             //     scrollDirection: Axis.horizontal),
             //child: Text(" ")
-           child:  categoryElement!=null?
+           child:
               ListView.builder(
                 shrinkWrap: true,
-                 itemCount:categoryElement!.children!.length,
+
+                 itemCount:categoryElement!=null?categoryElement!.children!.length:3,
                 padding: const EdgeInsets.all(0.0),
                   scrollDirection: (Axis.horizontal),
-                   itemBuilder: (context, index) => CategoryCard( categoryElement: categoryElement!.children![index]),
-              ):
-              Text(" ")
+                   itemBuilder: (context, index) => CategoryCard( categoryElement: categoryElement!=null?categoryElement!.children![index]:null),
+              )
 
 
 

@@ -4,14 +4,17 @@ import 'package:get/get.dart';
 import 'package:pazar_iraq/app/modules/controller/chatmeesage_controller.dart';
 
   class ChatDetailPage extends StatefulWidget{
-  const ChatDetailPage({Key? key}) : super(key: key);
+  String? reciverName;
+  String? reciverId;
+
+   ChatDetailPage({Key? key, this.reciverName,this.reciverId}) : super(key: key);
 
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
 }
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
-  final userid=1;
+  final String sender_id="2";
   ChatMessageController chatMessageController =  Get.put(ChatMessageController());
 
 
@@ -31,22 +34,22 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     onPressed: (){
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.arrow_back,color: Colors.black,),
+                    icon: const Icon(Icons.arrow_back,color: Colors.black,),
                   ),
-                  SizedBox(width: 2,),
+                  const SizedBox(width: 2,),
                   // CircleAvatar(
                   //   backgroundImage: NetworkImage("https://randomuser.me/api/portraits/men/5.jpg"),
                   //   maxRadius: 20,
                   // ),
-                  SizedBox(width: 12,),
+                  const SizedBox(width: 12,),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("Ahmad",style: TextStyle( fontSize: 16 ,fontWeight: FontWeight.w600),),
-                        SizedBox(height: 6,),
-                        Text("Online",style: TextStyle(color: Colors.grey.shade600, fontSize: 13),),
+                         Text(widget.reciverName!,style: const TextStyle( fontSize: 16 ,fontWeight: FontWeight.w600),),
+                        const SizedBox(height: 6,),
+                       // Text("Online",style: TextStyle(color: Colors.grey.shade600, fontSize: 13),),
                       ],
                     ),
                   ),
@@ -60,35 +63,35 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
           children: <Widget>[
     Obx(() {
 
-    if (chatMessageController.isLoad.value)
-    return Center(child: CircularProgressIndicator());
-    else
-    return ListView.builder(
+    if (chatMessageController.isLoad.value) {
+      return const Center(child: CircularProgressIndicator());
+    } else {
+      return ListView.builder(
               itemCount: chatMessageController.chatMessageData.length,
               shrinkWrap: true,
-              padding: EdgeInsets.only(top: 10,bottom: 10),
-              physics: NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(top: 10,bottom: 100),
               itemBuilder: (context, index){
                 return Container(
-                  padding: EdgeInsets.only(left: 14,right: 14,top: 10,bottom: 10),
+                  padding: const EdgeInsets.only(left: 14,right: 14,top: 10,bottom: 10),
                   child: Align(
-                    alignment: (chatMessageController.chatMessageData[index].recieverUserId == userid?Alignment.topLeft:Alignment.topRight),
+                    alignment: (chatMessageController.chatMessageData[index].senderUserId == sender_id?Alignment.topLeft:Alignment.topRight),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: (chatMessageController.chatMessageData[index].recieverUserId == userid?Color(0xfffbb448):Colors.grey.shade200),
+                        color: (chatMessageController.chatMessageData[index].senderUserId == sender_id?const Color(0xfffbb448):Colors.grey.shade200),
                       ),
-                      padding: EdgeInsets.all(16),
-                      child: Text(chatMessageController.chatMessageData[index].messageText!, style: TextStyle(fontSize: 15),),
+                      padding: const EdgeInsets.all(16),
+                      child: Text(chatMessageController.chatMessageData[index].messageText!, style: const TextStyle(fontSize: 15),),
                     ),
                   ),
                 );
               },
-            );}),
+            );
+    }}),
             Align(
               alignment: Alignment.bottomLeft,
               child: Container(
-                padding: EdgeInsets.only(left: 10,bottom: 10,top: 10),
+                padding: const EdgeInsets.only(left: 10,bottom: 10,top: 10),
                 height: 60,
                 width: double.infinity,
                 color: Colors.white,
@@ -107,12 +110,12 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     //     child: Icon(Icons.add, color: Colors.white, size: 20, ),
                     //   ),
                     // ),
-                    SizedBox(width: 15,),
+                    const SizedBox(width: 15,),
                     Expanded(
                       child: TextFormField(
                         controller: chatMessageController.messageController,
 
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: "Write message...",
                             hintStyle: TextStyle(color: Colors.black54),
                             border: InputBorder.none
@@ -127,13 +130,16 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         },
                       ),
                     ),
-                    SizedBox(width: 15,),
+                    const SizedBox(width: 15,),
                     FloatingActionButton(
                       onPressed: (){
 
-                        chatMessageController.addMessage();},
-                      child: Icon(Icons.send,color: Colors.white,size: 18,),
-                       backgroundColor: Color(0xfffbb448),
+                        chatMessageController.addMessage(chatid:chatMessageController.chatMessageData.first.chatId,reciver:widget.reciverId,sender:sender_id);
+                        chatMessageController.messageController.clear();
+
+                        },
+                      child: const Icon(Icons.send,color: Colors.white,size: 18,),
+                       backgroundColor: const Color(0xfffbb448),
 
                       elevation: 0,
                     ),

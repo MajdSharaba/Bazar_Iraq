@@ -33,11 +33,11 @@ class ChatMessageData {
   });
 
   int? id;
-  int? chatId;
-  int? senderUserId;
-  int? recieverUserId;
+  String? chatId;
+  String? senderUserId;
+  String? recieverUserId;
   String? messageText;
-  int? seen;
+  String? seen;
   DateTime? datetime;
 
   factory ChatMessageData.fromJson(Map<String, dynamic> json) => ChatMessageData(

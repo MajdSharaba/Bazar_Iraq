@@ -5,16 +5,32 @@ import 'package:pazar_iraq/app/model/productdetail.dart';
 class ProductProvider {
   static var client = http.Client();
 
-
+///http://184.168.97.161/public/api/products?category_id=12
   static Future<Product> fetchProducts() async {
     var response = await client.get(Uri.parse(
-        'http://184.168.97.161/public/api/products'));
+        'http://184.168.97.161/public/api/products'
+        ));
     if (response.statusCode == 200) {
       var jsonString = response.body;
       return productFromJson(jsonString);
     } else {
       //show error message
-      return null!;
+      return Product(productData: <ProductData> [ProductData( id:1,
+       nameEn:"problem",
+        nameAr:"problem",
+        nameKr:"problem",
+        price:"",
+        userId:null,
+        categoryId:null,
+        productType:null,
+        storeId:null,
+        createdAt:null,
+        updatedAt:null,
+        isFeatured:null,
+        images:[ Imagee(originalUrl: "https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1")],
+        desAr:null,
+        desEn:null,
+        desKr:null,)]);
     }
   }
   static Future<ProductDetail> fetchProductsDetails(var id) async {

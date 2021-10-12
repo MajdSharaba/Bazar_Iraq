@@ -34,6 +34,7 @@ class ProductWidget extends StatelessWidget {
               ],
             ),
           ),
+
           Obx(() {
             if (productController.isLoading.value)
               return Center(child: CircularProgressIndicator());
@@ -50,7 +51,7 @@ class ProductWidget extends StatelessWidget {
                       crossAxisSpacing: 20),
                   padding: const EdgeInsets.only(left: 20),
                   scrollDirection: Axis.horizontal,
-                  children: productController.productList!
+                  children: productController.productList!=null?productController.productList!
                       .map(
                         (product) =>
                         ProductCard(
@@ -58,7 +59,14 @@ class ProductWidget extends StatelessWidget {
 
                         ),
                   )
-                      .toList(),
+                      .toList():productController.productList!
+                      .map(
+                        (product) =>
+                        ProductCard(
+                          product: product,
+
+                        ),
+                  ).toList()
                 ),
               );
             }

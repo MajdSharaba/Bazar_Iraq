@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
-import 'package:pazar_iraq/app/model/comment_model.dart';
 import 'package:pazar_iraq/app/model/productdetail.dart';
-import 'package:pazar_iraq/app/model/user_model.dart';
 import 'package:pazar_iraq/app/modules/controller/productdetail_controller.dart';
 
 
@@ -15,87 +13,7 @@ class CommentsListKeyPrefix {
   static final String commentText = "Comment Text";
   static final String commentDivider = "Comment Divider";
 }
- final List<UserModel> users = [
-  UserModel(
-    id: "1",
-    name: "Ishfar",
-    email: "ishfar@gmail.com",
-    image: "assets/images/user.jpg",
-    followers: 123,
-    joined: DateTime(2019, 4, 30),
-    posts: 12,
-  ),
-  UserModel(
-    id: "2",
-    name: "Ishrak",
-    email: "ishrak@gmail.com",
-    image: "assets/images/user.jpg",
-    followers: 456,
-    joined: DateTime(2018, 5, 30),
-    posts: 13,
-  ),
-  UserModel(
-    id: "3",
-    name: "Shakleen",
-    email: "shakleen@gmail.com",
-    image: "assets/images/user.jpg",
-    followers: 789,
-    joined: DateTime(2017, 6, 30),
-    posts: 14,
-  ),
-];
 
-List<CommentModel> comments = <CommentModel>[
-  CommentModel(
-    comment:
-    "Et hic et sequi inventore. Molestiae laboriosam commodi exercitationem eum. ",
-    user: users[0],
-    time: DateTime(2019, 4, 30),
-  ),
-  CommentModel(
-    comment: "Unde id provident ut sunt in consequuntur qui sed. ",
-    user: users[1],
-    time: DateTime(2018, 5, 30),
-  ),
-  CommentModel(
-    comment: "Eveniet nesciunt distinctio sint ut. ",
-    user: users[0],
-    time: DateTime(2017, 6, 30),
-  ),
-  CommentModel(
-    comment: "Et facere a eos accusantium culpa quaerat in fugiat suscipit. ",
-    user: users[2],
-    time: DateTime(2019, 4, 30),
-  ),
-  CommentModel(
-    comment: "Necessitatibus pariatur harum deserunt cum illum ut.",
-    user: users[1],
-    time: DateTime(2018, 5, 30),
-  ),
-  CommentModel(
-    comment:
-    "Accusantium neque quis provident voluptatem labore quod dignissimos eum quaerat. ",
-    user: users[2],
-    time: DateTime(2017, 6, 30),
-  ),
-  CommentModel(
-    comment:
-    "Accusantium neque quis provident voluptatem labore quod dignissimos eum quaerat. ",
-    user: users[1],
-    time: DateTime(2019, 4, 30),
-  ),
-  CommentModel(
-    comment: "Neque est ut rerum vel sunt harum voluptatibus et. ",
-    user: users[0],
-    time: DateTime(2018, 5, 30),
-  ),
-  CommentModel(
-    comment:
-    "Hic accusantium minus fuga exercitationem id aut expedita doloribus. ",
-    user: users[1],
-    time: DateTime(2017, 6, 30),
-  ),
-];
 class CommentsList extends StatelessWidget {
    CommentsList({Key? key}) : super(key: key);
   final ProductDetailController productDetailController = Get.find();
@@ -103,10 +21,6 @@ class CommentsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final List<CommentModel> comments =
-    //     InheritedPostModel.of(context).postData!.comments!;
-
-
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child:

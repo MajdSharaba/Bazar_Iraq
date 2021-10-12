@@ -31,7 +31,7 @@ class CategoryCard extends StatelessWidget {
                       //   child: Image.asset(image,fit: BoxFit.cover,)
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: NetworkImage(categoryElement!.imageUrl!), scale: 1)),
+                              image:categoryElement!=null? NetworkImage(categoryElement!.imageUrl!):NetworkImage("https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1"), scale: 1)),
                     ),
                   ),
                   Positioned(
@@ -65,7 +65,7 @@ class CategoryCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                categoryElement!.nameEn!,
+                                categoryElement!=null?categoryElement!.nameEn!:"no name",
                                 style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,

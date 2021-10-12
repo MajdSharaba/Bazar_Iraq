@@ -19,7 +19,7 @@ class Product {
 
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
-    productData: List<ProductData>.from(json["data"].map((x) => ProductData.fromJson(x))),
+    productData: List<ProductData>.from(json["products"]["data"].map((x) => ProductData.fromJson(x))),
 
   );
 
@@ -44,6 +44,9 @@ class ProductData {
     this.updatedAt,
     this.isFeatured,
     this.images,
+    this.desAr,
+    this.desEn,
+    this.desKr,
   });
 
   int? id;
@@ -55,6 +58,9 @@ class ProductData {
   String? categoryId;
   String? productType;
   String? storeId;
+  String? desEn;
+  String? desAr;
+  String? desKr;
   dynamic? createdAt;
   dynamic? updatedAt;
   String? isFeatured;
@@ -65,6 +71,9 @@ class ProductData {
     nameEn: json["name_en"],
     nameAr: json["name_ar"],
     nameKr: json["name_kr"],
+    desEn : json["desc_en"],
+    desAr : json["desc_ar"],
+    desKr : json["desc_kr"],
     price: json["price"],
     userId: json["user_id"],
     categoryId: json["category_id"],
@@ -95,49 +104,49 @@ class ProductData {
 
 class Imagee {
   Imagee({
-    this.id,
-    this.targetType,
-    this.targetId,
-    this.mediaType,
+    // this.id,
+    // this.targetType,
+    // this.targetId,
+    // this.mediaType,
     this.originalUrl,
-    this.thumbUrl,
-    this.orderSn,
-    this.createdAt,
-    this.updatedAt,
+    // this.thumbUrl,
+    // this.orderSn,
+    // this.createdAt,
+    // this.updatedAt,
   });
 
-  int? id;
-  String? targetType;
-  String? targetId;
-  String? mediaType;
+  // int? id;
+  // String? targetType;
+  // String? targetId;
+  // String? mediaType;
   String? originalUrl;
-  String? thumbUrl;
-  String? orderSn;
-  dynamic? createdAt;
-  dynamic? updatedAt;
+  // String? thumbUrl;
+  // String? orderSn;
+  // dynamic? createdAt;
+  // dynamic? updatedAt;
 
   factory Imagee.fromJson(Map<String, dynamic> json) => Imagee(
-    id: json["id"],
-    targetType: json["target_type"],
-    targetId: json["target_id"],
-    mediaType: json["media_type"],
+    // id: json["id"],
+    // targetType: json["target_type"],
+    // targetId: json["target_id"],
+    // mediaType: json["media_type"],
     originalUrl: json["original_url"],
-    thumbUrl: json["thumb_url"],
-    orderSn: json["order_sn"],
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
+    // thumbUrl: json["thumb_url"],
+    // orderSn: json["order_sn"],
+    // createdAt: json["created_at"],
+    // updatedAt: json["updated_at"],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "target_type": targetType,
-    "target_id": targetId,
-    "media_type": mediaType,
+    // "id": id,
+    // "target_type": targetType,
+    // "target_id": targetId,
+    // "media_type": mediaType,
     "original_url": originalUrl,
-    "thumb_url": thumbUrl,
-    "order_sn": orderSn,
-    "created_at": createdAt,
-    "updated_at": updatedAt,
+    // "thumb_url": thumbUrl,
+    // "order_sn": orderSn,
+    // "created_at": createdAt,
+    // "updated_at": updatedAt,
   };
 }
 

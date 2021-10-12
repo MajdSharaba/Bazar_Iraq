@@ -1,16 +1,12 @@
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
-import 'package:pazar_iraq/app/core/data.dart';
-import 'package:pazar_iraq/app/modules/view/pages/chatPage.dart';
+import 'package:pazar_iraq/app/modules/view/pages/chatpage.dart';
 import 'package:pazar_iraq/app/modules/view/pages/home_screen.dart';
 import 'package:pazar_iraq/app/modules/view/pages/profile_screen.dart';
 import 'package:pazar_iraq/app/modules/view/pages/signinpage.dart';
-import 'package:pazar_iraq/app/modules/view/widgets/categorywidget.dart';
-import 'package:pazar_iraq/app/modules/view/widgets/productwidget.dart';
 
 
 class HomePage extends StatefulWidget {

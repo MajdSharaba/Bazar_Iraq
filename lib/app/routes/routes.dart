@@ -17,7 +17,7 @@ class AppRoutes {
     GetPage(name: Routes.home , page: () => const HomePage()),
     // GetPage(name: Routes.productDetails , page: () => ProductDetailPage()),
     GetPage(name: Routes.signInPage, page: () => const SigninPage()),
-    GetPage(name: Routes.subCategory, page: () =>  const SubCategoryPage()),
+    GetPage(name: Routes.subCategory, page: () =>   SubCategoryPage()),
   ];
 
 }
