@@ -153,7 +153,7 @@ class _CreateProductPageState extends State<CreateProductPage> {
                       width: 10,
                     ),
                     Text(
-                      category!.nameEn!,
+                      category!.name!,
                       // style: fieldsHint,
                     ),
                   ],
