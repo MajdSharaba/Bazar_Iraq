@@ -31,9 +31,8 @@ class ProductDetail {
 class ProductDetailData {
   ProductDetailData({
     this.id,
-    this.nameEn,
-    this.nameAr,
-    this.nameKr,
+    this.name,
+
     this.price,
     this.userId,
     this.categoryId,
@@ -45,15 +44,13 @@ class ProductDetailData {
     this.attributes,
     this.images,
     this.comments,
-    this.desAr,
-    this.desEn,
-    this.desKr,
+    this.des,
+
   });
 
   int? id;
-  String? nameEn;
-  String? nameAr;
-  String? nameKr;
+  String? name;
+
   String? price;
   String? userId;
   String? categoryId;
@@ -62,21 +59,18 @@ class ProductDetailData {
   dynamic? createdAt;
   dynamic? updatedAt;
   String? isFeatured;
-  String? desEn;
-  String? desAr;
-  String? desKr;
+  String? des;
+
   List<Attribute>? attributes;
   List<ImageD>? images;
   List<Comment>? comments;
 
   factory ProductDetailData.fromJson(Map<String, dynamic> json) => ProductDetailData(
     id: json["id"],
-    nameEn: json["name_en"],
-    nameAr: json["name_ar"],
-    nameKr: json["name_kr"],
-    desEn : json["desc_en"],
-    desAr : json["desc_ar"],
-    desKr : json["desc_kr"],
+    name: json["name"],
+
+    des : json["desc"],
+
     price: json["price"],
     userId: json["user_id"],
     categoryId: json["category_id"],
@@ -92,9 +86,8 @@ class ProductDetailData {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name_en": nameEn,
-    "name_ar": nameAr,
-    "name_kr": nameKr,
+    "name": name,
+
     "price": price,
     "user_id": userId,
     "category_id": categoryId,
@@ -111,37 +104,27 @@ class ProductDetailData {
 
 class Attribute {
   Attribute({
-    this.nameEn,
-    this.nameAr,
-    this.nameKr,
-    this.valueEn,
-    this.valueAr,
-    this.valueKr,
+    this.name,
+    this.value,
+
   });
 
-  String? nameEn;
-  String? nameAr;
-  String? nameKr;
-  String? valueEn;
-  String? valueAr;
-  String? valueKr;
+  String? name;
+
+  String? value;
 
   factory Attribute.fromJson(Map<String, dynamic> json) => Attribute(
-    nameEn: json["name_en"],
-    nameAr: json["name_ar"],
-    nameKr: json["name_kr"],
-    valueEn: json["value_en"],
-    valueAr: json["value_ar"],
-    valueKr: json["value_kr"],
+    name: json["name"],
+
+    value: json["value"],
+
   );
 
   Map<String, dynamic> toJson() => {
-    "name_en": nameEn,
-    "name_ar": nameAr,
-    "name_kr": nameKr,
-    "value_en": valueEn,
-    "value_ar": valueAr,
-    "value_kr": valueKr,
+    "name": name,
+
+    "value": value,
+
   };
 }
 

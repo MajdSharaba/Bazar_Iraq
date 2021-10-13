@@ -8,7 +8,9 @@ import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/core/light_color.dart';
 import 'package:pazar_iraq/app/model/productdetail.dart';
+import 'package:pazar_iraq/app/modules/controller/chatmeesage_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/productdetail_controller.dart';
+import 'package:pazar_iraq/app/modules/view/pages/chatdetailpage.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/commint_widget/comments_list.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 
@@ -36,6 +38,8 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage>
     with TickerProviderStateMixin {
   static ProductDetailController _productDetailController = Get.find();
+  final ChatMessageController chatMessageController = Get.put(ChatMessageController());
+
 
   AnimationController? controller;
   Animation<double>? animation;
@@ -201,7 +205,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                      return Center(child: const CircularProgressIndicator());
                    } else {
                      return TitleText
-                    (text:_productDetailController.productDetailData!.nameEn, fontSize: 25);
+                    (text:_productDetailController.productDetailData!.name, fontSize: 25);
                    }}),
                     //productController.productData!.name
                     Column(
@@ -359,9 +363,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-               TitleText(text:attributee!.nameEn,fontSize: 20,),
+               TitleText(text:attributee!.name,fontSize: 20,),
                 SizedBox(width: 100,),
-                TitleText(text:attributee.valueEn,fontSize: 15,color: Colors.red,),
+                TitleText(text:attributee.value,fontSize: 15,color: Colors.red,),
                 SizedBox(height: 50,)
               ]);
 
@@ -403,7 +407,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           if (_productDetailController.isLoading.value) {
             return Center(child: const CircularProgressIndicator());
           } else {
-            return  Text(_productDetailController.productDetailData!.desEn!);
+            return  Text(_productDetailController.productDetailData!.des!);
           }})
 
       ],
@@ -414,6 +418,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        
         children: <Widget>[
 
       RatingBar.builder(
@@ -525,6 +530,19 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           ),
         ),
       ),
+        floatingActionButton: FloatingActionButton(
+          // isExtended: true,
+          child: Icon(Icons.chat),
+          backgroundColor: Color(0xfffbb448),
+          onPressed: () {
+    chatMessageController.getfetchChatMessage(sender_id:3,reciver_id:2 );
+    Navigator.push(context, MaterialPageRoute(builder: (context){
+    return ChatDetailPage(reciverName:_productDetailController.productDetailData!.name!,reciverId:_productDetailController.productDetailData!.userId ,);
+    },
+    ),
     );
+     }))
+    ;
+
   }
 }

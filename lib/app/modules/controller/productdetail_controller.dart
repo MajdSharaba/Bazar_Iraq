@@ -33,7 +33,7 @@ class ProductDetailController extends GetxController {
       var productDetail = await ProductProvider.fetchProductsDetails(id);
       if (productDetail != null) {
         productDetailData = productDetail.productDetailData;
-        print(productDetailData!.nameEn);
+        print(productDetailData!.name);
       }
     } finally {
      ///

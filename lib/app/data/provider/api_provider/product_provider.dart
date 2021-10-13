@@ -16,9 +16,8 @@ class ProductProvider {
     } else {
       //show error message
       return Product(productData: <ProductData> [ProductData( id:1,
-       nameEn:"problem",
-        nameAr:"problem",
-        nameKr:"problem",
+       name:"problem",
+
         price:"",
         userId:null,
         categoryId:null,
@@ -28,9 +27,34 @@ class ProductProvider {
         updatedAt:null,
         isFeatured:null,
         images:[ Imagee(originalUrl: "https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1")],
-        desAr:null,
-        desEn:null,
-        desKr:null,)]);
+        des:null,
+        )]);
+    }
+  }
+  static Future<Product> fetchProductsByCategoryId(page,category_id) async {
+
+    var response = await client.get(Uri.parse(
+        'http://184.168.97.161/public/api/products?category_id=12&page=$page&result_num=7'
+    ));
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return productFromJson(jsonString);
+    } else {
+      //show error message
+      return Product(productData: <ProductData> [ProductData( id:1,
+        name:"problem",
+
+        price:"",
+        userId:null,
+        categoryId:null,
+        productType:null,
+        storeId:null,
+        createdAt:null,
+        updatedAt:null,
+        isFeatured:null,
+        images:[ Imagee(originalUrl: "https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1")],
+        des:null,
+       )]);
     }
   }
   static Future<ProductDetail> fetchProductsDetails(var id) async {

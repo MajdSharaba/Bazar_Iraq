@@ -31,7 +31,7 @@ class CategoryWidget extends StatelessWidget {
                 //   width: width! * 0.05,
                 // ),
                 Text(
-                  categoryElement!=null?categoryElement!.nameEn!:"cars",
+                  categoryElement!=null?categoryElement!.name!:"cars",
                   style: const TextStyle(color: Colors.black, fontSize: 16,fontStyle: FontStyle.normal),
                 ),
                 const Spacer(),

@@ -4,6 +4,7 @@ import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/model/product.dart';
 import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
+import 'package:pazar_iraq/app/modules/controller/subcategory_controller.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/categorycard.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/productcard.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
@@ -12,7 +13,7 @@ import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 class SubCategoryPage extends StatelessWidget {
   final CategoryElement? categoryElemen;
    SubCategoryPage({Key? key,this.categoryElemen}) : super(key: key);
-  final ProductController productController = Get.find();
+  final SubCategoryController subCategoryController = Get.put(SubCategoryController());
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class SubCategoryPage extends StatelessWidget {
          leading:BackButton(),
          centerTitle: true,
          title:   TitleText(
-           text:categoryElemen!.nameEn,
+           text:categoryElemen!.name,
            fontSize: 30,
          ),
 
@@ -71,21 +72,29 @@ class SubCategoryPage extends StatelessWidget {
             ),
             categoryElemen!.children!.isEmpty?
     Obx(() {
-    if (productController.isLoading.value)
+    if (subCategoryController.isLoading.value)
     return Center(child: CircularProgressIndicator());
     else {
-            return GridView.builder(
+            return
+              GridView.builder(
               shrinkWrap: true,
-              itemCount: productController.productList!.length,
+              itemCount: subCategoryController.categoryproductList!.length,
               physics: const BouncingScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+
+                crossAxisCount: 1,
                 mainAxisSpacing: 10.0,
                 crossAxisSpacing: 10.0,
                 childAspectRatio: 0.8,
               ),
               itemBuilder: (context, index) {
-            ProductData productCard = productController.productList![index] ;
+
+                if(index == subCategoryController.categoryproductList.length-1&&
+                    subCategoryController.isMoreDataAvilable.value==true){
+                  subCategoryController.paginateTask();
+                  print("bnnnnnnnnnnnnn");
+                  return Center(child: CircularProgressIndicator());}
+            ProductData productCard = subCategoryController.categoryproductList![index] ;
 
                 return ProductCard(
                 product: productCard,

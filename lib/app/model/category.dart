@@ -28,9 +28,7 @@ class Category {
 class CategoryElement {
   CategoryElement({
     this.id,
-    this.nameEn,
-    this.nameAr,
-    this.nameKr,
+    this.name,
     this.parentId,
     this.imageUrl,
     this.createdAt,
@@ -41,9 +39,7 @@ class CategoryElement {
   });
 
   int? id;
-  String? nameEn;
-  String? nameAr;
-  String? nameKr;
+  String? name;
   dynamic? parentId;
   String? imageUrl;
   dynamic? createdAt;
@@ -54,9 +50,7 @@ class CategoryElement {
 
   factory CategoryElement.fromJson(Map<String, dynamic> json) => CategoryElement(
     id: json["id"],
-    nameEn: json["name_en"],
-    nameAr: json["name_ar"],
-    nameKr: json["name_kr"],
+    name: json["name"],
     parentId: json["parent_id"],
     imageUrl: json["image_url"],
     createdAt: json["created_at"],
@@ -68,9 +62,8 @@ class CategoryElement {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name_en": nameEn,
-    "name_ar": nameAr,
-    "name_kr": nameKr,
+    "name": name,
+
     "parent_id": parentId,
     "image_url": imageUrl,
     "created_at": createdAt,

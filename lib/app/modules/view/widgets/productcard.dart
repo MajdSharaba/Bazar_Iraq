@@ -60,7 +60,7 @@ class ProductCard extends StatelessWidget {
                   ),
                   // SizedBox(height: 5),
                   TitleText(
-                    text: product!.nameEn!,
+                    text: product!.name!,
                     fontSize: 10,
                   ),
                   // TitleText(

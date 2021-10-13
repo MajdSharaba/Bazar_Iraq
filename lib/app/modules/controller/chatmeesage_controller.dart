@@ -26,11 +26,11 @@ class ChatMessageController extends GetxController {
   }
 
 
-  void getfetchChatMessage( {int? chat_id, int? sender_id}) async {
+  void getfetchChatMessage( {int? sender_id, int? reciver_id}) async {
     try {
-      print (chat_id);
+      print (sender_id);
       isLoad(true);
-      var chatMessage = await MessageService.fetchChatMessage(chat_id,sender_id);
+      var chatMessage = await MessageService.fetchChatMessage(sender_id,reciver_id);
 
       if (chatMessage != null) {
 
@@ -53,7 +53,7 @@ class ChatMessageController extends GetxController {
         senderUserId: "2",
         recieverUserId: "1",
         messageText: messageController.text,
-        seen: "1",
+        seen: "0",
         datetime: DateTime(2021),
     ));
        MessageService.sendChatMessage(sender_id:sender,reciver_id:reciver,chatid_id:chatid,message:messageController.text

@@ -1,14 +1,18 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/model/category.dart';
+import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
+import 'package:pazar_iraq/app/modules/controller/subcategory_controller.dart';
 import 'package:pazar_iraq/app/modules/view/pages/subcategorypage.dart';
 
 class CategoryCard extends StatelessWidget {
   final CategoryElement? categoryElement;
 
   CategoryCard({Key? key,required this.categoryElement}) : super(key: key);
+
 
 
 
@@ -36,7 +40,7 @@ class CategoryCard extends StatelessWidget {
                   ),
                   Positioned(
                     height: 60,
-                    width: deviceWidth * .5 < 250 ? deviceWidth * .5 : 250,
+                    width: deviceWidth * .5 < 240 ? deviceWidth * .5 : 240,
                     left: 5,
                     //right: 0,
                     bottom: 0,
@@ -65,7 +69,7 @@ class CategoryCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                categoryElement!=null?categoryElement!.nameEn!:"no name",
+                                categoryElement!=null?categoryElement!.name!:"no name",
                                 style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -126,7 +130,14 @@ class CategoryCard extends StatelessWidget {
           // )
         ],
       ),
-      onTap: (){ Navigator.of(context).push(
+      onTap: (){
+        // if(categoryElement!.children!.isEmpty){
+        //   subCategoryController.fetchProductsByCategory(categoryElement!.id);
+        // }
+        final SubCategoryController subCategoryController = Get.put(SubCategoryController());
+
+        subCategoryController.fetchProductsByCategory(categoryElement!.id!);
+        Navigator.of(context).push(
           MaterialPageRoute(
               builder: (context) => SubCategoryPage(categoryElemen:categoryElement)));
       },

@@ -4,9 +4,9 @@ import 'package:pazar_iraq/app/model/chatmessage.dart';
 
 class MessageService{
 
-  static Future<ChatMessages> fetchChatMessage(int? chatId, int? senderId) async {
+  static Future<ChatMessages> fetchChatMessage(int?senderId , int? reciverId) async {
     var url = Uri.parse(
-        'http://184.168.97.161/public/api/chats/getChatMessages/$chatId/2');
+        'http://184.168.97.161/public/api/chats/getChatMessages/$senderId/$reciverId');
     var response = await http.get(url);
 
     if (response.statusCode == 200) {

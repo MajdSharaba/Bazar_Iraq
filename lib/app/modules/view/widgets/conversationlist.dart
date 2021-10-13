@@ -18,7 +18,7 @@ class _ConversationListState extends State<ConversationList> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        chatMessageController.getfetchChatMessage(chat_id:int.parse(widget.chatRoomData!.chatId!),sender_id:1);
+        chatMessageController.getfetchChatMessage(sender_id:2,reciver_id:int.parse("3"));
         Navigator.push(context, MaterialPageRoute(builder: (context){
           return ChatDetailPage(reciverName:widget.chatRoomData!.recieverUserName!,reciverId:widget.chatRoomData!.recieverUserId ,);
         }));

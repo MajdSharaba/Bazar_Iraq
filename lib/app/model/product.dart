@@ -32,9 +32,7 @@ class Product {
 class ProductData {
   ProductData({
     this.id,
-    this.nameEn,
-    this.nameAr,
-    this.nameKr,
+    this.name,
     this.price,
     this.userId,
     this.categoryId,
@@ -44,23 +42,19 @@ class ProductData {
     this.updatedAt,
     this.isFeatured,
     this.images,
-    this.desAr,
-    this.desEn,
-    this.desKr,
+    this.des,
+
   });
 
   int? id;
-  String? nameEn;
-  String? nameAr;
-  String? nameKr;
+  String? name;
   String? price;
   String? userId;
   String? categoryId;
   String? productType;
   String? storeId;
-  String? desEn;
-  String? desAr;
-  String? desKr;
+  String? des;
+
   dynamic? createdAt;
   dynamic? updatedAt;
   String? isFeatured;
@@ -68,12 +62,8 @@ class ProductData {
 
   factory ProductData.fromJson(Map<String, dynamic> json) => ProductData(
     id: json["id"],
-    nameEn: json["name_en"],
-    nameAr: json["name_ar"],
-    nameKr: json["name_kr"],
-    desEn : json["desc_en"],
-    desAr : json["desc_ar"],
-    desKr : json["desc_kr"],
+    name: json["name"],
+    des : json["desc"],
     price: json["price"],
     userId: json["user_id"],
     categoryId: json["category_id"],
@@ -87,9 +77,8 @@ class ProductData {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name_en": nameEn,
-    "name_ar": nameAr,
-    "name_kr": nameKr,
+    "name": name,
+
     "price": price,
     "user_id": userId,
     "category_id": categoryId,

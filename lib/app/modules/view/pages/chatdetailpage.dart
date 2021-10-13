@@ -72,19 +72,20 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
               padding: const EdgeInsets.only(top: 10,bottom: 100),
               itemBuilder: (context, index){
                 return Container(
-                  padding: const EdgeInsets.only(left: 14,right: 14,top: 10,bottom: 10),
-                  child: Align(
-                    alignment: (chatMessageController.chatMessageData[index].senderUserId == sender_id?Alignment.topLeft:Alignment.topRight),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: (chatMessageController.chatMessageData[index].senderUserId == sender_id?const Color(0xfffbb448):Colors.grey.shade200),
-                      ),
-                      padding: const EdgeInsets.all(16),
-                      child: Text(chatMessageController.chatMessageData[index].messageText!, style: const TextStyle(fontSize: 15),),
-                    ),
-                  ),
-                );
+                 padding: const EdgeInsets.only(left: 5,right: 14,top: 10,bottom: 10),
+                 child: Align(
+                   alignment: (chatMessageController.chatMessageData[index].senderUserId == "2"?Alignment.topLeft:Alignment.topRight),
+                   child: Container(
+                     decoration: BoxDecoration(
+                       borderRadius: BorderRadius.circular(20),
+                       color: (chatMessageController.chatMessageData[index].senderUserId == sender_id?const Color(0xfffbb448):Colors.grey.shade200),
+                     ),
+                     padding: const EdgeInsets.all(16),
+                     child: Text(chatMessageController.chatMessageData[index].messageText!, style: const TextStyle(fontSize: 15),),
+                   ),
+
+                 ),
+                  );
               },
             );
     }}),
