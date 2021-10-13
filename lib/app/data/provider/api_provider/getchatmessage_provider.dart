@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:pazar_iraq/app/model/chatmessage.dart';
 
@@ -19,11 +21,15 @@ class MessageService{
     }
 
   }
-  static void  sendChatMessage({chatid_id, reciver_id, sender_id,message}) async{
+  static Future<String>  sendChatMessage({chatid_id, reciver_id, sender_id,message}) async{
     var url = Uri.parse('http://184.168.97.161/public/api/chats/sendMessage');
     var response = await http.post(url, body: {'chat_id': chatid_id, 'sender_user_id': sender_id,'reciever_user_id':reciver_id,'text':message});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
+    var decodedJson=jsonDecode(response.body);
+    var data=decodedJson["data"]["chatID"];
+    print(data);
+    return data;
 
 
   }

@@ -78,7 +78,7 @@ class SubCategoryPage extends StatelessWidget {
             return
               GridView.builder(
               shrinkWrap: true,
-              itemCount: subCategoryController.categoryproductList!.length,
+              itemCount: subCategoryController.categoryproductList.length,
               physics: const BouncingScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
 
@@ -94,7 +94,7 @@ class SubCategoryPage extends StatelessWidget {
                   subCategoryController.paginateTask();
                   print("bnnnnnnnnnnnnn");
                   return Center(child: CircularProgressIndicator());}
-            ProductData productCard = subCategoryController.categoryproductList![index] ;
+            ProductData productCard = subCategoryController.categoryproductList[index] ;
 
                 return ProductCard(
                 product: productCard,

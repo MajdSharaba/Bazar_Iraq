@@ -78,7 +78,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                    child: Container(
                      decoration: BoxDecoration(
                        borderRadius: BorderRadius.circular(20),
-                       color: (chatMessageController.chatMessageData[index].senderUserId == sender_id?const Color(0xfffbb448):Colors.grey.shade200),
+                       color: (chatMessageController.chatMessageData[index].senderUserId == sender_id?const Color(0xFF7200CA):Colors.grey.shade200),
                      ),
                      padding: const EdgeInsets.all(16),
                      child: Text(chatMessageController.chatMessageData[index].messageText!, style: const TextStyle(fontSize: 15),),
@@ -135,12 +135,12 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     FloatingActionButton(
                       onPressed: (){
 
-                        chatMessageController.addMessage(chatid:chatMessageController.chatMessageData.first.chatId,reciver:widget.reciverId,sender:sender_id);
+                        chatMessageController.addMessage(reciver:widget.reciverId,sender:sender_id);
                         chatMessageController.messageController.clear();
 
                         },
                       child: const Icon(Icons.send,color: Colors.white,size: 18,),
-                       backgroundColor: const Color(0xfffbb448),
+                       backgroundColor: const Color(0xFF7200CA),
 
                       elevation: 0,
                     ),

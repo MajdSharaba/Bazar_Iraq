@@ -8,6 +8,7 @@ class ChatMessageController extends GetxController {
   RxList chatMessageData=[].obs;
    late TextEditingController messageController = TextEditingController();
    String message = '';
+   var chat_id="".obs;
 
 
 
@@ -22,6 +23,8 @@ class ChatMessageController extends GetxController {
   @override
   void dispose() {
     messageController.dispose();
+
+    chat_id.value="";
     super.dispose();
   }
 
@@ -42,10 +45,10 @@ class ChatMessageController extends GetxController {
       isLoad(false);
     }
   }
-  void addMessage({sender, reciver, chatid}){
+  void addMessage({sender, reciver}){
 
 
-
+    print("mahhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+chat_id.value);
     chatMessageData.add(new ChatMessageData(
 
         id: 3,
@@ -56,7 +59,7 @@ class ChatMessageController extends GetxController {
         seen: "0",
         datetime: DateTime(2021),
     ));
-       MessageService.sendChatMessage(sender_id:sender,reciver_id:reciver,chatid_id:chatid,message:messageController.text
-       );
+     MessageService.sendChatMessage(sender_id:sender,reciver_id:reciver,chatid_id:chat_id.value,message:messageController.text
+       ).then((value) => chat_id.value=value);
   }
 }

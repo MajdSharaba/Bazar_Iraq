@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedPage = 0;
-  final _pageOptions = [HomeScreen(),  ChatPage(),CreateProductPage(), HomeScreen(),ProfileScreen()];
+  final _pageOptions = [HomeScreen(),  HomeScreen(),CreateProductPage(), ChatPage(),ProfileScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

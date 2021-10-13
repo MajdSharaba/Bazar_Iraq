@@ -282,11 +282,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         return
         ListView.builder(
             shrinkWrap: true,
-            itemCount: _productDetailController.productDetailData!.attributes!.length,//
+            itemCount: _productDetailController.productDetailData!.atts!.length,//
             physics: const BouncingScrollPhysics(),
 // _productDetailController.productDetailData!.attributes!.length,
         itemBuilder: (context,index){
-        return _availableColor(attributee: _productDetailController.productDetailData!.attributes![index]);
+        return _availableAttribute(attributee: _productDetailController.productDetailData!.atts![index]);
 
 
         });
@@ -359,12 +359,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 ///// widget for color available
-  Widget _availableColor( {Attribute? attributee}) {
+  Widget _availableAttribute( {Att? attributee}) {
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                TitleText(text:attributee!.name,fontSize: 20,),
-                SizedBox(width: 100,),
+               Spacer(),
                 TitleText(text:attributee.value,fontSize: 15,color: Colors.red,),
                 SizedBox(height: 50,)
               ]);
@@ -407,7 +407,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           if (_productDetailController.isLoading.value) {
             return Center(child: const CircularProgressIndicator());
           } else {
-            return  Text(_productDetailController.productDetailData!.des!);
+            return  Text(_productDetailController.productDetailData!.desc!);
           }})
 
       ],
@@ -533,7 +533,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         floatingActionButton: FloatingActionButton(
           // isExtended: true,
           child: Icon(Icons.chat),
-          backgroundColor: Color(0xfffbb448),
+          backgroundColor: Color(0xFF7200CA),
+
           onPressed: () {
     chatMessageController.getfetchChatMessage(sender_id:3,reciver_id:2 );
     Navigator.push(context, MaterialPageRoute(builder: (context){

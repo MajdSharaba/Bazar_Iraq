@@ -15,7 +15,7 @@ class CategoryProveder{
     var response = await client.get(Uri.parse(
         'http://184.168.97.161/public/api/category/allcategory'),
       headers: {
-      HttpHeaders.acceptLanguageHeader: 'ar',
+      HttpHeaders.acceptLanguageHeader: 'en',
       },                    );
     if (response.statusCode == 200) {
       var jsonString = response.body;
