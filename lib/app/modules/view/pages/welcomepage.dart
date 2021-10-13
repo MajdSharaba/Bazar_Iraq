@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
+import 'package:pazar_iraq/app/modules/view/pages/homepage.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/borderedbutton.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -54,10 +56,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     blurRadius: 5,
                     spreadRadius: 2)
               ],
-              gradient: const LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xfffbb448), Color(0xffe46b10)])),
+              gradient: linearGradientColor),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +70,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 height: 20,
               ),
               BorderedButton(buttonText: "English", function: (){
-                print("dd");
+                Get.to(HomePage());
               }),
               const SizedBox(
                 height: 20,
