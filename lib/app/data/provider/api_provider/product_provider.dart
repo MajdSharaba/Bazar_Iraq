@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+import 'package:pazar_iraq/app/core/constants.dart';
+import 'package:pazar_iraq/app/model/attribute.dart';
 import 'package:pazar_iraq/app/model/product.dart';
 import 'package:pazar_iraq/app/model/productdetail.dart';
 
 class ProductProvider {
   static var client = http.Client();
-
+   var response;
 
   static Future<Product> fetchProducts() async {
     var response = await client.get(Uri.parse(
@@ -37,7 +41,7 @@ class ProductProvider {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
   }
-}
+
 fetchAttributesForCategory(int categoryId) async {
   List<DynamicAttribute> attributes=[];
   try {
