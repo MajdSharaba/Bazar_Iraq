@@ -19,16 +19,13 @@ class BezierContainer extends StatelessWidget {
             child: Container(
               height: deviceHeight*.5,
               width: deviceWidth,
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Color(0xfffbb448),Color(0xffe46b10)]
+              decoration: BoxDecoration(
+                  gradient: linearGradientColor
                   )
               ),
             ),
           ),
-        )
+
     );
   }
 }

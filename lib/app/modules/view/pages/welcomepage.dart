@@ -1,4 +1,9 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -44,50 +49,63 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body:SingleChildScrollView(
-        child:Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          height: deviceHeight,
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(5)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.grey.shade200,
-                    offset: const Offset(2, 4),
-                    blurRadius: 5,
-                    spreadRadius: 2)
-              ],
-              gradient: linearGradientColor),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _title(),
-              const SizedBox(
-                height: 80,
-              ),
+        child:Stack(
+          children: [
 
-              const SizedBox(
-                height: 20,
+            Image.asset("assets/header.png"),
+            /*
+            ClipPath(
+              clipper: DiagonalPathClipperOne(),
+              child: Container(
+                height: 150,
+                color: Color(0xFF9B55C8),
               ),
-              BorderedButton(buttonText: "English", function: (){
-                Get.to(HomePage());
-              }),
-              const SizedBox(
-                height: 20,
+            ),
+            ClipPath(
+              clipper: DiagonalPathClipperOne(),
+              child: Container(
+                height: 120,
+                color: Color(0xFF7200CA),
               ),
-              BorderedButton(buttonText: "عربي", function: (){
-                print("dd");
-              }),
-              const SizedBox(
-                height: 20,
-              ),
+            ),
+            */
 
-              BorderedButton(buttonText: "كورد", function: (){
-                print("dd");
-              })
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              height: deviceHeight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(
+                    height: 0,
+                  ),
+                  Image.asset("assets/logo.png"),
 
-            ],
-          ),
+                  BorderedButton(buttonText: "English", function: (){
+                    Get.to(HomePage());
+                  }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  BorderedButton(buttonText: "عربي", function: (){
+                    print("dd");
+                  }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  BorderedButton(buttonText: "كورد", function: (){
+                    print("dd");
+                  }),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Text("Powered By Yawar",style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),)
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

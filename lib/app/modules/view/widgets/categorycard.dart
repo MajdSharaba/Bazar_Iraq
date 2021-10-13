@@ -11,7 +11,7 @@ import 'package:pazar_iraq/app/modules/view/pages/subcategorypage.dart';
 class CategoryCard extends StatelessWidget {
   final CategoryElement? categoryElement;
 
-  CategoryCard({Key? key,required this.categoryElement}) : super(key: key);
+    CategoryCard({Key? key,required this.categoryElement}) : super(key: key);
 
 
 

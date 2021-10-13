@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: Colors.orange),
+        border: Border.all(color: Colors.indigo),
         boxShadow: [
           BoxShadow(
             color: Colors.white.withOpacity(0.8),

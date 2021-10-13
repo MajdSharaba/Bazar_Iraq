@@ -20,7 +20,9 @@ class _CreateProductPageState extends State<CreateProductPage> {
   final CreateProductController createProductController =
       Get.put(CreateProductController());
   CategoryElement? selectedCategory;
-  List? attributes;
+   List? attributesIds=[];
+   List? attributesValues=[];
+
 
   @override
   Widget build(BuildContext context) {
@@ -118,8 +120,9 @@ class _CreateProductPageState extends State<CreateProductPage> {
      padding: const EdgeInsets.symmetric(vertical:8.0,horizontal: 30),
       child: Container(
         decoration: BoxDecoration(
+          color: const Color(0xFFCCCCCC).withOpacity(0.05),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.orangeAccent, width: 1),
+          border: Border.all(color: const Color(0xFFCCCCCC), width: 1),
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<CategoryElement>(
@@ -171,8 +174,9 @@ class _CreateProductPageState extends State<CreateProductPage> {
       padding: const EdgeInsets.symmetric(vertical:8.0,horizontal: 30),
       child: Container(
         decoration: BoxDecoration(
+          color: Color(0xFFCCCCCC).withOpacity(0.05),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.orange, width: 1),
+          border: Border.all(color: const Color(0xFFCCCCCC), width: 1),
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<Option>(
@@ -193,8 +197,12 @@ class _CreateProductPageState extends State<CreateProductPage> {
             onChanged: (Option? value) {
               setState(() {
                 createProductController.variables[index] = value;
-                //advertisment.subCategory = value.id;
-                print(value!.id);
+                if(false){
+
+                }
+                else{
+
+                }
               });
             },
             items: createProductController.attributes[index].options!

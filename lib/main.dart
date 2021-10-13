@@ -22,8 +22,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
-   
-        primarySwatch: Colors.blue,
+
+        primarySwatch: Colors.grey,primaryColor: Colors.grey,
+       splashColor: Colors.teal,
+        disabledColor: Colors.teal,accentColor: Colors.teal,accentIconTheme: IconThemeData(color: Colors.teal),
+
       ),
 
       home: const WelcomePage(),

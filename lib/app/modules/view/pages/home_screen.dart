@@ -12,10 +12,7 @@ final List<String> imgList = [
 
 ];
 class HomeScreen extends StatelessWidget {
-
   CategoryController categoryController = Get.put(CategoryController());
-
-
   final List<Widget> imageSliders = imgList
       .map((item) => Container(
     margin: const EdgeInsets.all(10.0),

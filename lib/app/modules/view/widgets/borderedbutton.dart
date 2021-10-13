@@ -15,7 +15,7 @@ class BorderedButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 13),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          borderRadius: const BorderRadius.all(Radius.circular(5)),gradient: linearGradientColor,
           border: Border.all(color: Colors.white, width: 2),
         ),
         child:  Text(

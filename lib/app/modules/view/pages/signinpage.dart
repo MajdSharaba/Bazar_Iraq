@@ -93,7 +93,7 @@ class _SigninPageState extends State<SigninPage> {
             borderRadius: BorderRadius.circular(0.0),
           ),
           followingFieldDecoration: BoxDecoration(
-              border: Border.all(color: Colors.orange),
+              border: Border.all(color: Colors.indigo),
               borderRadius: BorderRadius.circular(10)),
           onChanged: (otp) {
             if (otp.length == 6) {
@@ -103,7 +103,7 @@ class _SigninPageState extends State<SigninPage> {
           },
           eachFieldWidth: 1,
           disabledDecoration: BoxDecoration(
-            border: Border.all(color: Colors.orange),
+            border: Border.all(color: Colors.indigo),
             borderRadius: BorderRadius.circular(10.0),
           ),
           withCursor: true,

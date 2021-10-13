@@ -8,9 +8,9 @@ double deviceHeight = Get.height;
 double deviceWidth = Get.width;
 
 LinearGradient linearGradientColor = const LinearGradient(
-    begin: Alignment.centerLeft,
-    end: Alignment.centerRight,
-    colors: [Color(0xfffbb448), Color(0xfff7892b)]);
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFF7200CA),Color(0xFF7200CA),Color(0xFF7200CA), Color(0xFFF75672)]);
 
 /////pading
 EdgeInsets padding =
