@@ -17,7 +17,7 @@ class CategoryProveder{
       return categoryFromJson(jsonString);
     } else {
       //show error message
-      return null!;
+      return new Category();
     }
   }
 }

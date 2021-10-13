@@ -7,8 +7,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/core/light_color.dart';
-import 'package:pazar_iraq/app/model/product.dart';
-import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
+import 'package:pazar_iraq/app/model/productdetail.dart';
 import 'package:pazar_iraq/app/modules/controller/productdetail_controller.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/commint_widget/comments_list.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
@@ -127,7 +126,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           );
         },
         animation: animation!,
-        child: Stack(
+        child:
+            Obx((){
+    if (_productDetailController.isLoading.value) {
+    return Center(child: const CircularProgressIndicator());
+    } else {
+        return Stack(
           alignment: Alignment.topCenter,
           children: <Widget>[
 
@@ -137,13 +141,22 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       enlargeCenterPage: true,
       autoPlay: false,
       ),
-      items: CarouselSliderDetails,
-      ),
+      items: _productDetailController.productDetailData!.images!.map((item) =>
+    Container(
+    child: ClipRRect(
+    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+    child:
+
+     Image.network(item.originalUrl!, fit: BoxFit.fill,)
+    ),
+    ))
+        .toList(),
+      )]);}})
 
             // Image.asset(widget.product!.image!)
-          ],
+
         ),
-      ),
+
     );
   }
 /////detailwidget
@@ -258,11 +271,37 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 const SizedBox(
                   height: 20,
                 ),
-                _availableColor(),
+        Obx(() {
+        if (_productDetailController.isLoading.value) {
+        return Center(child: const CircularProgressIndicator());
+        } else {
+        return
+        ListView.builder(
+            shrinkWrap: true,
+            itemCount: _productDetailController.productDetailData!.attributes!.length,//
+            physics: const BouncingScrollPhysics(),
+// _productDetailController.productDetailData!.attributes!.length,
+        itemBuilder: (context,index){
+        return _availableColor(attributee: _productDetailController.productDetailData!.attributes![index]);
+
+
+        });
+        }}),
 
                 const SizedBox(
                   height: 20,
                 ),
+        // Obx(() {
+        // if (_productDetailController.isLoading.value) {
+        // return Center(child: const CircularProgressIndicator());
+        // } else {
+        // return
+        // ListView.builder(
+        // itemCount: _productDetailController.productDetailData!.attributes!.length,
+        // itemBuilder: (context,index) {
+        //   return _availableColor(attributee:_productDetailController.productDetailData!.attributes![index]);
+        //
+        // });}}),
                 _description(),
                 CommentsList(),
                // _addcomment(),
@@ -316,39 +355,22 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 ///// widget for color available
-  Widget _availableColor() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const TitleText(
-          text: "Available Color",
-          fontSize: 14,
-        ),
-        const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            // _colorWidget(LightColor.yellowColor, isSelected: true),
-            // const SizedBox(
-            //   width: 30,
-            // ),
-            // _colorWidget(LightColor.lightBlue),
-            // const SizedBox(
-            //   width: 30,
-            // ),
-            // _colorWidget(LightColor.black),
-            // const SizedBox(
-            //   width: 30,
-            // ),
-            _colorWidget(LightColor.red),
-            const SizedBox(
-              width: 30,
-            ),
-            // _colorWidget(LightColor.skyBlue),
-          ],
-        )
-      ],
-    );
+  Widget _availableColor( {Attribute? attributee}) {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+               TitleText(text:attributee!.nameEn,fontSize: 20,),
+                SizedBox(width: 100,),
+                TitleText(text:attributee.valueEn,fontSize: 15,color: Colors.red,),
+                SizedBox(height: 50,)
+              ]);
+
+
+
+
+
+
+
   }
 
 //// widget for clor design
@@ -370,14 +392,20 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   Widget _description() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const <Widget>[
+      children:  <Widget>[
 
-        TitleText(
+        const TitleText(
           text: "Description",
-          fontSize: 14,
+          fontSize: 20,
         ),
-        SizedBox(height: 20),
-        Text( "2000 cc  automatic gearbox full option "),
+        const SizedBox(height: 20),
+           Obx(() {
+          if (_productDetailController.isLoading.value) {
+            return Center(child: const CircularProgressIndicator());
+          } else {
+            return  Text(_productDetailController.productDetailData!.desEn!);
+          }})
+
       ],
     );
   }
@@ -422,9 +450,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   ),
                   onSaved: (text) {
                     _productDetailController.comment.value=text!;
-                    //you can access nameController in its scope to get
-                    // the value of text entered as shown below
-                    //fullName = nameController.text;
 
                   },
                 ),
@@ -453,22 +478,19 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
   //// widget for CarouselSliderDetails
-  final List<Widget> CarouselSliderDetails = exampleImage
+  final List<Widget>
+  CarouselSliderDetails = exampleImage
       .map((item) =>
       Container(
-        margin: const EdgeInsets.all(5.0),
         child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-            child: Stack(
-              children: <Widget>[
-  Obx(() {
-  if (_productDetailController.isLoading.value) {
-  return Center(child: const CircularProgressIndicator());
-  } else {
+            child: Obx(() {
+            if (_productDetailController.isLoading.value) {
+            return Center(child: const CircularProgressIndicator());
+            } else {
 
-                return Image.network(_productDetailController.productDetailData!.images!.first.originalUrl!, fit: BoxFit.cover, width: 1000.0);}
-  })],
-            )),
+                          return Image.network(_productDetailController.productDetailData!.images!.first.originalUrl!, fit: BoxFit.fill,);}
+            })),
       ))
       .toList();
 

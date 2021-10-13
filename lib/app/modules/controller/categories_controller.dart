@@ -1,6 +1,6 @@
 
 import 'package:get/get.dart';
-import 'package:pazar_iraq/app/data/provider/api_provider/category_proveder.dart';
+import 'package:pazar_iraq/app/data/provider/api_provider/category_provider.dart';
 import 'package:pazar_iraq/app/model/category.dart';
 
 class CategoryController extends GetxController {

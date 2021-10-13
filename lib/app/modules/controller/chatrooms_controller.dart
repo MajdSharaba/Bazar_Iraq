@@ -1,5 +1,5 @@
 import 'package:get/state_manager.dart';
-import 'package:pazar_iraq/app/data/provider/service/chatservice.dart';
+import 'package:pazar_iraq/app/data/provider/api_provider/getchat_provider.dart';
 import 'package:pazar_iraq/app/model/chatroom.dart';
 
 class ChatRoomsController extends GetxController {

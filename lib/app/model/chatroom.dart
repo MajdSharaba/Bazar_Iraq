@@ -25,16 +25,20 @@ class ChatRoomsData {
     this.chatId,
     this.recieverUserId,
     this.recieverUserName,
+    this.lastMessage,
   });
 
-  int? chatId;
-  int? recieverUserId;
+  String? chatId;
+  String? recieverUserId;
   String? recieverUserName;
+  String?lastMessage;
 
   factory ChatRoomsData.fromJson(Map<String, dynamic> json) => ChatRoomsData(
     chatId: json["chat_id"],
     recieverUserId: json["reciever_user_id"],
     recieverUserName: json["reciever_user_name"],
+     lastMessage: json["latest_message"]
+
   );
 
   Map<String, dynamic> toJson() => {

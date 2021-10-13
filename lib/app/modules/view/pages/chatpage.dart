@@ -2,64 +2,44 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:pazar_iraq/app/model/chatUsersModel.dart';
+import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/modules/controller/chatrooms_controller.dart';
-import 'package:pazar_iraq/app/modules/view/widgets/conversationList.dart';
+import 'package:pazar_iraq/app/modules/view/widgets/beziercontainer.dart';
+import 'package:pazar_iraq/app/modules/view/widgets/conversationlist.dart';
 
 class ChatPage extends StatelessWidget {
 
   final ChatRoomsController chatController =   Get.put(ChatRoomsController());
-  //
-  List<ChatUsers> chatUsers = [
-    ChatUsers(name: "Jane Russel",
-        messageText: "Awesome Setup",
-        imageURL: "https://th.bing.com/th/id/OIP.e1KNYwnuhNwNj7_-98yTRwHaF7?pid=ImgDet&rs=1",
-        time: "Now"),
-    ChatUsers(name: "Glady's Murphy",
-        messageText: "That's Great",
-        imageURL: "https://th.bing.com/th/id/OIP.e1KNYwnuhNwNj7_-98yTRwHaF7?pid=ImgDet&rs=1",
-        time: "Yesterday"),
-    ChatUsers(name: "Jorge Henry",
-        messageText: "Hey where are you?",
-        imageURL: "https://th.bing.com/th/id/OIP.e1KNYwnuhNwNj7_-98yTRwHaF7?pid=ImgDet&rs=1",
-        time: "31 Mar"),
-    ChatUsers(name: "Philip Fox",
-        messageText: "Busy! Call me in 20 mins",
-        imageURL: "https://th.bing.com/th/id/OIP.e1KNYwnuhNwNj7_-98yTRwHaF7?pid=ImgDet&rs=1",
-        time: "28 Mar"),
-    ChatUsers(name: "Debra Hawkins",
-        messageText: "Thankyou, It's awesome",
-        imageURL: "https://th.bing.com/th/id/OIP.e1KNYwnuhNwNj7_-98yTRwHaF7?pid=ImgDet&rs=1",
-        time: "23 Mar"),
-    ChatUsers(name: "Jacob Pena",
-        messageText: "will update you in evening",
-        imageURL: "https://th.bing.com/th/id/OIP.e1KNYwnuhNwNj7_-98yTRwHaF7?pid=ImgDet&rs=1",
-        time: "17 Mar"),
-    ChatUsers(name: "Andrey Jones",
-        messageText: "Can you please share the file?",
-        imageURL: "https://th.bing.com/th/id/OIP.e1KNYwnuhNwNj7_-98yTRwHaF7?pid=ImgDet&rs=1",
-        time: "24 Feb"),
-    ChatUsers(name: "John Wick",
-        messageText: "How are you?",
-        imageURL: "https://th.bing.com/th/id/OIP.e1KNYwnuhNwNj7_-98yTRwHaF7?pid=ImgDet&rs=1",
-        time: "18 Feb"),
-  ];
+
+
+  ChatPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+      body:Container(
+        height: deviceHeight,
+        child: Stack(
+        children: <Widget>[
+        Positioned(
+        top: -deviceHeight * .35,
+        right: -deviceWidth * .4,
+        child: const BezierContainer()),
+    Container(
+    width: deviceWidth,
+    padding: const EdgeInsets.symmetric(horizontal: 20),
+    child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SafeArea(
               child: Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 10),
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
+                  children: const <Widget>[
                     Text("Conversations", style: TextStyle(
                         fontSize: 32, fontWeight: FontWeight.bold),),
                     // Container(
@@ -106,29 +86,21 @@ class ChatPage extends StatelessWidget {
             // shade100
             Obx(() {
 
-              if (chatController.isLoading.value)
-                return Center(child: CircularProgressIndicator());
-              else
-              return ListView.builder(
+              if (chatController.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                return ListView.builder(
                 itemCount: chatController.chatRoomsData!.length,
                 shrinkWrap: true,
-                padding: EdgeInsets.only(top: 16),
-                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(top: 16),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return ConversationList(
-                    name:chatController.chatRoomsData![index].recieverUserName! ,
-
-                   //  Container(
-                   // child: Text(chatController.chatRooms![1].recieverUserName!)
-                      messageText: chatUsers[index].messageText,
-                    imageUrl: chatUsers[index].imageURL,
-                     time: chatUsers[index].time,
-                     isMessageRead: (index == 0 || index == 3) ? true : false,
-
-
+                    chatRoomData:chatController.chatRoomsData![index]
                   );
                 },
               );
+              }
             }),
             //
             //   Obx(() {
@@ -143,7 +115,7 @@ class ChatPage extends StatelessWidget {
 
         ),
       ),
-    );
+    )])));
   }
 
 

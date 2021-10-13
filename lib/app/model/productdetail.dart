@@ -45,6 +45,9 @@ class ProductDetailData {
     this.attributes,
     this.images,
     this.comments,
+    this.desAr,
+    this.desEn,
+    this.desKr,
   });
 
   int? id;
@@ -59,8 +62,11 @@ class ProductDetailData {
   dynamic? createdAt;
   dynamic? updatedAt;
   String? isFeatured;
+  String? desEn;
+  String? desAr;
+  String? desKr;
   List<Attribute>? attributes;
-  List<Image>? images;
+  List<ImageD>? images;
   List<Comment>? comments;
 
   factory ProductDetailData.fromJson(Map<String, dynamic> json) => ProductDetailData(
@@ -68,6 +74,9 @@ class ProductDetailData {
     nameEn: json["name_en"],
     nameAr: json["name_ar"],
     nameKr: json["name_kr"],
+    desEn : json["desc_en"],
+    desAr : json["desc_ar"],
+    desKr : json["desc_kr"],
     price: json["price"],
     userId: json["user_id"],
     categoryId: json["category_id"],
@@ -76,8 +85,8 @@ class ProductDetailData {
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
     isFeatured: json["is_featured"],
-    attributes: List<Attribute>.from(json["attributes"].map((x) => Attribute.fromJson(x))),
-    images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
+    attributes: List<Attribute>.from(json["atts"].map((x) => Attribute.fromJson(x))),
+    images: List<ImageD>.from(json["images"].map((x) => ImageD.fromJson(x))),
     comments: List<Comment>.from(json["comments"].map((x) => Comment.fromJson(x))),
   );
 
@@ -102,73 +111,37 @@ class ProductDetailData {
 
 class Attribute {
   Attribute({
-    this.id,
     this.nameEn,
     this.nameAr,
     this.nameKr,
-    this.typeId,
-    this.min,
-    this.max,
-    this.step,
-    this.order,
-    this.icon,
-    this.packageId,
-    this.createdAt,
-    this.updatedAt,
-    this.pivot,
-    this.attributeOptions,
+    this.valueEn,
+    this.valueAr,
+    this.valueKr,
   });
 
-  int? id;
   String? nameEn;
   String? nameAr;
   String? nameKr;
-  String? typeId;
-  dynamic? min;
-  dynamic? max;
-  dynamic? step;
-  dynamic? order;
-  String? icon;
-  String? packageId;
-  dynamic? createdAt;
-  dynamic? updatedAt;
-  Pivot? pivot;
-  List<AttributeOption>? attributeOptions;
+  String? valueEn;
+  String? valueAr;
+  String? valueKr;
 
   factory Attribute.fromJson(Map<String, dynamic> json) => Attribute(
-    id: json["id"],
     nameEn: json["name_en"],
     nameAr: json["name_ar"],
     nameKr: json["name_kr"],
-    typeId: json["type_id"],
-    min: json["min"],
-    max: json["max"],
-    step: json["step"],
-    order: json["order"],
-    icon: json["icon"],
-    packageId: json["package_id"],
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
-    pivot: Pivot.fromJson(json["pivot"]),
-    attributeOptions: List<AttributeOption>.from(json["attribute_options"].map((x) => AttributeOption.fromJson(x))),
+    valueEn: json["value_en"],
+    valueAr: json["value_ar"],
+    valueKr: json["value_kr"],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
     "name_en": nameEn,
     "name_ar": nameAr,
     "name_kr": nameKr,
-    "type_id": typeId,
-    "min": min,
-    "max": max,
-    "step": step,
-    "order": order,
-    "icon": icon,
-    "package_id": packageId,
-    "created_at": createdAt,
-    "updated_at": updatedAt,
-    "pivot": pivot!.toJson(),
-    "attribute_options": List<dynamic>.from(attributeOptions!.map((x) => x.toJson())),
+    "value_en": valueEn,
+    "value_ar": valueAr,
+    "value_kr": valueKr,
   };
 }
 
@@ -280,8 +253,8 @@ class Comment {
   };
 }
 
-class Image {
-  Image({
+class ImageD {
+  ImageD({
     this.id,
     this.targetType,
     this.targetId,
@@ -303,7 +276,7 @@ class Image {
   dynamic? createdAt;
   dynamic? updatedAt;
 
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
+  factory ImageD.fromJson(Map<String, dynamic> json) => ImageD(
     id: json["id"],
     targetType: json["target_type"],
     targetId: json["target_id"],
