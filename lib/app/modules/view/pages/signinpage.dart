@@ -67,7 +67,9 @@ class _SigninPageState extends State<SigninPage> {
         verificationId: _verificationId,
         smsCode: otpController.text,
       );
+
       final User? user = (await _auth.signInWithCredential(credential)).user;
+      
       print(user!.phoneNumber);
     } catch (e) {
       print(e.toString());
@@ -84,15 +86,15 @@ class _SigninPageState extends State<SigninPage> {
           eachFieldHeight: 55.0,
           selectedFieldDecoration: BoxDecoration(
             gradient: linearGradientColor,
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(0.0),
           ),
           submittedFieldDecoration: BoxDecoration(
             gradient: linearGradientColor,
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(0.0),
           ),
           followingFieldDecoration: BoxDecoration(
               border: Border.all(color: Colors.orange),
-              borderRadius: BorderRadius.circular(360)),
+              borderRadius: BorderRadius.circular(10)),
           onChanged: (otp) {
             if (otp.length == 6) {
               authController.signIn(0, otp);
@@ -102,7 +104,7 @@ class _SigninPageState extends State<SigninPage> {
           eachFieldWidth: 1,
           disabledDecoration: BoxDecoration(
             border: Border.all(color: Colors.orange),
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           withCursor: true,
           fieldsCount: 6,

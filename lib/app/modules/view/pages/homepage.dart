@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/core/data.dart';
 import 'package:pazar_iraq/app/modules/view/pages/chatPage.dart';
+import 'package:pazar_iraq/app/modules/view/pages/create_product_page.dart';
 import 'package:pazar_iraq/app/modules/view/pages/home_screen.dart';
 import 'package:pazar_iraq/app/modules/view/pages/profile_screen.dart';
-import 'package:pazar_iraq/app/modules/view/pages/signinpage.dart';
-import 'package:pazar_iraq/app/modules/view/widgets/categorywidget.dart';
-import 'package:pazar_iraq/app/modules/view/widgets/productwidget.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -23,7 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedPage = 0;
-  final _pageOptions = [HomeScreen(),  ChatPage(),SigninPage(), HomeScreen(),ProfileScreen()];
+  final _pageOptions = [HomeScreen(),  ChatPage(),CreateProductPage(), HomeScreen(),ProfileScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

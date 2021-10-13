@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pazar_iraq/app/modules/view/pages/profile_screen.dart';
+import 'package:pazar_iraq/app/modules/view/pages/welcomepage.dart';
 import 'app/modules/view/pages/homepage.dart';
 import 'app/modules/view/pages/signinpage.dart';
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 
-      home: const HomePage(),
+      home: const WelcomePage(),
       debugShowCheckedModeBanner: false,
       // home: const SigninPage(title: "welcome"),
     );
