@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:pazar_iraq/app/data/provider/api_provider/product_provider.dart';
 import 'package:pazar_iraq/app/model/attribute.dart';
@@ -14,6 +15,8 @@ class CreateProductController extends GetxController {
   final attributes = <DynamicAttribute>[].obs;
   get getAttributes => attributes.value;
   set setAttributes(value) => attributes.value = value;
+  final ImagePicker _picker = ImagePicker();
+  List<XFile>? images=[];
 
   @override
   void onInit() {
@@ -26,6 +29,10 @@ class CreateProductController extends GetxController {
       var var$i;
       variables.add(var$i);
     }
+  }
+
+  getImages() async {
+    images=await _picker.pickMultiImage(maxHeight: 300,maxWidth: 300,imageQuality: 30);
   }
 
   Future<void> fetchAttributes() async {

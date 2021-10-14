@@ -9,6 +9,8 @@ import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/model/option.dart';
 import 'package:pazar_iraq/app/modules/controller/categories_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/create_product_controller.dart';
+import 'package:pazar_iraq/app/modules/view/widgets/buttonwidget.dart';
+import 'package:pazar_iraq/app/modules/view/widgets/fieldwidget.dart';
 
 class CreateProductPage extends StatefulWidget {
   @override
@@ -19,10 +21,12 @@ class _CreateProductPageState extends State<CreateProductPage> {
   final CategoryController categoryController = Get.find();
   final CreateProductController createProductController =
       Get.put(CreateProductController());
+  TextEditingController nameController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   CategoryElement? selectedCategory;
-   List? attributesIds=[];
-   List? attributesValues=[];
-
+  List attributesIds = [];
+  List attributesValues = [];
 
   @override
   Widget build(BuildContext context) {
@@ -34,31 +38,76 @@ class _CreateProductPageState extends State<CreateProductPage> {
             child: Container(
               height: 150,
               decoration: BoxDecoration(gradient: linearGradientColor),
-              child: const Center(child: Text("Create Product",style: TextStyle(fontSize: 20,color: Colors.white),)),
+              child: const Center(
+                  child: Text(
+                "Create Product",
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              )),
             ),
           ),
-          testDropDwon(),
+          categoryDropDwon(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: FieldWidget(
+              title: "name",
+              controller: nameController,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10),
+            child: FieldWidget(
+              title: "price",
+              controller: priceController,
+              keyboardType: TextInputType.number,
+            ),
+          ),
           GetBuilder<CreateProductController>(
               init: createProductController,
               builder: (controller) {
                 return controller.attributes.isEmpty
                     ? Container()
-                    :   ListView.builder(
-                    physics:
-                    const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                    shrinkWrap: true,
-                    itemCount: controller.attributes.value.length,
-                    itemBuilder: (context, index) {
-                      return controller.attributes.value[index].typeId ==
-                          "1"
-                          ? testDropDwon1(index)
-                          : Container();
-                    });
-              }) ,
+                    : ListView.builder(
+                        physics:
+                            const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                        shrinkWrap: true,
+                        itemCount: controller.attributes.value.length,
+                        itemBuilder: (context, index) {
+                          return controller.attributes.value[index].typeId ==
+                                  "1"
+                              ? testDropDwon1(index)
+                              : Container();
+                        });
+              }),
+           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10),
+            child: FieldWidget(
+              title: "description",
+              keyboardType: TextInputType.multiline,
+              maxLines: 5,
+              controller: descriptionController,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10),
+            child: ButtonWidget(
+                title: 'Pick Images',
+                function: () {
+                  createProductController.getImages();
+                }),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10),
+            child: ButtonWidget(
+                title: 'Add Your Advertisment',
+                function: () {
+                  createProductController.getImages();
+                }),
+          )
         ],
       ),
     );
   }
+
 /*
   Widget dropdownButtonCategory(List<CategoryElement> options) {
     return DropdownButton<CategoryElement>(
@@ -115,9 +164,9 @@ class _CreateProductPageState extends State<CreateProductPage> {
   }
 
   */
-  Widget testDropDwon() {
+  Widget categoryDropDwon() {
     return Padding(
-     padding: const EdgeInsets.symmetric(vertical:8.0,horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
       child: Container(
         decoration: BoxDecoration(
           color: const Color(0xFFCCCCCC).withOpacity(0.05),
@@ -171,7 +220,7 @@ class _CreateProductPageState extends State<CreateProductPage> {
 
   Widget testDropDwon1(int index) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical:8.0,horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
       child: Container(
         decoration: BoxDecoration(
           color: Color(0xFFCCCCCC).withOpacity(0.05),
@@ -182,8 +231,8 @@ class _CreateProductPageState extends State<CreateProductPage> {
           child: DropdownButton<Option>(
             isExpanded: true,
             borderRadius: BorderRadius.circular(20),
-            hint:  Padding(
-              padding: const EdgeInsets.only(left:8.0),
+            hint: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
               child: Text(
                 createProductController.attributes[index].nameEn!,
               ),
@@ -195,13 +244,19 @@ class _CreateProductPageState extends State<CreateProductPage> {
             elevation: 8,
             value: createProductController.variables[index],
             onChanged: (Option? value) {
+              int indexOfDuplicatedOption;
               setState(() {
                 createProductController.variables[index] = value;
-                if(false){
-
+                indexOfDuplicatedOption=attributesIds.indexOf(value!.attributeId);
+                if(indexOfDuplicatedOption==-1){
+                  attributesIds.add(value.attributeId);
+                  attributesValues.add(value.id);
                 }
                 else{
-
+                  attributesIds.removeAt(indexOfDuplicatedOption);
+                  attributesValues.removeAt(indexOfDuplicatedOption);
+                  attributesIds.add(value.attributeId);
+                  attributesValues.add(value.id);
                 }
               });
             },

@@ -24,7 +24,7 @@ class _SigninPageState extends State<SigninPage> {
   TextEditingController otpController = TextEditingController();
   late String _verificationId;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final AuthController authController = Get.put(AuthController());
+  final AuthController authController = Get.find();
   Widget _divider() {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -221,6 +221,7 @@ class _SigninPageState extends State<SigninPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(height: deviceHeight / 30),
+                    Image.asset("assets/logo.png",height: 200,),
                     Stack(
                       children: [
                         FieldWidget(
@@ -248,6 +249,7 @@ class _SigninPageState extends State<SigninPage> {
                         )
                       ],
                     ),
+
                     SizedBox(height: deviceHeight / 30),
                     ButtonWidget(
                         title: "Signin with Phone Number", function: _dialog),

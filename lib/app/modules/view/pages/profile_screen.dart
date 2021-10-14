@@ -10,7 +10,7 @@ import 'package:pazar_iraq/app/modules/view/widgets/beziercontainer.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
-  final AuthController authController = Get.put(AuthController());
+  final AuthController authController = Get.find();
   Widget infoCard(String title, String information) {
     return Container(
       decoration: BoxDecoration(
@@ -49,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-              top: -deviceHeight * .01,
+              top: -deviceHeight * .1,
               right: -deviceWidth * .2,
               child: const BezierContainer()),
           Padding(
@@ -60,17 +60,17 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 ClipOval(
                     child: Image.network(
-                  authController.user.photoUrl ?? "",
+                  "https://lh3.googleusercontent.com/ogw/ADea4I4dpy-7bbhj9xQVU3b0aBvMwOirdlYoEbj5QNaMRA=s192-c-mo",
                   fit: BoxFit.cover,
                   width: 120.0,
                   height: 120.0,
                 )),
-                infoCard("Name : ", authController.user.name ?? ""),
+                infoCard("Name : ", authController.user.value.name ?? ""),
                 infoCard(
-                    "Phone :", authController.user.phone ?? "+9647515408773"),
-                infoCard("Email : ", authController.user.email ?? ""),
+                    "Phone :", authController.user.value.phone ?? "+9647515408773"),
+                infoCard("Email : ", authController.user.value.email ?? ""),
                 infoCard(
-                    "Address : ", authController.user.address ?? "Erbil, Iraq"),
+                    "Address : ", authController.user.value.address ?? "Erbil, Iraq"),
               ],
             ),
           )

@@ -25,16 +25,8 @@ class Auth {
         userCredential = await signInWithFacebook();
         break;
     }
-    String token = await _auth.currentUser!.getIdToken();
-    var response = await http.post(
-      Uri.parse(baseUrl + "firebaselogin"),
-      body: jsonEncode({"firebasetoken": token}),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-      },
-    );
-
-    return UserModel.fromJson(jsonDecode(response.body));
+    var user=await getCurrentUser();
+    return user ;
   }
 
   Future<UserCredential> signInWithGoogle() async {
@@ -84,5 +76,18 @@ class Auth {
       smsCode: otp,
     );
     return await _auth.signInWithCredential(credential);
+  }
+
+  getCurrentUser() async {
+    String? token = await _auth.currentUser!.getIdToken();
+    var response = await http.post(
+      Uri.parse(baseUrl + "firebaselogin"),
+      body: jsonEncode({"firebasetoken": token}),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+    );
+
+    return UserModel.fromJson(jsonDecode(response.body));
   }
 }

@@ -12,7 +12,6 @@
             <string>fb604321047405383</string>
 			<string>com.googleusercontent.apps.21715591397-ggteb6p5pun1mkrls9pbpkn2e56ara6q</string>
 		</array>
-
 	</dict>
 </array>
 	<key>CFBundleDevelopmentRegion</key>
@@ -58,6 +57,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>User will get images for products</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

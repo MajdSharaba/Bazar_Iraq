@@ -82,7 +82,7 @@ class SubCategoryPage extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
 
-                crossAxisCount: 1,
+                crossAxisCount: 3,
                 mainAxisSpacing: 10.0,
                 crossAxisSpacing: 10.0,
                 childAspectRatio: 0.8,
