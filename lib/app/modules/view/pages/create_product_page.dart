@@ -109,6 +109,7 @@ class _CreateProductPageState extends State<CreateProductPage> {
                 function: () async {
                  await createProductController.createProduct(
                       nameController.text,
+                      selectedCategory!.id.toString(),
                       priceController.text,
                       attributesIds,
                       attributesValues,

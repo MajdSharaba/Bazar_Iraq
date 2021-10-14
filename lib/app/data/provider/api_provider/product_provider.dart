@@ -136,6 +136,7 @@ class ProductProvider {
 
   createProduct(
       String name,
+      String categoryId,
       String price,
       List attributeId,
       List attributeValue,
