@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:meta/meta.dart';
 import 'package:pazar_iraq/app/data/provider/api_provider/product_provider.dart';
 import 'package:pazar_iraq/app/model/attribute.dart';
 
@@ -16,7 +15,7 @@ class CreateProductController extends GetxController {
   get getAttributes => attributes.value;
   set setAttributes(value) => attributes.value = value;
   final ImagePicker _picker = ImagePicker();
-  List<XFile>? images=[];
+
 
   @override
   void onInit() {
@@ -31,17 +30,17 @@ class CreateProductController extends GetxController {
     }
   }
 
-  getImages() async {
-    images=await _picker.pickMultiImage(maxHeight: 300,maxWidth: 300,imageQuality: 30);
-  }
+ Future<List<XFile>?> getImages() async {
+    return await _picker.pickMultiImage(maxHeight: 300,maxWidth: 300,imageQuality: 30);
 
+  }
   Future<void> fetchAttributes() async {
     isLoading.value=true;
     attributes.clear();
     variables.clear();
     try {
       attributes.value =
-          await ProductProvider().fetchAttributesForCategory(categoryId.value);
+      await ProductProvider().fetchAttributesForCategory(categoryId.value);
       print(attributes.length);
       generateVariables();
       update();
@@ -50,4 +49,24 @@ class CreateProductController extends GetxController {
     }
 
   }
+  createProduct( String name,
+      String price,
+      List attributeId,
+      List attributeValue,
+      String key,
+      String value,
+      String user_id,
+      List<XFile> images,
+      String desc) async {
+    isLoading(true);
+    update();
+    try {
+      await ProductProvider().createProduct(name, price, attributeId, attributeValue, key, value, user_id, images,desc);
+      update();
+    } finally{
+      isLoading.value=false;
+    }
+  }
+
+
 }

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/model/attribute.dart';
 import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/model/option.dart';
+import 'package:pazar_iraq/app/modules/controller/auth_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/categories_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/create_product_controller.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/buttonwidget.dart';
@@ -21,12 +23,14 @@ class _CreateProductPageState extends State<CreateProductPage> {
   final CategoryController categoryController = Get.find();
   final CreateProductController createProductController =
       Get.put(CreateProductController());
+  final AuthController authController = Get.find();
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   CategoryElement? selectedCategory;
   List attributesIds = [];
   List attributesValues = [];
+  List<XFile>? images=[];
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +82,7 @@ class _CreateProductPageState extends State<CreateProductPage> {
                               : Container();
                         });
               }),
-           Padding(
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10),
             child: FieldWidget(
               title: "description",
@@ -91,16 +95,28 @@ class _CreateProductPageState extends State<CreateProductPage> {
             padding: const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10),
             child: ButtonWidget(
                 title: 'Pick Images',
-                function: () {
-                  createProductController.getImages();
+                function: () async {
+                images=await  createProductController.getImages();
+                setState(() {
+
+                });
                 }),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10),
             child: ButtonWidget(
                 title: 'Add Your Advertisment',
-                function: () {
-                  createProductController.getImages();
+                function: () async {
+                 await createProductController.createProduct(
+                      nameController.text,
+                      priceController.text,
+                      attributesIds,
+                      attributesValues,
+                      "attribute_id",
+                      "attribute_value",
+                      authController.user.value.id.toString(),
+                      images!,
+                      descriptionController.text);
                 }),
           )
         ],
@@ -189,8 +205,6 @@ class _CreateProductPageState extends State<CreateProductPage> {
             onChanged: (CategoryElement? value) {
               setState(() {
                 selectedCategory = value;
-                //advertisment.subCategory = value.id;
-                print(selectedCategory!.id);
                 createProductController.categoryId.value = value!.id!;
                 createProductController.fetchAttributes();
               });
@@ -247,12 +261,12 @@ class _CreateProductPageState extends State<CreateProductPage> {
               int indexOfDuplicatedOption;
               setState(() {
                 createProductController.variables[index] = value;
-                indexOfDuplicatedOption=attributesIds.indexOf(value!.attributeId);
-                if(indexOfDuplicatedOption==-1){
+                indexOfDuplicatedOption =
+                    attributesIds.indexOf(value!.attributeId);
+                if (indexOfDuplicatedOption == -1) {
                   attributesIds.add(value.attributeId);
                   attributesValues.add(value.id);
-                }
-                else{
+                } else {
                   attributesIds.removeAt(indexOfDuplicatedOption);
                   attributesValues.removeAt(indexOfDuplicatedOption);
                   attributesIds.add(value.attributeId);

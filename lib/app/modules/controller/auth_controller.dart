@@ -10,7 +10,7 @@ class AuthController extends GetxController {
 
   signIn(int signInTypeId,String otp) async {
   user.value=await Auth().signIn(signInTypeId, otp);
-  Get.offAll(HomeScreen());
+  Get.off(HomeScreen());
   }
 
   phoneVerification(String phoneNumber) async {
