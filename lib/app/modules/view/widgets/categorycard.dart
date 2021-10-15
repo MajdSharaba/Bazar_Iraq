@@ -5,12 +5,12 @@ import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
-import 'package:pazar_iraq/app/modules/controller/subcategory_controller.dart';
+import 'package:pazar_iraq/app/modules/controller/productpage_controller.dart';
+import 'package:pazar_iraq/app/modules/view/pages/productpage.dart';
 import 'package:pazar_iraq/app/modules/view/pages/subcategorypage.dart';
 
 class CategoryCard extends StatelessWidget {
   final CategoryElement? categoryElement;
-
     CategoryCard({Key? key,required this.categoryElement}) : super(key: key);
 
 
@@ -42,7 +42,6 @@ class CategoryCard extends StatelessWidget {
                     height: 60,
                     width: deviceWidth * .5 < 240 ? deviceWidth * .5 : 240,
                     left: 5,
-                    //right: 0,
                     bottom: 0,
                     child: Container(
                       decoration: const BoxDecoration(
@@ -131,16 +130,27 @@ class CategoryCard extends StatelessWidget {
         ],
       ),
       onTap: (){
-        // if(categoryElement!.children!.isEmpty){
-        //   subCategoryController.fetchProductsByCategory(categoryElement!.id);
-        // }
-        final SubCategoryController subCategoryController = Get.put(SubCategoryController());
+        // final ProductPageController productpageController = Get.put(ProductPageController(categoryId:1.obs));
+        if(categoryElement!.children!.isEmpty){
+          // productpageController.fetchProductsByCategory(categoryElement!.id!);
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => ProductPage(categoryElemen:categoryElement)));
+        }
+        else{
+    Navigator.of(context).push(
+    MaterialPageRoute(
+    builder: (context) => SubCategoryPage(categoryElemen:categoryElement)));
+    }
 
-        subCategoryController.fetchProductsByCategory(categoryElement!.id!);
-        Navigator.of(context).push(
-          MaterialPageRoute(
-              builder: (context) => SubCategoryPage(categoryElemen:categoryElement)));
-      },
+        }
+
+
+        // subCategoryController.fetchProductsByCategory(categoryElement!.id!);
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //       builder: (context) => SubCategoryPage(categoryElemen:categoryElement)));
+
     );
   }
 }

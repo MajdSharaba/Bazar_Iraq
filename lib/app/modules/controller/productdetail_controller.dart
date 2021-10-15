@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:pazar_iraq/app/data/provider/api_provider/product_provider.dart';
 import 'package:pazar_iraq/app/model/product.dart';
@@ -10,8 +11,9 @@ class ProductDetailController extends GetxController {
   late TextEditingController commentController = TextEditingController();
 
   ProductDetailData? productDetailData;
-   var rating = 0.0;
+   var rating = 2.0;
   var comment=''.obs;
+  var commentVisabilte=false.obs;
 
 
   @override
@@ -29,6 +31,7 @@ class ProductDetailController extends GetxController {
 
   void fetchProductsDetail(var id) async {
     try {
+      print(id.toString()+"2222333333");
       isLoading(true);
       var productDetail = await ProductProvider.fetchProductsDetails(id);
       if (productDetail != null) {
@@ -40,9 +43,21 @@ class ProductDetailController extends GetxController {
       isLoading(false);
     }
   }
-  void addcomment(){
-    print(rating);
-    ///ProductProvider.addComment(productDetailData!.id,comment.value , rating.value);
-  }
+  String? validateComment(String commentvalidate ){
+    if(commentvalidate.length<1){
+      return "please Enter comment";
+    }
+    else{
+      return null;
+    }
 
+  }
+  void addcomment() {
+    if (commentController.text.isNotEmpty) {
+      productDetailData!.comments!.add(new Comment(id:productDetailData!.id!,comment:commentController.text,rating: rating.toString(),userId:  productDetailData!.userId   ));
+      ProductProvider.addComment(
+          productDetailData!.id!.toString(), commentController.text,
+          rating.toStringAsFixed(2), productDetailData!.userId!.toString());
+    }
+  }
 }

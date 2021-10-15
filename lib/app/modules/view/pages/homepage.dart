@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
       HomeScreen(),
       HomeScreen(),
       authController.user.value.accessToken == null ? const SigninPage() : CreateProductPage(),
-      authController.user.value.accessToken == null ? const SigninPage() : ChatPage(),
+      authController.user.value.accessToken == null ?  ChatPage() : ChatPage(),
       authController.user.value.accessToken == null ? const SigninPage() : ProfileScreen()
     ];
     return Scaffold(
