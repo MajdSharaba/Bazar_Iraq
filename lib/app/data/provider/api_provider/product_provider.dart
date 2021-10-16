@@ -48,8 +48,9 @@ class ProductProvider {
   }
 
   static Future<Product> fetchProductsByCategoryId(page, category_id) async {
+    print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"+category_id.toString());
     var response = await client.get(Uri.parse(
-        'http://184.168.97.161/public/api/products?category_id=12&page=$page&result_num=7'));
+        'http://184.168.97.161/public/api/products?category_id=$category_id&page=$page&result_num=7'));
     if (response.statusCode == 200) {
       var jsonString = response.body;
       return productFromJson(jsonString);
@@ -92,11 +93,9 @@ class ProductProvider {
     }
   }
 
-  static Future<void> addComment(var id, comment, rating) async {
-    var url = Uri.parse(
-        'http://192.168.1.12:8080/bazar-iraq/public/api/product/add_comment');
-    var response = await http.post(url,
-        body: {'product_id': id, 'comment': comment, 'rating': rating});
+  static Future<void> addComment( id,comment, rating,  userId) async {
+    var url = Uri.parse('http://184.168.97.161/public/api/product/add_comment');
+    var response = await http.post(url, body: {'product_id': id, 'comment': comment,'rating': rating,'user_id':userId});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
   }

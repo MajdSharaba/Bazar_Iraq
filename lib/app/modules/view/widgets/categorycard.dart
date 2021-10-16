@@ -7,7 +7,6 @@ import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/modules/controller/categories_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/subcategory_controller.dart';
-import 'package:pazar_iraq/app/modules/view/pages/create_product_page_v2.dart';
 import 'package:pazar_iraq/app/modules/view/pages/subcategorypage.dart';
 
 class CategoryCard extends StatelessWidget {

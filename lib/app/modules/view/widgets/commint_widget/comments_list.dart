@@ -82,7 +82,7 @@ class _SingleComment extends StatelessWidget {
     const Text("name", style: TextStyle(fontSize: 16),),
     const SizedBox(height: 6,),
       RatingBarIndicator(
-            rating: 2.75,
+            rating: double.parse(comment!.rating!),
             itemBuilder: (context, index) => const Icon(
               Icons.star,
               color: Colors.amber,

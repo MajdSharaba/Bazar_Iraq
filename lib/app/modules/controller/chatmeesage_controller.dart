@@ -12,6 +12,7 @@ class ChatMessageController extends GetxController {
 
 
 
+
   @override
   void onInit() {
 
@@ -49,7 +50,7 @@ class ChatMessageController extends GetxController {
 
 
     print("mahhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+chat_id.value);
-    chatMessageData.add(new ChatMessageData(
+    chatMessageData.insert(0,ChatMessageData(
 
         id: 3,
         chatId: "1",
