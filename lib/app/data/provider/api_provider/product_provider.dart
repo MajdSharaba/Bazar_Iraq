@@ -1,13 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:async';
+import 'package:async/async.dart';
 
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/model/attribute.dart';
+import 'package:pazar_iraq/app/model/jsonList.dart';
 import 'package:pazar_iraq/app/model/product.dart';
 import 'package:pazar_iraq/app/model/productdetail.dart';
-import 'package:pazar_iraq/app/modules/controller/create_product_controller.dart';
 
 class ProductProvider {
   static var client = http.Client();
@@ -123,15 +125,15 @@ class ProductProvider {
 
   convertListstoJson(
       List attributeId, List attributeValue, String key, String value) {
-    List<dynamic>? attributeIdsValues = [];
+    List<JsonList>? attributeIdsValues=[] ;
+    var list=[];
     for (int i = 0; i < attributeId.length; i++) {
-      var attribueIdElement=attributeId[i];
-      var attributeValuElement=attributeValue[i];
-      var json={"$key: $attribueIdElement", "$value: $attributeValuElement"};
-      attributeIdsValues
-          .add(json);
+      attributeIdsValues.add(JsonList(attributeId: attributeId[i], attributeValue: attributeValue[i]));
     }
-    return attributeIdsValues;
+    for (int i = 0; i < attributeIdsValues.length; i++) {
+      list.add(jsonEncode(attributeIdsValues[i].toJson()));
+    }
+    return list;
   }
 
   createProduct(
@@ -143,24 +145,51 @@ class ProductProvider {
       String key,
       String value,
       String user_id,
-          List<XFile> images,
+      List<XFile> images,
       String desc) async {
-    final CreateProductController createProductController = Get.find();
-    List attributes =
-        convertListstoJson(attributeId, attributeValue, key, value);
+
+    var attributes =
+       convertListstoJson(attributeId, attributeValue, key, value);
     try {
-      response = await http.post(Uri.parse(baseUrl + "products"), body: {
-        "name": name,
-        "category_id": createProductController.categoryId.value,
-        "price": price,
-        "images[]": images,
-        "attributes": attributes,
-        "user_id": user_id.toString(),
-        "desc":desc
-      });
+      var uri = Uri.parse(baseUrl + "products");
+
+// create multipart request
+      var request =  http.MultipartRequest("POST", uri);
+      Map<String, String> headers = {
+        "Accept": "application/json",
+      };
+
+//add headers
+      request.headers.addAll(headers);
+      for (var file in images) {
+        String fileName = file.path.split("/").last;
+        var stream =  http.ByteStream(DelegatingStream.typed(file.openRead()));
+        // get file length
+        var length = await file.length(); //imageFile is your image file
+        // multipart that takes file
+        var multipartFileSign =  http.MultipartFile('images[]', stream, length,
+            filename: fileName);
+        request.files.add(multipartFileSign);
+      }
+
+//adding params
+      request.fields['name'] = name;
+      request.fields['category_id'] = categoryId;
+      request.fields['price'] = price;
+      request.fields['user_id'] = user_id;
+      request.fields['desc'] = desc;
+      request.fields['attributes'] = attributes.toString();
+
+
+      var responseStream = await request.send();
+      var response = await responseStream.stream.bytesToString();
+
+
       print(response.toString());
+
+
     } catch (ex) {
-      print("dddd"+ex.toString());
+      print("dddd" + ex.toString());
     }
   }
 }

@@ -6,7 +6,8 @@ import 'package:pazar_iraq/app/model/category.dart';
 class CategoryController extends GetxController {
   var isLoading = true.obs;
   List<CategoryElement>? categoryelement;
-
+  var parentCategoryId=-1.obs;
+  var childCategoryId=-1.obs;
   @override
   void onInit() {
     fetchCategory();

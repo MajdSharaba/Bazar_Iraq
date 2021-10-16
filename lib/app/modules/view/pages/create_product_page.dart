@@ -5,7 +5,6 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
-import 'package:pazar_iraq/app/model/attribute.dart';
 import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/model/option.dart';
 import 'package:pazar_iraq/app/modules/controller/auth_controller.dart';
@@ -102,6 +101,9 @@ class _CreateProductPageState extends State<CreateProductPage> {
                 });
                 }),
           ),
+
+
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10),
             child: ButtonWidget(

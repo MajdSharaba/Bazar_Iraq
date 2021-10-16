@@ -15,8 +15,6 @@ class CreateProductController extends GetxController {
   get getAttributes => attributes.value;
   set setAttributes(value) => attributes.value = value;
   final ImagePicker _picker = ImagePicker();
-
-
   @override
   void onInit() {
     fetchAttributes();

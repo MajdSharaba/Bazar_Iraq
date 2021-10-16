@@ -1,3 +1,4 @@
+import 'package:comment_box/main.dart';
 import 'package:get/get.dart';
 import 'package:pazar_iraq/app/data/provider/api_provider/auth_provider.dart';
 import 'package:pazar_iraq/app/model/user.dart';
@@ -10,7 +11,7 @@ class AuthController extends GetxController {
 
   signIn(int signInTypeId,String otp) async {
   user.value=await Auth().signIn(signInTypeId, otp);
-  Get.off(HomeScreen());
+  //Get.off(MyApp());
   }
 
   phoneVerification(String phoneNumber) async {

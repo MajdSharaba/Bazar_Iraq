@@ -6,6 +6,7 @@ import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/modules/controller/auth_controller.dart';
 import 'package:pazar_iraq/app/modules/view/pages/chatpage.dart';
 import 'package:pazar_iraq/app/modules/view/pages/create_product_page.dart';
+import 'package:pazar_iraq/app/modules/view/pages/create_product_page_v2.dart';
 import 'package:pazar_iraq/app/modules/view/pages/home_screen.dart';
 import 'package:pazar_iraq/app/modules/view/pages/profile_screen.dart';
 import 'package:pazar_iraq/app/modules/view/pages/signinpage.dart';
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     final _pageOptions = [
       HomeScreen(),
       HomeScreen(),
-      authController.user.value.accessToken == null ? const SigninPage() : CreateProductPage(),
+      authController.user.value.accessToken == null ? const SigninPage() : CreateProductPageV2(),
       authController.user.value.accessToken == null ? const SigninPage() : ChatPage(),
       authController.user.value.accessToken == null ? const SigninPage() : ProfileScreen()
     ];
