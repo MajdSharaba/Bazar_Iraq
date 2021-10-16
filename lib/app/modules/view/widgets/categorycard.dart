@@ -6,13 +6,15 @@ import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/modules/controller/categories_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
-import 'package:pazar_iraq/app/modules/controller/subcategory_controller.dart';
+import 'package:pazar_iraq/app/modules/controller/productpage_controller.dart';
+import 'package:pazar_iraq/app/modules/view/pages/create_product_page_v2.dart';
+import 'package:pazar_iraq/app/modules/view/pages/productpage.dart';
 import 'package:pazar_iraq/app/modules/view/pages/subcategorypage.dart';
 
 class CategoryCard extends StatelessWidget {
   final CategoryElement? categoryElement;
-
-    CategoryCard({Key? key,required this.categoryElement}) : super(key: key);
+  final int? parentId;
+    CategoryCard({Key? key,required this.categoryElement, this.parentId,}) : super(key: key);
 
 
 
@@ -43,7 +45,6 @@ class CategoryCard extends StatelessWidget {
                     height: 60,
                     width: deviceWidth * .5 < 240 ? deviceWidth * .5 : 240,
                     left: 5,
-                    //right: 0,
                     bottom: 0,
                     child: Container(
                       decoration: const BoxDecoration(
@@ -86,22 +87,7 @@ class CategoryCard extends StatelessWidget {
                             ],
                           ),
                         ),
-                        // Container(
-                        //   padding:
-                        //   const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        //   decoration: const BoxDecoration(
-                        //       shape: BoxShape.rectangle,
-                        //       color: Colors.white,
-                        //       borderRadius:
-                        //       BorderRadius.all(Radius.circular(10))),
-                        //   child: Text(
-                        //     categoryElement.discount! ,
-                        //     style: const TextStyle(
-                        //         fontSize: 14,
-                        //         fontWeight: FontWeight.w400,
-                        //         color: Colors.black),
-                        //   ),
-                        // )
+
                       ],
                     ),
                     left: 10,
@@ -110,37 +96,34 @@ class CategoryCard extends StatelessWidget {
                   )
                 ],
               )),
-          // Row(
-          //   mainAxisSize: MainAxisSize.max,
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: <Widget>[
-          //     Text("\$ " + '${(category.newprice)}',
-          //         style: const TextStyle(
-          //             color: Colors.black,
-          //             fontWeight: FontWeight.bold,
-          //             fontStyle: FontStyle.italic)),
-          //     SizedBox(
-          //       width: deviceWidth * 0.08,
-          //     ),
-          //     Text("\$ " + '${(category.oldprice)}',
-          //         style: const TextStyle(
-          //             color: Colors.black87,
-          //             fontWeight: FontWeight.w400,
-          //             fontStyle: FontStyle.italic)),
-          //   ],
-          // )
+
         ],
       ),
       onTap: (){
+        // final ProductPageController productpageController = Get.put(ProductPageController(categoryId:1.obs));
+        if(categoryElement!.children!.isEmpty){
+          // productpageController.fetchProductsByCategory(categoryElement!.id!);
+          // Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //         builder: (context) => ProductPage(categoryElemen:categoryElement,parentId:parentId)));
+          Get.to(ProductPage(categoryElemen:categoryElement,parentId:parentId));
+        }
+        else{
+    Navigator.of(context).push(
+    MaterialPageRoute(
+    builder: (context) => SubCategoryPage(categoryElemen:categoryElement)));
+    }
+
+
         // if(categoryElement!.children!.isEmpty){
         //   subCategoryController.fetchProductsByCategory(categoryElement!.id);
         // }
-        final SubCategoryController subCategoryController = Get.put(SubCategoryController());
-
-        subCategoryController.fetchProductsByCategory(categoryElement!.id!);
-        Navigator.of(context).push(
-          MaterialPageRoute(
-              builder: (context) => SubCategoryPage(categoryElemen:categoryElement)));
+      //   final ProductPageController productPageController = Get.put(ProductPageController(categoryId: categoryId, parentid: parentid));
+      //
+      //   subCategoryController.fetchProductsByCategory(categoryElement!.id!);
+      //   Navigator.of(context).push(
+      //     MaterialPageRoute(
+      //         builder: (context) => SubCategoryPage(categoryElemen:categoryElement)));
       },
     );
   }

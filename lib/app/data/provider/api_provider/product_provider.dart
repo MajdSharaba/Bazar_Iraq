@@ -47,10 +47,11 @@ class ProductProvider {
     }
   }
 
-  static Future<Product> fetchProductsByCategoryId(page, category_id) async {
-    print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"+category_id.toString());
+  static Future<Product> fetchProductsByCategoryId(page, category_id,parent_id) async {
+    print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"+category_id.toString()+parent_id.toString()
+    );
     var response = await client.get(Uri.parse(
-        'http://184.168.97.161/public/api/products?category_id=$category_id&page=$page&result_num=7'));
+        'http://184.168.97.161/public/api/products?child_id=$category_id&parent_id=$parent_id&page=$page&result_num=7'));
     if (response.statusCode == 200) {
       var jsonString = response.body;
       return productFromJson(jsonString);

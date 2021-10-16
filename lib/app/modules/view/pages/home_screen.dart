@@ -70,6 +70,7 @@ class HomeScreen extends StatelessWidget {
             items: imageSliders,
           ),
         ),
+        //ProductWidget(),
         ProductWidget(),
 
         Obx(() {

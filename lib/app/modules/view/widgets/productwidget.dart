@@ -1,75 +1,50 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/productcard.dart';
+
 
 class ProductWidget extends StatelessWidget {
   ProductWidget({Key? key}) : super(key: key);
   final ProductController productController = Get.put(ProductController());
 
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const <Widget>[
-                // SizedBox(
-                //   width: width! * 0.05,
-                // ),
-                Text(
-                  "Latest products",
-                  style: TextStyle(color:Colors.black, fontSize: 14),
-                ),
-                Spacer(),
-                Text("VIEW ALL",
-                  style: TextStyle(color: Colors.black, fontSize: 14),
-                )
-              ],
-            ),
-          ),
+    return Container(
+        padding: EdgeInsets.only(top: 20, left: 20),
+        height: 330,
+        child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text('Last Product', style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
+                  Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: Text('View all ', style: TextStyle(color: Colors.black, fontSize: 14),),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10,),
+              Obx(() {
+                if (productController.isLoading.value)
+                  return Center(child: CircularProgressIndicator());
+                else {
+                  return Expanded(
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: productController.productList!.length,
+                          itemBuilder: (context, index) {
+                            return
+                              ProductCard (product :productController.productList![index]);
+                          }
+                      )
+                  );}})
+            ]
+        )
+    );
 
-          Obx(() {
-            if (productController.isLoading.value)
-              return Center(child: CircularProgressIndicator());
-            else {
-              return Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                width: deviceWidth,
-                height: deviceHeight * .25,
-                child: GridView(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      childAspectRatio: 4 / 3,
-                      mainAxisSpacing: 30,
-                      crossAxisSpacing: 20),
-                  padding: const EdgeInsets.only(left: 20),
-                  scrollDirection: Axis.horizontal,
-                  children: productController.productList!=null?productController.productList!
-                      .map(
-                        (product) =>
-                        ProductCard(
-                          product: product,
-
-                        ),
-                  )
-                      .toList():productController.productList!
-                      .map(
-                        (product) =>
-                        ProductCard(
-                          product: product,
-
-                        ),
-                  ).toList()
-                ),
-              );
-            }
-          })]);
   }
 }

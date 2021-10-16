@@ -31,8 +31,8 @@ class CategoryWidget extends StatelessWidget {
                 //   width: width! * 0.05,
                 // ),
                 Text(
-                  categoryElement!=null?categoryElement!.name!:"cars",
-                  style: const TextStyle(color: Colors.black, fontSize: 16,fontStyle: FontStyle.normal),
+                  categoryElement!=null?categoryElement!.name!:"Cars",
+                  style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const Spacer(),
                  TextButton(onPressed: (){
@@ -64,7 +64,8 @@ class CategoryWidget extends StatelessWidget {
                  itemCount:categoryElement!=null?categoryElement!.children!.length:3,
                 padding: const EdgeInsets.all(0.0),
                   scrollDirection: (Axis.horizontal),
-                   itemBuilder: (context, index) => CategoryCard( categoryElement: categoryElement!=null?categoryElement!.children![index]:null),
+                   itemBuilder: (context, index) => CategoryCard( categoryElement: categoryElement!=null?categoryElement!.children![index]:null,
+                   parentId:categoryElement!=null?categoryElement!.id!:null),
               )
 
 

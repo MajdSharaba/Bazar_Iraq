@@ -21,7 +21,7 @@ class _ConversationListState extends State<ConversationList> {
         chatMessageController.chat_id.value="";
         chatMessageController.getfetchChatMessage(sender_id:2,reciver_id:int.parse(widget.chatRoomData!.recieverUserId!));
         Navigator.push(context, MaterialPageRoute(builder: (context){
-          return ChatDetailPage(reciverName:widget.chatRoomData!.recieverUserName!,reciverId:widget.chatRoomData!.recieverUserId ,);
+          return ChatDetailPage(reciverName:widget.chatRoomData!.recieverUserName==null?"USER":widget.chatRoomData!.recieverUserName!,reciverId:widget.chatRoomData!.recieverUserId ,);
         }));
       },
       child: Container(
@@ -42,7 +42,7 @@ class _ConversationListState extends State<ConversationList> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(widget.chatRoomData!.recieverUserName!, style: TextStyle(fontSize: 16),),
+                          Text(widget.chatRoomData!.recieverUserName==null?"USER":widget.chatRoomData!.recieverUserName!, style: const TextStyle(fontSize: 16),),
                           SizedBox(height: 6,),
                           Text(widget.chatRoomData!.lastMessage!,style: TextStyle(fontSize: 13,color: Colors.grey.shade600, fontWeight: FontWeight.normal),),
                         ],

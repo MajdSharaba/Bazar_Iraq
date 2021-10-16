@@ -40,7 +40,7 @@ class SubCategoryPage extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           children: [
             Container(
-              height: deviceHeight / 3 + 50,
+              height: deviceHeight / 3 ,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -54,7 +54,7 @@ class SubCategoryPage extends StatelessWidget {
                           image:  DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                                categoryElemen!.imageUrl!, scale: 1.0
+                                categoryElemen!.imageUrl!
                             ),
                           ),
                           boxShadow: [
@@ -69,46 +69,8 @@ class SubCategoryPage extends StatelessWidget {
                 ],
               ),
             ),
-    //         categoryElemen!.children!.isEmpty?
-    // Obx(() {
-    // if (subCategoryController.isLoading.value)
-    // return Center(child: CircularProgressIndicator());
-    // else {
-    //         return
-    //           GridView.builder(
-    //           shrinkWrap: true,
-    //           itemCount: subCategoryController.categoryproductList.length,
-    //           physics: const BouncingScrollPhysics(),
-    //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-    //
-    //             crossAxisCount: 3,
-    //             mainAxisSpacing: 10.0,
-    //             crossAxisSpacing: 10.0,
-    //             childAspectRatio: 0.8,
-    //           ),
-    //           itemBuilder: (context, index) {
-    //
-    //             if(index == subCategoryController.categoryproductList.length-1&&
-    //                 subCategoryController.isMoreDataAvilable.value==true){
-    //               subCategoryController.paginateTask();
-    //               print("bnnnnnnnnnnnnn");
-    //               return Center(child: CircularProgressIndicator());}
-    //         ProductData productCard = subCategoryController.categoryproductList[index] ;
-    //
-    //             return ProductCard(
-    //             product: productCard,
-    //               // onSelected: (model) {
-    //               //   setState(() {
-    //               //     AppData.productList.forEach((item) {
-    //               //       item.isSelected = false;
-    //               //     });
-    //               //     model.isSelected = true;
-    //               //   });
-    //               // },
-    //             );
-    //           },
-    //         );}})
-    //         :
+
+            SizedBox(height:20),
             GridView.builder(
               shrinkWrap: true,
               itemCount: categoryElemen!.children!.length,
@@ -124,14 +86,8 @@ class SubCategoryPage extends StatelessWidget {
 
                 return CategoryCard(
                   categoryElement: subCategory,
-                  // onSelected: (model) {
-                  //   setState(() {
-                  //     AppData.productList.forEach((item) {
-                  //       item.isSelected = false;
-                  //     });
-                  //     model.isSelected = true;
-                  //   });
-                  // },
+                  parentId:categoryElemen!.id,
+
                 );
               },
             ),

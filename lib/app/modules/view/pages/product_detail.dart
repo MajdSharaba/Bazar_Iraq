@@ -18,13 +18,13 @@ import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 
 
 ///image for CarouselSlider
-final List<String> exampleImage = [
-  'assets/shoe_tilt_2.png',
-  'assets/shoe_tilt_2.png',
-  'assets/shoe_tilt_2.png',
-  'assets/shoe_tilt_2.png',
-  'assets/shoe_tilt_2.png'
-];
+// final List<String> exampleImage = [
+//   'assets/shoe_tilt_2.png',
+//   'assets/shoe_tilt_2.png',
+//   'assets/shoe_tilt_2.png',
+//   'assets/shoe_tilt_2.png',
+//   'assets/shoe_tilt_2.png'
+// ];
 
 
 class ProductDetailPage extends StatefulWidget {
@@ -166,7 +166,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 /////detailwidget
   Widget _detailWidget() {
     return DraggableScrollableSheet(
-      maxChildSize: .8,
+     /// maxChildSize: .8,
       initialChildSize: .53,
       minChildSize: .1,
       builder: (context, scrollController) {
@@ -199,11 +199,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 const SizedBox(height: 10),
                 Container(
                   height: 100,
-                  decoration:  BoxDecoration(
+                  decoration:  const BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
-
                     color: Colors.white ),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(8.0,20,8.0,8.0),
@@ -212,6 +211,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
+
                     Obx(() {
                        if (_productDetailController.isLoading.value) {
                          return Center(child: const CircularProgressIndicator());
@@ -219,6 +219,23 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                          return TitleText
                         (text:_productDetailController.productDetailData!.name, fontSize: 25);
                        }}),
+                        Visibility(
+                          visible:false,
+                          child: Row(
+                              children: const [
+                                Icon(Icons.alarm,size:15),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: TitleText(
+                                    text: "2021-10-09 09:30:16",
+                                    fontSize: 15,
+                                    color: Color(0xFFF75672) ,
+
+                                  ),
+                                ),
+                              ]
+                          ),
+                        ),
                         //productController.productData!.name
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -530,21 +547,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
   //// widget for CarouselSliderDetails
-  final List<Widget>
-  CarouselSliderDetails = exampleImage
-      .map((item) =>
-      Container(
-        child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-            child: Obx(() {
-            if (_productDetailController.isLoading.value) {
-            return Center(child: const CircularProgressIndicator());
-            } else {
 
-                          return Image.network(_productDetailController.productDetailData!.images!.first.originalUrl!, fit: BoxFit.fill,);}
-            })),
-      ))
-      .toList();
 
   @override
   Widget build(BuildContext context) {

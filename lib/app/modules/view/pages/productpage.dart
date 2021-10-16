@@ -16,9 +16,8 @@ import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 class ProductPage extends StatelessWidget {
 
   final CategoryElement? categoryElemen;
-
-  ProductPage({Key? key, this.categoryElemen}) : super(key: key);
-  final ProductPageController productpageController = Get.put(ProductPageController(categoryId:12.obs));
+  final int? parentId;
+  ProductPage({Key? key, this.categoryElemen, this.parentId}) : super(key: key);
 
 
 
@@ -27,6 +26,8 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProductPageController productpageController = Get.put(ProductPageController(categoryId:categoryElemen!.id!.obs,parentid:parentId!.obs));
+
     // var conntroller;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -57,10 +58,10 @@ class ProductPage extends StatelessWidget {
            //// physics: const BouncingScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
 
-              childAspectRatio: 100 / 150,
+              childAspectRatio: 100 / 120,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
-              crossAxisCount: 3,
+              crossAxisCount: 2,
             ),
 
             // itemBuilder: (context, index) {
@@ -74,7 +75,7 @@ class ProductPage extends StatelessWidget {
                 itemBuilder: (context, item, index) =>
                 ///ProductData productCard = productPageController.categoryproductList[index] ;
                 // Text(item.name!)
-               ProductCard(
+                ProductCard(
                 product: item,
                 // onSelected: (model) {
                 //   setState(() {
