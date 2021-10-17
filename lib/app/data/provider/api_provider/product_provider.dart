@@ -101,11 +101,14 @@ class ProductProvider {
     print('Response body: ${response.body}');
   }
 
-  fetchAttributesForCategory(int categoryId) async {
+  fetchAttributesForCategory(int categoryChildId, int categoryParentId) async {
     List<DynamicAttribute> attributes = [];
     try {
-      response = await http.get(
-        Uri.parse(baseUrl + "category/getattribute/$categoryId"),
+      response = await http.post(
+        Uri.parse(baseUrl + "category/getattribute"),body: {
+          "child_id" : categoryChildId.toString(),
+           "category_id" : categoryParentId.toString()
+      }
       );
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);

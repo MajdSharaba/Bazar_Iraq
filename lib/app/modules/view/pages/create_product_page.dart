@@ -48,7 +48,7 @@ class _CreateProductPageState extends State<CreateProductPage> {
               )),
             ),
           ),
-          categoryDropDwon(),
+        //  categoryDropDwon(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: FieldWidget(
@@ -183,6 +183,8 @@ class _CreateProductPageState extends State<CreateProductPage> {
   }
 
   */
+
+  /*
   Widget categoryDropDwon() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
@@ -234,7 +236,7 @@ class _CreateProductPageState extends State<CreateProductPage> {
       ),
     );
   }
-
+*/
   Widget testDropDwon1(int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),

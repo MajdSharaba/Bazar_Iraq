@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/modules/controller/auth_controller.dart';
+import 'package:pazar_iraq/app/modules/controller/categories_controller.dart';
 import 'package:pazar_iraq/app/modules/view/pages/chatpage.dart';
 import 'package:pazar_iraq/app/modules/view/pages/create_product_page.dart';
 import 'package:pazar_iraq/app/modules/view/pages/create_product_page_v2.dart';
@@ -19,6 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  CategoryController categoryController = Get.put(CategoryController());
   final AuthController authController = Get.find();
   int selectedPage = 0;
   @override
@@ -26,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     final _pageOptions = [
       HomeScreen(),
       HomeScreen(),
-      authController.user.value.accessToken == null ? const SigninPage() : CreateProductPage(),
+      authController.user.value.accessToken == null ?  CreateProductPageV2(subCategoryList: const [],) : CreateProductPageV2(subCategoryList: const [],),
       authController.user.value.accessToken == null ? const SigninPage() : ChatPage(),
       authController.user.value.accessToken == null ? const SigninPage() : ProfileScreen()
     ];

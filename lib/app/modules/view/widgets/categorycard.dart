@@ -5,8 +5,9 @@ import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/modules/controller/categories_controller.dart';
-import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
-import 'package:pazar_iraq/app/modules/controller/productpage_controller.dart';
+import 'package:pazar_iraq/app/modules/controller/create_product_controller.dart';
+import 'package:pazar_iraq/app/modules/view/pages/create_product_page.dart';
+
 import 'package:pazar_iraq/app/modules/view/pages/create_product_page_v2.dart';
 import 'package:pazar_iraq/app/modules/view/pages/productpage.dart';
 import 'package:pazar_iraq/app/modules/view/pages/subcategorypage.dart';
@@ -14,6 +15,7 @@ import 'package:pazar_iraq/app/modules/view/pages/subcategorypage.dart';
 class CategoryCard extends StatelessWidget {
   final CategoryElement? categoryElement;
   final int? parentId;
+  final CreateProductController createProductController=Get.find();
     CategoryCard({Key? key,required this.categoryElement, this.parentId,}) : super(key: key);
 
 
@@ -45,6 +47,7 @@ class CategoryCard extends StatelessWidget {
                     height: 60,
                     width: deviceWidth * .5 < 240 ? deviceWidth * .5 : 240,
                     left: 5,
+                    //right: 0,
                     bottom: 0,
                     child: Container(
                       decoration: const BoxDecoration(
@@ -133,6 +136,7 @@ class CategoryCardForCreateProduct extends StatelessWidget {
   final CategoryElement? categoryElement;
    CategoryCardForCreateProduct({Key? key, this.categoryElement}) : super(key: key);
   final CategoryController categoryController = Get.find();
+  final CreateProductController createProductController=Get.find();
   @override
   Widget build(BuildContext context) {
     return
@@ -204,9 +208,16 @@ class CategoryCardForCreateProduct extends StatelessWidget {
 
           if(categoryElement!.children!.isEmpty){
             categoryController.childCategoryId=categoryElement!.id!;
+            createProductController.categoryChildId.value = categoryElement!.id!;
+            createProductController.fetchAttributes();
+            Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => CreateProductPage()));
+
           }
           else{
             categoryController.parentCategoryId=categoryElement!.id!;
+            createProductController.categoryParentId.value = categoryElement!.id!;
             Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => CreateProductPageV2(subCategoryList: categoryElement!.children,)));

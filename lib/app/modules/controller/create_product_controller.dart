@@ -5,9 +5,12 @@ import 'package:pazar_iraq/app/model/attribute.dart';
 
 class CreateProductController extends GetxController {
   RxBool isLoading=false.obs;
-  RxInt categoryId = 7.obs;
-  get categoryIdValue => categoryId.value;
-  set categoryIdValue(value) => categoryId.value = value;
+  RxInt categoryChildId = 7.obs;
+  RxInt categoryParentId = 7.obs;
+  get categoryChildIdValue => categoryChildId.value;
+  set categoryChildIdValue(value) => categoryChildId.value = value;
+  get categoryParentIdValue => categoryChildId.value;
+  set categoryParentIdValue(value) => categoryChildId.value = value;
   final variables = [].obs;
   get getVariables => variables.value;
   set setVariables(value) => variables.value = value;
@@ -38,7 +41,7 @@ class CreateProductController extends GetxController {
     variables.clear();
     try {
       attributes.value =
-      await ProductProvider().fetchAttributesForCategory(categoryId.value);
+      await ProductProvider().fetchAttributesForCategory(categoryChildId.value,categoryParentId.value);
       print(attributes.length);
       generateVariables();
       update();
