@@ -2,29 +2,25 @@ import 'package:pazar_iraq/app/model/option.dart';
 
 class DynamicAttribute {
   int? id;
-  String? nameEn;
-  String? nameAr;
-  String? nameKr;
+  String? name;
   String? typeId;
-  int? min;
-  int? max;
-  int? step;
+  double? min;
+  double? max;
+  double? step;
   int? order;
   String? icon;
   String? packageId;
   List<Option>? options;
 
-  DynamicAttribute({this.id, this.nameEn, this.nameAr, this.nameKr, this.typeId, this.min, this.max, this.step, this.order,this.icon,this.options,this.packageId});
+  DynamicAttribute({this.id, this.name, this.typeId, this.min, this.max, this.step, this.order,this.icon,this.options,this.packageId});
 
   DynamicAttribute.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    nameEn = json['name_en'];
-    nameAr = json['name_ar'];
-    nameKr = json['name_kr'];
+    name = json['name'];
     typeId = json['type_id'];
-    min = json['min'] ?? 0;
-    max = json['max'] ?? 0;
-    step = json['step'] ?? 0;
+    min = json['min']==null ? 0.0 :double.parse(json['min']);
+    max = json['max']==null? 0.0 :double.parse(json["max"]);
+    step = json['step'] ==null ? 0.0 :double.parse(json[step]);
     order = json['order'] ?? 0;
     icon = json['icon'] ?? "";
     packageId = json['package_id'] ?? "";
@@ -37,9 +33,7 @@ class DynamicAttribute {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['name_en'] = this.nameEn;
-    data['name_ar'] = this.nameAr;
-    data['name_kr'] = this.nameKr;
+    data['name'] = this.name;
     data['type_id'] = this.typeId;
     data['min'] = this.min;
     data['max'] = this.max;

@@ -112,7 +112,7 @@ class ProductProvider {
       );
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
-        var data = decodedJson["all_attribute"];
+        var data = decodedJson["data"];
         data.forEach((element) {
           attributes.add(DynamicAttribute.fromJson(element));
         });
