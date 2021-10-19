@@ -30,8 +30,8 @@ class CategoryProveder{
       print(jsonString);
       return categoryFromJson(jsonString);
     } else  {
-      print('getDriverInfo error 401 ');
-      Get.snackbar("Error", "فشل الاتصا",
+      print('getCategory error 401 ');
+      Get.snackbar("Error", "فشل الاتصال",
       snackPosition: SnackPosition.TOP,
       backgroundColor: Colors.red,
       colorText: Colors.white);
@@ -41,8 +41,8 @@ class CategoryProveder{
 
   }
       catch (e) {
-        print('getDriverInfo error 401 ');
-        Get.snackbar("Error", "فشل الاتصا",
+        print('getCategory error 401 ');
+        Get.snackbar("Error", "فشل الاتصال",
             snackPosition: SnackPosition.TOP,
             backgroundColor: Colors.red,
             colorText: Colors.white);
@@ -52,8 +52,8 @@ class CategoryProveder{
 
       }
     else{
-      print('getDriverInfo error 401 ');
-      Get.snackbar("Error", " تحقق من الاتصال ",
+      print('getCategory error 401 ');
+      Get.snackbar("Error", "فشل الاتصال",
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white);

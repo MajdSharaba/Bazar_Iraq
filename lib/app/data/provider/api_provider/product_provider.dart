@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
 import 'package:async/async.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -16,14 +19,77 @@ class ProductProvider {
   var response;
 
   ///http://184.168.97.161/public/api/products?category_id=12
+  ///// get last products
+
   static Future<Product> fetchProducts() async {
-    var response = await client
-        .get(Uri.parse('http://184.168.97.161/public/api/products'));
-    if (response.statusCode == 200) {
-      var jsonString = response.body;
-      return productFromJson(jsonString);
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult != ConnectivityResult.none) {
+      try {
+        var response = await client
+            .get(Uri.parse('http://184.168.97.161/public/api/products?user_id=$user_id'));
+        if (response.statusCode == 200) {
+          var jsonString = response.body;
+          return productFromJson(jsonString);
+        } else {
+          print('getLastProduct error 401 ');
+          Get.snackbar("Error", "فشل الاتصال",
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white);
+          return Product(productData: <ProductData>[
+            ProductData(
+              id: 1,
+              name: "problem",
+              price: "",
+              userId: null,
+              categoryId: null,
+              productType: null,
+              storeId: null,
+              createdAt: null,
+              updatedAt: null,
+              isFeatured: null,
+              images: [
+                Imagee(
+                    originalUrl:
+                        "https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1")
+              ],
+              des: null,
+            )
+          ]);
+        }
+      } catch (e) {
+        print('getLastProduct error 401 ');
+        Get.snackbar("Error", "فشل الاتصال",
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+        return Product(productData: <ProductData>[
+          ProductData(
+            id: 1,
+            name: "problem",
+            price: "",
+            userId: null,
+            categoryId: null,
+            productType: null,
+            storeId: null,
+            createdAt: null,
+            updatedAt: null,
+            isFeatured: null,
+            images: [
+              Imagee(
+                  originalUrl:
+                      "https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1")
+            ],
+            des: null,
+          )
+        ]);
+      }
     } else {
-      //show error message
+      print('getLastProduct error 401 ');
+      Get.snackbar("Error", "فشل الاتصال",
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
       return Product(productData: <ProductData>[
         ProductData(
           id: 1,
@@ -47,16 +113,81 @@ class ProductProvider {
     }
   }
 
-  static Future<Product> fetchProductsByCategoryId(page, category_id,parent_id) async {
-    print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"+category_id.toString()+parent_id.toString()
-    );
-    var response = await client.get(Uri.parse(
-        'http://184.168.97.161/public/api/products?child_id=$category_id&parent_id=$parent_id&page=$page&result_num=7'));
-    if (response.statusCode == 200) {
-      var jsonString = response.body;
-      return productFromJson(jsonString);
+  //////get product by category id
+
+  static Future<Product> fetchProductsByCategoryId(
+      page, category_id, parent_id) async {
+    print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii" +
+        category_id.toString() +
+        parent_id.toString());
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult != ConnectivityResult.none) {
+      try {
+        var response = await client.get(Uri.parse(
+            'http://184.168.97.161/public/api/products?user_id=$user_id&child_id=$category_id&parent_id=$parent_id&page=$page&result_num=7'));
+        if (response.statusCode == 200) {
+          var jsonString = response.body;
+          return productFromJson(jsonString);
+        } else {
+          print('getProductByCategory error 401 ');
+          Get.snackbar("Error", "فشل الاتصال",
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white);
+          return Product(productData: <ProductData>[
+            ProductData(
+              id: 1,
+              name: "problem",
+              price: "",
+              userId: null,
+              categoryId: null,
+              productType: null,
+              storeId: null,
+              createdAt: null,
+              updatedAt: null,
+              isFeatured: null,
+              images: [
+                Imagee(
+                    originalUrl:
+                        "https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1")
+              ],
+              des: null,
+            )
+          ]);
+        }
+      } catch (e) {
+        print('getProductByCategory error 401 ');
+        Get.snackbar("Error", "فشل الاتصال",
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+        return Product(productData: <ProductData>[
+          ProductData(
+            id: 1,
+            name: "problem",
+            price: "",
+            userId: null,
+            categoryId: null,
+            productType: null,
+            storeId: null,
+            createdAt: null,
+            updatedAt: null,
+            isFeatured: null,
+            images: [
+              Imagee(
+                  originalUrl:
+                      "https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1")
+            ],
+            des: null,
+          )
+        ]);
+      }
     } else {
-      //show error message
+      print('getProductByCategory error 401 ');
+      Get.snackbar("Error", "فشل الاتصال",
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
       return Product(productData: <ProductData>[
         ProductData(
           id: 1,
@@ -79,37 +210,165 @@ class ProductProvider {
       ]);
     }
   }
+  /////////////////////////////////////
 
+  ///// fetch product details
   static Future<ProductDetail> fetchProductsDetails(var id) async {
-    var url = Uri.parse('http://184.168.97.161/public/api/products/$id');
-    var response = await http.get(url);
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult != ConnectivityResult.none) {
+      try {
+        var response = await client.get(
+            Uri.parse('http://184.168.97.161/public/api/products/$id?user_id=$user_id'),
+            headers: {
+              HttpHeaders.acceptLanguageHeader: 'en',
+            });
+        //
+        // var response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      var jsonString = response.body;
-      print(jsonString);
-      return productDetailFromJson(jsonString);
+        if (response.statusCode == 200) {
+          var jsonString = response.body;
+          print(jsonString);
+          return productDetailFromJson(jsonString);
+        } else {
+          print('getProudactsData error 401 ');
+          Get.snackbar("Error", "فشل الاتصال",
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white);
+          return null!;
+        }
+      } catch (e) {
+        print('getProudactsData error 401 ');
+        Get.snackbar("Error", "فشل الاتصال",
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+        return null!;
+      }
     } else {
-      //show error message
+      print('getProudactsData error 401 ');
+      Get.snackbar("Error", "فشل الاتصال",
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
       return null!;
     }
   }
 
-  static Future<void> addComment( id,comment, rating,  userId) async {
+  ////// add comment
+  static Future<void> addComment(id, comment, rating, userId) async {
     var url = Uri.parse('http://184.168.97.161/public/api/product/add_comment');
-    var response = await http.post(url, body: {'product_id': id, 'comment': comment,'rating': rating,'user_id':userId});
+    var response = await http.post(url, body: {
+      'product_id': id,
+      'comment': comment,
+      'rating': rating,
+      'user_id': userId
+    });
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
   }
 
+  static Future<void> addAuctions(
+      productId, startDate, endDate, minAmount, step) async {
+    ///productId,startDate, endDate,minAmount, step
+    print(productId +
+        "#" +
+        startDate +
+        "#" +
+        endDate +
+        "#" +
+        minAmount +
+        "#" +
+        step);
+    var url = Uri.parse('http://184.168.97.161/public/api/new-auction');
+    var response = await http.post(url, body: {
+      'product_id': "1195",
+      'min_amount': "5000",
+      'step': "1000",
+      'start_date': "1634733900000",
+      'end_date': "1734733900000"
+    });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
+  static Future<Product> fetchFavoriteProducts() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult != ConnectivityResult.none) {
+      try {
+        var response = await client.get(
+            Uri.parse(
+                'http://184.168.97.161/public/api/product/myfavoriteproduct/${user_id}'),
+            headers: {
+              HttpHeaders.acceptLanguageHeader: 'en',
+            });
+        //
+        // var response = await http.get(url);
+
+        if (response.statusCode == 200) {
+          var json = jsonDecode(response.body);
+          print(json);
+          return Product(
+              productData: List<ProductData>.from(
+                  json["allfavorite"].map((x) => ProductData.fromJson(x))));
+        } else {
+          print('getFavorite error 401 ');
+          Get.snackbar("Error", "فشل الاتصال",
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white);
+          return new Product();
+        }
+      } catch (e) {
+        print('getFavorite error 401 ');
+        Get.snackbar("Error", "فشل الاتصال",
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+        return new Product();
+      }
+    } else {
+      print('getFavorite error 401 ');
+      Get.snackbar("Error", "فشل الاتصال",
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return new Product();
+    }
+
+  }
+  static Future<void> addFavoriteProduct(productId
+      ) async {
+    ///productId,startDate, endDate,minAmount, step
+
+    var url = Uri.parse('http://184.168.97.161/public/api/product/addtofavorite');
+    var response = await http.post(url, body: {
+      'user_id': user_id.toString(),
+      'product_id': productId,
+    });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+//////////////// delete from favorite
+  static Future<void> deleteFavoriteProduct(productId
+      ) async {
+    ///productId,startDate, endDate,minAmount, step
+
+    var response = await client.get(Uri.parse(
+       "http://184.168.97.161/public/api/product/deletefromfavorite/$productId/$user_id"));
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
+
   fetchAttributesForCategory(int categoryChildId, int categoryParentId) async {
     List<DynamicAttribute> attributes = [];
     try {
-      response = await http.post(
-        Uri.parse(baseUrl + "category/getattribute"),body: {
-          "child_id" : categoryChildId.toString(),
-           "category_id" : categoryParentId.toString()
-      }
-      );
+      response =
+          await http.post(Uri.parse(baseUrl + "category/getattribute"), body: {
+        "child_id": categoryChildId.toString(),
+        "category_id": categoryParentId.toString()
+      });
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         var data = decodedJson["data"];
@@ -128,10 +387,11 @@ class ProductProvider {
 
   convertListstoJson(
       List attributeId, List attributeValue, String key, String value) {
-    List<JsonList>? attributeIdsValues=[] ;
-    var list=[];
+    List<JsonList>? attributeIdsValues = [];
+    var list = [];
     for (int i = 0; i < attributeId.length; i++) {
-      attributeIdsValues.add(JsonList(attributeId: attributeId[i], attributeValue: attributeValue[i]));
+      attributeIdsValues.add(JsonList(
+          attributeId: attributeId[i], attributeValue: attributeValue[i]));
     }
     for (int i = 0; i < attributeIdsValues.length; i++) {
       list.add(jsonEncode(attributeIdsValues[i].toJson()));
@@ -150,14 +410,13 @@ class ProductProvider {
       String user_id,
       List<XFile> images,
       String desc) async {
-
     var attributes =
-       convertListstoJson(attributeId, attributeValue, key, value);
+        convertListstoJson(attributeId, attributeValue, key, value);
     try {
       var uri = Uri.parse(baseUrl + "products");
 
 // create multipart request
-      var request =  http.MultipartRequest("POST", uri);
+      var request = http.MultipartRequest("POST", uri);
       Map<String, String> headers = {
         "Accept": "application/json",
       };
@@ -166,12 +425,12 @@ class ProductProvider {
       request.headers.addAll(headers);
       for (var file in images) {
         String fileName = file.path.split("/").last;
-        var stream =  http.ByteStream(DelegatingStream.typed(file.openRead()));
+        var stream = http.ByteStream(DelegatingStream.typed(file.openRead()));
         // get file length
         var length = await file.length(); //imageFile is your image file
         // multipart that takes file
-        var multipartFileSign =  http.MultipartFile('images[]', stream, length,
-            filename: fileName);
+        var multipartFileSign =
+            http.MultipartFile('images[]', stream, length, filename: fileName);
         request.files.add(multipartFileSign);
       }
 
@@ -183,14 +442,10 @@ class ProductProvider {
       request.fields['desc'] = desc;
       request.fields['attributes'] = attributes.toString();
 
-
       var responseStream = await request.send();
       var response = await responseStream.stream.bytesToString();
 
-
       print(response.toString());
-
-
     } catch (ex) {
       print("dddd" + ex.toString());
     }

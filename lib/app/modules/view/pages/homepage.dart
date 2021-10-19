@@ -12,6 +12,8 @@ import 'package:pazar_iraq/app/modules/view/pages/home_screen.dart';
 import 'package:pazar_iraq/app/modules/view/pages/profile_screen.dart';
 import 'package:pazar_iraq/app/modules/view/pages/signinpage.dart';
 
+import 'favoritepage.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -27,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final _pageOptions = [
       HomeScreen(),
-      HomeScreen(),
+      FavoritPage(),
       authController.user.value.accessToken == null ?  CreateProductPageV2(subCategoryList: const [],) : CreateProductPageV2(subCategoryList: const [],),
       authController.user.value.accessToken == null ? const SigninPage() : ChatPage(),
       authController.user.value.accessToken == null ? const SigninPage() : ProfileScreen()

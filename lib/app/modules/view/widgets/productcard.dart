@@ -27,7 +27,7 @@ class ProductCard extends StatelessWidget {
             Get.to(ProductDetailPage());
           },
           child: Container(
-            margin: EdgeInsets.only(right: 20, bottom: 25),
+            margin: EdgeInsets.only(right: 20, bottom: 25,left: 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Colors.white,
@@ -40,15 +40,33 @@ class ProductCard extends StatelessWidget {
             padding: EdgeInsets.all(10),
             child: ListView(
               children: [
+
                 Container(
                   height: 150,
                   child: Stack(
                     children: [
+
                       Container(
                         width: double.infinity,
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
                             child: product!.images!.isNotEmpty?Image.network(product!.images!.first.originalUrl!,fit: BoxFit.cover,):Image.asset("assets/jacket.png")
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        top: 0,
+
+
+                        child: IconButton(
+                          icon: Icon(
+                            product!.is_favorite! ? Icons.favorite : Icons.favorite,
+                            color:
+                            product!.is_favorite! ? Colors.red : Colors.grey,
+                          ),
+                          onPressed: () {
+
+                          },
                         ),
                       ),
 

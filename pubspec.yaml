@@ -54,7 +54,9 @@ dependencies:
   connectivity: ^3.0.6
   modal_bottom_sheet: ^2.0.0
 
-
+  intl: ^0.17.0
+  flutter_countdown_timer: ^4.1.0
+  datetime_picker_formfield: ^2.0.0
 
 dev_dependencies:
   flutter_test:

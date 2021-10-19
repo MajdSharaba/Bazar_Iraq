@@ -43,6 +43,7 @@ class ProductData {
     this.isFeatured,
     this.images,
     this.des,
+    this.is_favorite ,
 
   });
 
@@ -58,10 +59,12 @@ class ProductData {
   dynamic? createdAt;
   dynamic? updatedAt;
   String? isFeatured;
+  bool? is_favorite;
   List<Imagee>? images;
 
   factory ProductData.fromJson(Map<String, dynamic> json) => ProductData(
     id: json["id"],
+    is_favorite: json["is_favorite"] ??false,
     name: json["name"],
     des : json["desc"],
     price: json["price"],

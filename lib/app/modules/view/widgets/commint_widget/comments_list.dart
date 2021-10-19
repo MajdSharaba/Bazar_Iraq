@@ -31,13 +31,13 @@ class CommentsList extends StatelessWidget {
           return
       ExpansionTile(
         leading: Icon(Icons.comment),
-        trailing: Text(productDetailController.productDetailData!.comments!.length.toString()),
+        trailing: Text(productDetailController.productDetailData!.value!.comments!.length.toString()),
         title: Text("Comments"),
         children: List<Widget>.generate(
-          productDetailController.productDetailData!.comments!.length,
+          productDetailController.productDetailData!.value!.comments!.length,
           (int index) => _SingleComment(
             key: ValueKey("${CommentsListKeyPrefix.singleComment} $index"),
-            comment: productDetailController.productDetailData!.comments![index],
+            comment: productDetailController.productDetailData!.value!.comments![index],
           ),
         ),
       );  }}),
@@ -62,10 +62,7 @@ class _SingleComment extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // UserDetailsWithFollow(
-          //   key: ValueKey("${CommentsListKeyPrefix.commentUser} $index"),
-          //   userData: commentData.user,
-          // ),
+
       Row(
           children: <Widget>[
           const CircleAvatar(
@@ -112,7 +109,7 @@ class _SingleComment extends StatelessWidget {
           //     textAlign: TextAlign.left,
           //   ),
           // ),
-          Divider(
+          const Divider(
             color: Colors.black45,
           ),
         ],

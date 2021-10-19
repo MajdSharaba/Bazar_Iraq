@@ -8,12 +8,18 @@ import 'package:pazar_iraq/app/model/productdetail.dart';
 
 class ProductDetailController extends GetxController {
   var isLoading = true.obs;
+  var isfavorite= false.obs;
   late TextEditingController commentController = TextEditingController();
 
-  ProductDetailData? productDetailData;
+  var productDetailData = ProductDetailData().obs;
    var rating = 2.0;
   var comment=''.obs;
   var commentVisabilte=false.obs;
+  /////auction paramter
+  var startPriceSliderValue = 0.0.obs;
+  var bidPriceSliderValue = 0.0.obs;
+  var startDate = "".obs;
+  var endDate ="".obs;
 
 
   @override
@@ -35,8 +41,9 @@ class ProductDetailController extends GetxController {
       isLoading(true);
       var productDetail = await ProductProvider.fetchProductsDetails(id);
       if (productDetail != null) {
-        productDetailData = productDetail.productDetailData;
-        print(productDetailData!.name);
+        productDetailData.value = productDetail.productDetailData!;
+         isfavorite.value = productDetail.productDetailData!.isFavorite!;
+        print(productDetailData.value.name);
       }
     } finally {
      ///
@@ -54,10 +61,21 @@ class ProductDetailController extends GetxController {
   }
   void addcomment() {
     if (commentController.text.isNotEmpty) {
-      productDetailData!.comments!.add(new Comment(id:productDetailData!.id!,comment:commentController.text,rating: rating.toString(),userId:  productDetailData!.userId   ));
+      productDetailData.value.comments!.add(new Comment(id:productDetailData.value.id!,comment:commentController.text,rating: rating.toString(),userId:  productDetailData!.value.userId   ));
       ProductProvider.addComment(
-          productDetailData!.id!.toString(), commentController.text,
-          rating.toStringAsFixed(2), productDetailData!.userId!.toString());
+          productDetailData.value.id!.toString(), commentController.text,
+          rating.toStringAsFixed(2), productDetailData.value.userId!.toString());
     }
   }
-}
+
+  void addAuction(proudctId) {
+
+      ProductProvider.addAuctions(proudctId.toString(),startDate.toString(), endDate.toString(),startPriceSliderValue.toString(), bidPriceSliderValue.toString());
+
+
+  }
+
+  deleteFromFavorite(product_id) async {
+    await ProductProvider.deleteFavoriteProduct(product_id);
+
+  }}

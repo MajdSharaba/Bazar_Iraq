@@ -41,12 +41,14 @@ class ProductDetailData {
     this.storeId,
     this.createdAt,
     this.updatedAt,
+
     this.isFeatured,
     this.name,
     this.desc,
     this.atts,
     this.images,
     this.comments,
+    this.isFavorite,
   });
 
   int? id;
@@ -63,6 +65,7 @@ class ProductDetailData {
   List<Att>? atts;
   List<ImageD>? images;
   List<Comment>? comments;
+  bool? isFavorite;
 
   factory ProductDetailData.fromJson(Map<String, dynamic> json) => ProductDetailData(
     id: json["id"],
@@ -76,6 +79,7 @@ class ProductDetailData {
     isFeatured: json["is_featured"],
     name: json["name"],
     desc: json["desc"],
+    isFavorite:json["is_favorite"],
     atts: List<Att>.from(json["atts"].map((x) => Att.fromJson(x))),
     images: List<ImageD>.from(json["images"].map((x) => ImageD.fromJson(x))),
     comments: List<Comment>.from(json["comments"].map((x) => Comment.fromJson(x))),

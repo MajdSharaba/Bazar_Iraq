@@ -6,6 +6,7 @@ String baseUrl='http://184.168.97.161/public/api/';
 
 double deviceHeight = Get.height;
 double deviceWidth = Get.width;
+int user_id=2;
 
 LinearGradient linearGradientColor = const LinearGradient(
     begin: Alignment.topLeft,
