@@ -20,8 +20,8 @@ class ProductDetailController extends GetxController {
   /////auction paramter
   var startPriceSliderValue = 0.0.obs;
   var bidPriceSliderValue = 0.0.obs;
-  var startDate = "".obs;
-  var endDate = "".obs;
+  RxInt startDate = 0.obs;
+  RxInt endDate = 0.obs;
 
 
   @override
@@ -77,18 +77,26 @@ class ProductDetailController extends GetxController {
     }
   }
 
-  void addAuction(proudctId) {
+   addAuction(proudctId) {
+    if(startDate>DateTime.now().millisecondsSinceEpoch&&endDate.value>startDate.value){
     ProductProvider.addAuctions(
         proudctId.toString(), startDate.toString(), endDate.toString(),
-        startPriceSliderValue.toString(), bidPriceSliderValue.toString());
+        startPriceSliderValue.toStringAsFixed(2), bidPriceSliderValue.toStringAsFixed(2));}
+    else print("some thing");
   }
   void addBids(auction_id,current_price){
-    productDetailData.value.auct!.currentPrice=current_price.obs;
-    update();
+
 
 
 
     ProductProvider.addBids(auction_id.toString(), current_price.toString());
+    productDetailData.value.auct!.currentPrice=current_price.toString();
+    update();
   }
+  deletProduct(product_id){
+    ProductProvider.deleteProduct(product_id);
+
+  }
+
 
 }

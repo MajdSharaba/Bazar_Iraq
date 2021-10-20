@@ -113,6 +113,16 @@ class ProductProvider {
       ]);
     }
   }
+  ///////////
+  static Future<void> deleteProduct(product) async {
+    var url = Uri.parse('http://184.168.97.161/public/api/product/delete');
+    var response = await http.post(url, body: {
+      'product': product.toString(),
+      'user_id': user_id.toString(),
+    });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
 
   //////get product by category id
 

@@ -53,6 +53,7 @@ dependencies:
   flutter_staggered_animations: 1.0.0
   connectivity: ^3.0.6
   modal_bottom_sheet: ^2.0.0
+  flutter_speed_dial: ^4.4.0+2
   intl: ^0.17.0
   flutter_countdown_timer: ^4.1.0
   datetime_picker_formfield: ^2.0.0

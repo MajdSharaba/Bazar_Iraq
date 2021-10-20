@@ -22,13 +22,15 @@ class ProductController extends GetxController {
     super.onInit();
   }
 
-  void fetchProducts() async {
+   fetchProducts() async {
     try {
+
       isLoading(true);
       var product = await ProductProvider.fetchProducts();
       if (product != null) {
         productList = product.productData;
         print(productList!.length);
+        update();
       }
     } finally {
       isLoading(false);

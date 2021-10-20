@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
@@ -12,9 +13,12 @@ import 'package:pazar_iraq/app/model/product.dart';
 import 'package:pazar_iraq/app/model/productdetail.dart';
 import 'package:pazar_iraq/app/modules/controller/chatmeesage_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/favoriteproduct_controller.dart';
+import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/productdetail_controller.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:pazar_iraq/app/modules/view/pages/chatdetailpage.dart';
+import 'package:pazar_iraq/app/modules/view/pages/home_screen.dart';
+import 'package:pazar_iraq/app/modules/view/pages/homepage.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/commint_widget/comments_list.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 
@@ -33,9 +37,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   final ChatMessageController chatMessageController =
       Get.put(ChatMessageController());
   final FavoriteProductController _favoriteProductController = Get.find();
+  ProductController productController= Get.find();
+
 
   AnimationController? controller;
   Animation<double>? animation;
+
   @override
   void initState() {
     super.initState();
@@ -48,9 +55,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 
   @override
   void dispose() {
+
     controller!.dispose();
     super.dispose();
   }
+
+
 
   Widget _appBar() {
     return _productDetailController.productDetailData.value.id == null
@@ -216,6 +226,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       initialChildSize: .53,
       minChildSize: .1,
       builder: (context, scrollController) {
+
         return Container(
           padding: padding.copyWith(bottom: 0),
           decoration: const BoxDecoration(
@@ -398,14 +409,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                                 .value
                                                                 .auct ==
                                                             null
-                                                        ? TitleText(
+                                                        ? Obx(()=>TitleText(
                                                             text: _productDetailController
                                                                 .productDetailData
                                                                 .value
                                                                 .price
                                                                 .toString(),
                                                             fontSize: 15,
-                                                          )
+                                                          ))
                                                         : Column(
                                                             children: <Widget>[
                                                                 const Text("Bids"),
@@ -480,10 +491,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   height: 40,
                 ),
                 /////button for Auction
+               // _productDetailController.productDetailData.value.userId ==user_id.toString()?Text(""):
                 Visibility(
                   visible:
-                      _productDetailController.productDetailData.value.auct !=
-                          null,
+                  (( _productDetailController.productDetailData.value.auct !=
+                          null )&&( _productDetailController.productDetailData.value.userId !=user_id.toString())),
                   child: MaterialButton(
                     onPressed: () {
                       _productDetailController.addBids(
@@ -493,6 +505,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                   .value.auct!.currentPrice!) +
                               int.parse(_productDetailController
                                   .productDetailData.value.auct!.step!));
+                      setState((){print("6");});
                     },
                     height: 50,
                     elevation: 0,
@@ -694,7 +707,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           if (_productDetailController.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            return _productDetailController.productDetailData.value.userId !=
+            return
+              _productDetailController.productDetailData.value.userId !=
                     user_id.toString()
                 ? FloatingActionButton(
                     // isExtended: true,
@@ -722,16 +736,75 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       );
                       //   showAddAuctionModal();
                     })
-                : FloatingActionButton(
-                    // isExtended: true,
-                    heroTag: "btn2",
-                    child: const Icon(Icons.add),
-                    backgroundColor: const Color(0xFF7200CA),
-                    onPressed: () {
-                      showAddAuctionModal();
-                    });
+                : _getFAB();
+
+              // FloatingActionButton(
+              //       // isExtended: true,
+              //       heroTag: "btn2",
+              //       child: const Icon(Icons.add),
+              //       backgroundColor: const Color(0xFF7200CA),
+              //       onPressed: () {
+              //         showAddAuctionModal();
+              //       });
           }
         }));
+
+  }
+  Widget _getFAB() {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      animatedIconTheme: const IconThemeData(size: 22),
+      backgroundColor: const Color(0xFF7200CA),
+      visible: true,
+      curve: Curves.bounceIn,
+      children: [
+        // FAB 1
+        _productDetailController.productDetailData.value.auct==null?
+        SpeedDialChild(
+            child: const Icon(Icons.add),
+            backgroundColor: const Color(0xFF7200CA),
+            onTap: () {  showAddAuctionModal(); },
+            label: 'add auction',
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 16.0),
+            labelBackgroundColor: const Color(0xFF7200CA)):
+        SpeedDialChild(
+            child: const Icon(Icons.pause),
+            backgroundColor: const Color(0xFF7200CA),
+            onTap: () async {
+
+              await productController.fetchProducts();
+
+              Get.to(HomePage());
+
+            },
+            label: 'stop auction',
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 16.0),
+            labelBackgroundColor: const Color(0xFF7200CA)),
+        // FAB 2
+        SpeedDialChild(
+            child: const Icon(Icons.delete),
+            backgroundColor: const Color(0xFF7200CA),
+            onTap: () async {
+             await _productDetailController.deletProduct(_productDetailController.productDetailData.value.id);
+             await productController.fetchProducts();
+
+             Get.to(HomePage());
+
+            },
+            label: 'delete product',
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 16.0),
+            labelBackgroundColor: const Color(0xFF7200CA))
+      ],
+    );
   }
 
   showAddAuctionModal() {
@@ -798,19 +871,22 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 Column(children: <Widget>[
                   DateTimeField(
                     format: format,
+
                     decoration: const InputDecoration(
                       enabledBorder: OutlineInputBorder(
+
                         borderSide:
                             BorderSide(color: Color(0xFF7200CA), width: 2.0),
                       ),
+
                       hintText: 'select start date',
                     ),
                     onShowPicker: (context, currentValue) async {
                       final date = await showDatePicker(
                           context: context,
-                          firstDate: DateTime(1900),
+                          firstDate: DateTime.now(),
                           initialDate: currentValue ?? DateTime.now(),
-                          lastDate: DateTime(2100));
+                          lastDate: DateTime(2022));
                       if (date != null) {
                         final time = await showTimePicker(
                           context: context,
@@ -819,8 +895,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                         );
                         _productDetailController.startDate.value =
                             DateTimeField.combine(date, time)
-                                .millisecondsSinceEpoch
-                                .toString();
+                                .millisecondsSinceEpoch;
+
                         print(DateTimeField.combine(date, time)
                             .millisecondsSinceEpoch);
                         return DateTimeField.combine(date, time);
@@ -828,6 +904,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                         return currentValue;
                       }
                     },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (startDate) => startDate!=null?startDate.millisecondsSinceEpoch<  DateTime.now().millisecondsSinceEpoch? 'select valid date' : null:null,
+
                   ),
                 ]),
 
@@ -861,19 +940,20 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                     onShowPicker: (context, currentValue) async {
                       final date = await showDatePicker(
                           context: context,
-                          firstDate: DateTime(1900),
+                          firstDate: DateTime.now(),
                           initialDate: currentValue ?? DateTime.now(),
-                          lastDate: DateTime(2100));
+                          lastDate: DateTime(2022));
                       if (date != null) {
                         final time = await showTimePicker(
                           context: context,
+
                           initialTime: TimeOfDay.fromDateTime(
                               currentValue ?? DateTime.now()),
                         );
                         _productDetailController.endDate.value =
                             DateTimeField.combine(date, time)
                                 .millisecondsSinceEpoch
-                                .toString();
+                                ;
                         print(DateTimeField.combine(date, time)
                             .millisecondsSinceEpoch
                             .toString());
@@ -883,7 +963,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                         return currentValue;
                       }
                     },
-                  ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (endDate) => endDate!=null?endDate.millisecondsSinceEpoch<  _productDetailController.startDate.value? 'select valid date' : null:null,
+                      ),
+
+
                 ]),
 
                 // Slider start  Price
@@ -918,7 +1002,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   height: 10,
                 ),
                 Obx(() => Slider(
-                      max: 1000000.00,
+                      max: 100000.00,
                       divisions: 10000,
                       inactiveColor: Colors.grey.shade300,
                       activeColor: const Color(0xFF7200CA),
@@ -965,7 +1049,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   height: 10,
                 ),
                 Obx(() => Slider(
-                      max: 1000000.00,
+                      max: 10000.00,
                       divisions: 10000,
                       inactiveColor: Colors.grey.shade300,
                       activeColor: const Color(0xFF7200CA),
@@ -982,9 +1066,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   height: 20,
                 ),
                 MaterialButton(
-                  onPressed: () {
-                    _productDetailController.addAuction(
+                  onPressed: () async {
+                   await _productDetailController.addAuction(
                         _productDetailController.productDetailData.value.id!);
+                   await productController.fetchProducts();
+
+                   Get.to(HomePage());
                   },
                   height: 50,
                   elevation: 0,
