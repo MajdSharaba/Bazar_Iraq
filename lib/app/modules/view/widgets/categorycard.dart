@@ -212,7 +212,7 @@ class CategoryCardForCreateProduct extends StatelessWidget {
             createProductController.fetchAttributes();
             Navigator.of(context).push(
                 MaterialPageRoute(
-                    builder: (context) => CreateProductPage()));
+                    builder: (context) => CreateProductAttributePage()));
 
           }
           else{

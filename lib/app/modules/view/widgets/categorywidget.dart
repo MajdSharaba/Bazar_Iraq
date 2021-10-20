@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
+import 'package:pazar_iraq/app/core/languages/locale_keys.g.dart';
 import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/modules/view/pages/subcategorypage.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'categorycard.dart';
 
 
@@ -39,7 +40,7 @@ class CategoryWidget extends StatelessWidget {
                    Navigator.of(context).push(
                        MaterialPageRoute(
                            builder: (context) => SubCategoryPage(categoryElemen:categoryElement)));
-                 }, child: const Text("VIEW ALL",
+                 }, child:  Text(LocaleKeys.viewAll.translations(),
                    style: TextStyle(color: Colors.black, fontSize: 12,fontStyle: FontStyle.normal),),)
               ],
             ),

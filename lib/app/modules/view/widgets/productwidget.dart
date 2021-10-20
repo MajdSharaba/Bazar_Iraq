@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pazar_iraq/app/core/languages/locale_keys.g.dart';
 import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/productcard.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 
 class ProductWidget extends StatelessWidget {
   ProductWidget({Key? key}) : super(key: key);
@@ -19,18 +20,18 @@ class ProductWidget extends StatelessWidget {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Last Product', style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
-                  Padding(
+                children:  [
+                  Text(LocaleKeys.lastProducts.translations(), style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
+                  const Padding(
                     padding: EdgeInsets.only(right: 20.0),
                     child: Text('View all ', style: TextStyle(color: Colors.black, fontSize: 14),),
                   ),
                 ],
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Obx(() {
                 if (productController.isLoading.value)
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 else {
                   return Expanded(
                       child: ListView.builder(

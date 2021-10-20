@@ -19,7 +19,7 @@ class AuthController extends GetxController {
   }
 
   getUser() async {
-   user.value = await Auth().getCurrentUser();
+   user.value = await Auth().getUserProfile();
    update();
   }
 

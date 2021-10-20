@@ -41,8 +41,7 @@ class FavoritPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
         } else {
             return ListView.builder(
-      itemCount: _favoriteProductController.favoriteProductList!.length ??
-          0,
+      itemCount: _favoriteProductController.favoriteProductList!.length  ,
       itemBuilder: (context, index) {
         return Dismissible(
           key: UniqueKey(),

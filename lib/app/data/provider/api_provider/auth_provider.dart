@@ -5,6 +5,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:pazar_iraq/app/core/constants.dart';
+import 'package:pazar_iraq/app/data/provider/db_provider/auth_provider.dart';
 import 'package:pazar_iraq/app/model/user.dart';
 
 String _verificationId = "";
@@ -13,6 +14,7 @@ class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late AuthCredential credential;
   late UserCredential userCredential;
+  var response;
   Future<UserModel> signIn(int signInTypeId, String otp) async {
     switch (signInTypeId) {
       case 0:
@@ -25,8 +27,8 @@ class Auth {
         userCredential = await signInWithFacebook();
         break;
     }
-    var user=await getCurrentUser();
-    return user ;
+    var user = await signInUser();
+    return user;
   }
 
   Future<UserCredential> signInWithGoogle() async {
@@ -78,15 +80,31 @@ class Auth {
     return await _auth.signInWithCredential(credential);
   }
 
-  getCurrentUser() async {
+  signInUser() async {
     String? token = await _auth.currentUser!.getIdToken();
-    var response = await http.post(
+     response = await http.post(
       Uri.parse(baseUrl + "firebaselogin"),
       body: jsonEncode({"firebasetoken": token}),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
     );
+
+    return UserModel.fromJson(jsonDecode(response.body));
+  }
+
+
+  getUserProfile() async {
+    String? token = await AccessTokenStorage().getAccessToken();
+    if(token !=null){
+       response = await http.post(
+        Uri.parse(baseUrl + "userprofile"),
+        body: jsonEncode({"bearer token": token}),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+      );
+    }
 
     return UserModel.fromJson(jsonDecode(response.body));
   }

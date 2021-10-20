@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:pazar_iraq/app/modules/view/widgets/fluid_slider.dart';
+import 'package:pazar_iraq/app/modules/view/widgets/slidertheme.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/model/option.dart';
@@ -17,14 +16,13 @@ import 'package:pazar_iraq/app/modules/controller/categories_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/create_product_controller.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/buttonwidget.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/fieldwidget.dart';
-import 'package:pazar_iraq/app/modules/view/widgets/fluid_slider.dart';
 
-class CreateProductPage extends StatefulWidget {
+class CreateProductAttributePage extends StatefulWidget {
   @override
-  State<CreateProductPage> createState() => _CreateProductPageState();
+  State<CreateProductAttributePage> createState() => _CreateProductAttributePageState();
 }
 
-class _CreateProductPageState extends State<CreateProductPage> {
+class _CreateProductAttributePageState extends State<CreateProductAttributePage> {
   final CategoryController categoryController = Get.find();
   final CreateProductController createProductController =
       Get.put(CreateProductController());
@@ -122,8 +120,8 @@ class _CreateProductPageState extends State<CreateProductPage> {
                                                           .value
                                                       : controller.attributes
                                                           .value[index].name!,
-                                                  style:
-                                                      TextStyle(fontSize: 16),
+                                                  style: const TextStyle(
+                                                      fontSize: 16),
                                                 );
                                               })
                                             ],
@@ -132,40 +130,43 @@ class _CreateProductPageState extends State<CreateProductPage> {
                                       )),
                                 )
                               : Obx(() {
-                                  int indexOfDuplicatedOption;
-                                  indexOfDuplicatedOption =
-                                      attributesIds.indexOf(controller
-                                          .attributes.value[index].id);
+
+                                 int indexOfDuplicatedOption =
+                                      attributesIds.indexOf(createProductController.attributes[index].id);
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 27.0, vertical: 10),
-                                    child: FluidSlider(
-                                      value: indexOfDuplicatedOption == -1
-                                          ? createProductController
-                                              .attributes.value[index].min!
-                                          : 3,
-                                      onChanged: (double newValue) {
-                                        setState(() {
-                                          if (indexOfDuplicatedOption == -1) {
-                                            createProductController
-                                                .variables[index] = newValue;
-                                            attributesIds.add(controller
-                                                .attributes.value[index].id);
-                                            attributesValues.add(newValue);
-                                          } else {
-                                            createProductController.variables[
-                                                    indexOfDuplicatedOption] =
-                                                newValue;
-
-                                            attributesValues[
-                                                    indexOfDuplicatedOption] =
-                                                newValue;
-                                          }
-                                        });
-                                      },
-                                      min: createProductController.attributes.value[index].min!,
-                                      max: createProductController.attributes.value[index].max!,
-                                    ),
+                                    child: SliderTheme(
+                                        data: SliderThemeData(
+                                          trackShape:
+                                              GradientRectSliderTrackShape(
+                                                  gradient: linearGradientColor,
+                                                  darkenInactive: false),
+                                        ),
+                                        child: Slider(
+                                          min: createProductController
+                                              .attributes[index].min!,
+                                          max: createProductController
+                                              .attributes[index].max!,
+                                            onChangeEnd: (double value) {
+                                            if (indexOfDuplicatedOption == -1) {
+                                              attributesIds.add(controller
+                                                  .attributes.value[index].id);
+                                              attributesValues.add(value);
+                                            } else {
+                                              attributesValues[
+                                                      indexOfDuplicatedOption] =
+                                                  value;
+                                            }
+                                            setState(() {
+                                            });
+                                          },
+                                          value: indexOfDuplicatedOption == -1
+                                              ? createProductController
+                                                  .attributes[index].min
+                                              : attributesValues[
+                                                  indexOfDuplicatedOption], onChanged: (double value) {  },
+                                        )),
                                   );
                                 });
                         });
@@ -195,7 +196,8 @@ class _CreateProductPageState extends State<CreateProductPage> {
                 function: () async {
                   await createProductController.createProduct(
                       nameController.text,
-                      selectedCategory!.id.toString(),
+                      categoryController.childCategoryId,
+                      categoryController.parentCategoryId,
                       priceController.text,
                       attributesIds,
                       attributesValues,

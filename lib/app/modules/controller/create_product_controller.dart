@@ -51,7 +51,8 @@ class CreateProductController extends GetxController {
 
   }
   createProduct( String name,
-      String categoryId,
+      int categoryChildId,
+      int categoryParentId,
       String price,
       List attributeId,
       List attributeValue,
@@ -63,7 +64,7 @@ class CreateProductController extends GetxController {
     isLoading(true);
     update();
     try {
-      await ProductProvider().createProduct(name,categoryId, price, attributeId, attributeValue, key, value, user_id, images,desc);
+      await ProductProvider().createProduct(name,categoryChildId,categoryParentId, price, attributeId, attributeValue, key, value, "2", images,desc);
       update();
     } finally{
       isLoading.value=false;

@@ -13,6 +13,7 @@ import 'package:pazar_iraq/app/model/attribute.dart';
 import 'package:pazar_iraq/app/model/jsonList.dart';
 import 'package:pazar_iraq/app/model/product.dart';
 import 'package:pazar_iraq/app/model/productdetail.dart';
+import 'package:pazar_iraq/app/modules/view/widgets/snackbar.dart';
 
 class ProductProvider {
   static var client = http.Client();
@@ -210,9 +211,7 @@ class ProductProvider {
       ]);
     }
   }
-  /////////////////////////////////////
 
-  ///// fetch product details
   static Future<ProductDetail> fetchProductsDetails(var id) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
@@ -414,7 +413,8 @@ class ProductProvider {
 
   createProduct(
       String name,
-      String categoryId,
+      int categoryCildId,
+      int categoryParentId,
       String price,
       List attributeId,
       List attributeValue,
@@ -423,13 +423,14 @@ class ProductProvider {
       String user_id,
       List<XFile> images,
       String desc) async {
+
     var attributes =
-        convertListstoJson(attributeId, attributeValue, key, value);
+       convertListstoJson(attributeId, attributeValue, key, value);
     try {
       var uri = Uri.parse(baseUrl + "products");
 
 // create multipart request
-      var request = http.MultipartRequest("POST", uri);
+      var request =  http.MultipartRequest("POST", uri);
       Map<String, String> headers = {
         "Accept": "application/json",
       };
@@ -438,25 +439,31 @@ class ProductProvider {
       request.headers.addAll(headers);
       for (var file in images) {
         String fileName = file.path.split("/").last;
-        var stream = http.ByteStream(DelegatingStream.typed(file.openRead()));
+        var stream =  http.ByteStream(DelegatingStream.typed(file.openRead()));
         // get file length
         var length = await file.length(); //imageFile is your image file
         // multipart that takes file
-        var multipartFileSign =
-            http.MultipartFile('images[]', stream, length, filename: fileName);
+        var multipartFileSign =  http.MultipartFile('images[]', stream, length,
+            filename: fileName);
         request.files.add(multipartFileSign);
       }
 
 //adding params
       request.fields['name'] = name;
-      request.fields['category_id'] = categoryId;
+      request.fields['child_category'] = categoryCildId.toString();
+      request.fields['parent_category'] = categoryParentId.toString();
       request.fields['price'] = price;
       request.fields['user_id'] = user_id;
       request.fields['desc'] = desc;
       request.fields['attributes'] = attributes.toString();
 
+
       var responseStream = await request.send();
       var response = await responseStream.stream.bytesToString();
+
+      print(response.toString());
+
+
 
       print(response.toString());
     } catch (ex) {

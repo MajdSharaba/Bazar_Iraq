@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -58,21 +59,32 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                   Image.asset("assets/logo.png"),
 
-                  BorderedButton(buttonText: "English", function: (){
-                    Get.to(HomePage());
+                  BorderedButton(buttonText: "English", function: () async {
+                    final _newLocale =  Locale('en');
+                    await context.setLocale(_newLocale); // change `easy_localization` locale
+                    Get.updateLocale(_newLocale); // c
+                    Get.to(const HomePage());
                   }),
                   const SizedBox(
                     height: 10,
                   ),
-                  BorderedButton(buttonText: "عربي", function: (){
-                    print("dd");
+                  BorderedButton(buttonText: "عربي", function: () async {
+                    final _newLocale = Locale('ar');
+                    await context.setLocale(_newLocale); // change `easy_localization` locale
+                    Get.updateLocale(_newLocale); // c
+                    Get.to(const HomePage());
+
+
                   }),
                   const SizedBox(
                     height: 10,
                   ),
 
-                  BorderedButton(buttonText: "كورد", function: (){
-                    print("dd");
+                  BorderedButton(buttonText: "كورد", function: () async {
+                    final _newLocale = Locale('fa');
+                    await context.setLocale(_newLocale); // change `easy_localization` locale
+                    Get.updateLocale(_newLocale); // c
+                    Get.to(const HomePage());
                   }),
                   const SizedBox(
                     height: 50,

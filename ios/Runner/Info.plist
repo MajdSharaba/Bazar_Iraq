@@ -61,6 +61,12 @@
     <string>User will get images for products</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>CFBundleLocalizations</key>
+    <array>
+    	<string>en</string>
+    	<string>ar</string>
+    	<string>fa</string>
+    </array>
 </dict>
 </plist>
 

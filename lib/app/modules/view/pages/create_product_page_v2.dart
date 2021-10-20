@@ -10,7 +10,7 @@ import 'package:pazar_iraq/app/modules/view/widgets/categorycard.dart';
 
 class CreateProductPageV2 extends StatelessWidget {
   CreateProductPageV2({Key? key, this.subCategoryList}) : super(key: key);
-  final CreateProductController createProductController=Get.put(CreateProductController());
+  final CreateProductController createProductController=Get.find();
   final CategoryController categoryController = Get.find();
   final List<CategoryElement>? subCategoryList;
   @override
