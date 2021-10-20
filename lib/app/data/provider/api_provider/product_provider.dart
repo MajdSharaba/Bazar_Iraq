@@ -282,11 +282,11 @@ class ProductProvider {
         step);
     var url = Uri.parse('http://184.168.97.161/public/api/new-auction');
     var response = await http.post(url, body: {
-      'product_id': "1195",
-      'min_amount': "5000",
-      'step': "1000",
-      'start_date': "1634733900000",
-      'end_date': "1734733900000"
+      'product_id': productId.toString(),
+      'min_amount': minAmount.toString(),
+      'step': step.toString(),
+      'start_date': startDate.toString(),
+      'end_date': endDate.toString()
     });
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -359,7 +359,20 @@ class ProductProvider {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
   }
+    ///////////////////////////////////////
+  static Future<void> addBids(auctionId,currentPrice
+      ) async {
 
+    var url = Uri.parse('http://184.168.97.161/public/api/auction/addBid');
+    print(currentPrice+"majd");
+    var response = await http.post(url, body: {
+      'user_id': user_id.toString(),
+      'auction_id': auctionId,
+      'current_price':currentPrice
+    });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
 
   fetchAttributesForCategory(int categoryChildId, int categoryParentId) async {
     List<DynamicAttribute> attributes = [];

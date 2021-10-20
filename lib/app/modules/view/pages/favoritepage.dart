@@ -51,7 +51,7 @@ class FavoritPage extends StatelessWidget {
             color: Colors.red,
           ),
           onDismissed: (direction) {
-            _favoriteProductController.deleteFromFavorite(index);
+            _favoriteProductController.deleteFromFavorite(_favoriteProductController.favoriteProductList![index].id!);
           },
           child: FavoriteCard(
             product: _favoriteProductController.favoriteProductList![index],

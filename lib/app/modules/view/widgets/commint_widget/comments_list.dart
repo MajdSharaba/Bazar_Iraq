@@ -22,7 +22,8 @@ class CommentsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets
+          .only(top: 8.0),
       child:
       Obx(() {
         if (productDetailController.isLoading.value) {
@@ -31,13 +32,13 @@ class CommentsList extends StatelessWidget {
           return
       ExpansionTile(
         leading: Icon(Icons.comment),
-        trailing: Text(productDetailController.productDetailData!.value!.comments!.length.toString()),
+        trailing: Text(productDetailController.productDetailData.value.comments!.length.toString()),
         title: Text("Comments"),
         children: List<Widget>.generate(
-          productDetailController.productDetailData!.value!.comments!.length,
+          productDetailController.productDetailData.value.comments!.length,
           (int index) => _SingleComment(
             key: ValueKey("${CommentsListKeyPrefix.singleComment} $index"),
-            comment: productDetailController.productDetailData!.value!.comments![index],
+            comment: productDetailController.productDetailData.value.comments![index],
           ),
         ),
       );  }}),

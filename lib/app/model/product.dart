@@ -43,6 +43,7 @@ class ProductData {
     this.isFeatured,
     this.images,
     this.des,
+    this.auction,
     this.is_favorite ,
 
   });
@@ -55,6 +56,9 @@ class ProductData {
   String? productType;
   String? storeId;
   String? des;
+  Auction? auction;
+
+
 
   dynamic? createdAt;
   dynamic? updatedAt;
@@ -75,6 +79,7 @@ class ProductData {
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
     isFeatured: json["is_featured"],
+    auction: json["auction"] == null ? null : Auction.fromJson(json["auction"]),
     images: List<Imagee>.from(json["images"].map((x) => Imagee.fromJson(x))),
   );
 
@@ -91,6 +96,37 @@ class ProductData {
     "updated_at": updatedAt,
     "is_featured": isFeatured,
     "images": List<dynamic>.from(images!.map((x) => x.toJson())),
+  };
+}
+class Auction {
+  Auction({
+
+    this.currentPrice,
+    this.numOfBids,
+    this.remainingTime,
+    this.step,
+    this.auctionId
+  });
+
+  String? currentPrice;
+  int? numOfBids;
+  DateTime? remainingTime;
+  String? step;
+  int ?auctionId;
+
+  factory Auction.fromJson(Map<String, dynamic> json) => Auction(
+    currentPrice: json["current_price"],
+    numOfBids: json["num_of_bids"],
+    remainingTime: DateTime.parse(json["remaining_time"]),
+    step: json["step"],
+    auctionId:json["auction_id"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "current_price": currentPrice,
+    "num_of_bids": numOfBids,
+    "remaining_time": remainingTime,
+    "step": step,
   };
 }
 

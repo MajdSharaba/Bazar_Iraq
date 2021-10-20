@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/modules/controller/auth_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/categories_controller.dart';
+import 'package:pazar_iraq/app/modules/controller/favoriteproduct_controller.dart';
 import 'package:pazar_iraq/app/modules/view/pages/chatpage.dart';
 import 'package:pazar_iraq/app/modules/view/pages/create_product_page.dart';
 import 'package:pazar_iraq/app/modules/view/pages/create_product_page_v2.dart';
@@ -24,6 +25,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   CategoryController categoryController = Get.put(CategoryController());
   final AuthController authController = Get.find();
+  final FavoriteProductController _favoriteProductController = Get.put(FavoriteProductController());
+
   int selectedPage = 0;
   @override
   Widget build(BuildContext context) {

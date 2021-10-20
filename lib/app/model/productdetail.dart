@@ -49,6 +49,7 @@ class ProductDetailData {
     this.images,
     this.comments,
     this.isFavorite,
+    this.auct,
   });
 
   int? id;
@@ -62,6 +63,8 @@ class ProductDetailData {
   String? isFeatured;
   String? name;
   String? desc;
+  Auct? auct;
+
   List<Att>? atts;
   List<ImageD>? images;
   List<Comment>? comments;
@@ -79,6 +82,7 @@ class ProductDetailData {
     isFeatured: json["is_featured"],
     name: json["name"],
     desc: json["desc"],
+    auct: json["auction"] == null ? null : Auct.fromJson(json["auction"]),
     isFavorite:json["is_favorite"],
     atts: List<Att>.from(json["atts"].map((x) => Att.fromJson(x))),
     images: List<ImageD>.from(json["images"].map((x) => ImageD.fromJson(x))),
@@ -101,6 +105,31 @@ class ProductDetailData {
     "images": List<dynamic>.from(images!.map((x) => x.toJson())),
     "comments": List<dynamic>.from(comments!.map((x) => x.toJson())),
   };
+}
+class Auct {
+  Auct({
+    this.currentPrice,
+    this.numOfBids,
+    this.remainingTime,
+    this.step,
+    this.auctionId,
+  });
+
+  String? currentPrice;
+  int? numOfBids;
+  DateTime? remainingTime;
+  String? step;
+  int?auctionId;
+
+  factory Auct.fromJson(Map<String, dynamic> json) => Auct(
+    currentPrice: json["current_price"],
+    numOfBids: json["num_of_bids"],
+    auctionId:json["auction_id"],
+    remainingTime: DateTime.parse(json["remaining_time"]),
+    step: json["step"],
+  );
+
+
 }
 
 class Att {

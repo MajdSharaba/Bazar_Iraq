@@ -18,6 +18,12 @@ class FavoriteProductController extends GetxController {
     fetchFavoriteProducts();
     super.onInit();
   }
+  @override
+  void dispose() {
+
+    super.dispose();
+  }
+
 
   void fetchFavoriteProducts() async {
     try {
@@ -31,12 +37,11 @@ class FavoriteProductController extends GetxController {
       isLoading(false);
     }
   }
-  deleteFromFavorite(int index) async {
-    await ProductProvider.deleteFavoriteProduct(favoriteProductList![index].id);
-    favoriteProductList!.removeAt(index);
-
-
+  deleteFromFavorite(int proudact_id) async {
+    await ProductProvider.deleteFavoriteProduct(proudact_id);
+    // favoriteProductList!.removeAt(index);
     update();
+    fetchFavoriteProducts();
   }
   addToFavorite(productData) {
     ProductProvider.addFavoriteProduct(productData.id.toString());

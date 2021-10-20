@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -19,10 +18,9 @@ import 'package:pazar_iraq/app/modules/view/pages/chatdetailpage.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/commint_widget/comments_list.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 
-
 class ProductDetailPage extends StatefulWidget {
-   //Product? product;
-  ProductDetailPage({Key? key}) : super(key: key);
+  //Product? product;
+  const ProductDetailPage({Key? key}) : super(key: key);
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -30,14 +28,11 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage>
     with TickerProviderStateMixin {
-  static ProductDetailController _productDetailController = Get.put(ProductDetailController());
-  final ChatMessageController chatMessageController = Get.put(ChatMessageController());
-  final FavoriteProductController _favoriteProductController = Get.put(FavoriteProductController());
-
-
-
-
-
+  static final ProductDetailController _productDetailController =
+      Get.put(ProductDetailController());
+  final ChatMessageController chatMessageController =
+      Get.put(ChatMessageController());
+  final FavoriteProductController _favoriteProductController = Get.find();
 
   AnimationController? controller;
   Animation<double>? animation;
@@ -57,65 +52,74 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     super.dispose();
   }
 
-
   Widget _appBar() {
-    return Container(
-      padding: padding,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          const BackButton(),
-        Obx((){
-      if (_productDetailController.isLoading.value) {
-        return Center(child: const CircularProgressIndicator());
-      } else {
-        return _icon(
-            _productDetailController.isfavorite.value? Icons
-                .favorite : Icons.favorite_border,
-            color: _productDetailController.isfavorite.value!
-                ? LightColor.red
-                : LightColor.lightGrey,
-            size: 15,
-            padding: 12,
-            isOutLine: false,
-            onPressed: () {
-              if(_productDetailController.isfavorite.value!){
-                _productDetailController.deleteFromFavorite(_productDetailController.productDetailData!.value!.id);
-                _productDetailController.isfavorite.value =false;
-
-              }
-
-
-              else{
-
-              _favoriteProductController.addToFavorite(ProductData(
-                id: _productDetailController.productDetailData!.value!.id,
-                name: _productDetailController.productDetailData!.value!.name,
-                price: _productDetailController.productDetailData!.value!.price,
-                userId: _productDetailController.productDetailData!.value!.userId,
-                categoryId: _productDetailController.productDetailData!.value!
-                    .categoryId,
-                productType: _productDetailController.productDetailData!.value!
-                    .productType,
-                storeId: null,
-                createdAt: null,
-                updatedAt: null,
-                isFeatured: null,
-                images: [
-                  Imagee(
-                      originalUrl:
-                      _productDetailController.productDetailData!.value!.images!.first
-                          .originalUrl)
-                ],
-                des: _productDetailController.productDetailData!.value!.desc,
-              ));
-              _productDetailController.isfavorite.value=true;
-            }});
-
-        }})],
-      ),
-    );
+    return _productDetailController.productDetailData.value.id == null
+        ? const Text("")
+        : Container(
+            padding: padding,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                const BackButton(),
+                Obx(() {
+                  if (_productDetailController.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return _icon(
+                        _productDetailController.isfavorite.value
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: _productDetailController.isfavorite.value
+                            ? LightColor.red
+                            : LightColor.lightGrey,
+                        size: 15,
+                        padding: 12,
+                        isOutLine: false, onPressed: () {
+                      if (_productDetailController.isfavorite.value) {
+                        _favoriteProductController.deleteFromFavorite(
+                            _productDetailController
+                                .productDetailData.value.id!);
+                        _productDetailController.isfavorite.value = false;
+                      } else {
+                        _favoriteProductController.addToFavorite(ProductData(
+                          id: _productDetailController
+                              .productDetailData.value.id,
+                          name: _productDetailController
+                              .productDetailData.value.name,
+                          price: _productDetailController
+                              .productDetailData.value.price,
+                          userId: _productDetailController
+                              .productDetailData.value.userId,
+                          categoryId: _productDetailController
+                              .productDetailData.value.categoryId,
+                          productType: _productDetailController
+                              .productDetailData.value.productType,
+                          storeId: null,
+                          createdAt: null,
+                          updatedAt: null,
+                          isFeatured: null,
+                          images: [
+                            Imagee(
+                                originalUrl: _productDetailController
+                                    .productDetailData
+                                    .value
+                                    .images!
+                                    .first
+                                    .originalUrl)
+                          ],
+                          des: _productDetailController
+                              .productDetailData.value.desc,
+                        ));
+                        _productDetailController.isfavorite.value = true;
+                      }
+                    });
+                  }
+                })
+              ],
+            ),
+          );
   }
+
 ///// favorite icon
   Widget _icon(
     IconData icon, {
@@ -136,8 +140,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               color: LightColor.iconColor,
               style: isOutLine ? BorderStyle.solid : BorderStyle.none),
           borderRadius: BorderRadius.all(Radius.circular(13)),
-          color:
-              isOutLine ? Colors.transparent : Theme.of(context).backgroundColor,
+          color: isOutLine
+              ? Colors.transparent
+              : Theme.of(context).backgroundColor,
           boxShadow: const <BoxShadow>[
             BoxShadow(
                 color: Color(0xfff8f8f8),
@@ -148,74 +153,77 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         ),
         child: Icon(icon, color: color, size: size),
       ),
-      onTap: (){if
-      (onPressed != null) {
-        onPressed();
-      }},
+      onTap: () {
+        if (onPressed != null) {
+          onPressed();
+        }
+      },
     );
   }
+
 //// productImage
   Widget _productImage() {
     return Expanded(
       child: AnimatedBuilder(
-        builder: (context, child) {
-          return AnimatedOpacity(
-            duration: const Duration(milliseconds: 500),
-            opacity: animation!.value,
-            child: child,
-          );
-        },
-        animation: animation!,
-        child:
-            ///_productDetailController.productDetailData!=null?
-            Obx((){
-    if (_productDetailController.isLoading.value) {
-    return Center(child: const CircularProgressIndicator());
-    } else {
-        return Stack(
-          alignment: Alignment.topCenter,
-          children: <Widget>[
+          builder: (context, child) {
+            return AnimatedOpacity(
+              duration: const Duration(milliseconds: 500),
+              opacity: animation!.value,
+              child: child,
+            );
+          },
+          animation: animation!,
+          child:
+              // _productDetailController.productDetailData.value.images!=null?
+              Obx(() {
+            if (_productDetailController.isLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return Stack(alignment: Alignment.topCenter, children: <Widget>[
+                CarouselSlider(
+                  options: CarouselOptions(
+                    aspectRatio: 2.0,
+                    enlargeCenterPage: true,
+                    autoPlay: false,
+                  ),
+                  items:
+                      _productDetailController.productDetailData.value.images!
+                          .map((item) => Container(
+                                child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(5.0)),
+                                    child: Image.network(
+                                      item.originalUrl!,
+                                      fit: BoxFit.fill,
+                                    )),
+                              ))
+                          .toList(),
+                )
+              ]);
+            }
+          })
+          // :  Image.network("https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1")1
 
-       CarouselSlider(
-      options: CarouselOptions(
-      aspectRatio: 2.0,
-      enlargeCenterPage: true,
-      autoPlay: false,
-      ),
-      items: _productDetailController.productDetailData!.value!.images!.map((item) =>
-    Container(
-    child: ClipRRect(
-    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-    child:
-
-     Image.network(item.originalUrl!, fit: BoxFit.fill,)
-    ),
-    ))
-        .toList(),
-      )]);}})
-              // :  Image.network("https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1")
-
-        ),
-
+          ),
     );
   }
+
 /////detailwidget
   Widget _detailWidget() {
-    int endTime = DateTime.parse("2021-10-17 02:15:00").millisecondsSinceEpoch-5721000 ;
+    /// int endTime = DateTime.parse("2021-10-17 02:15:00").millisecondsSinceEpoch-5721000 ;
     return DraggableScrollableSheet(
-     /// maxChildSize: .8,
+      /// maxChildSize: .8,
       initialChildSize: .53,
       minChildSize: .1,
       builder: (context, scrollController) {
         return Container(
           padding: padding.copyWith(bottom: 0),
-          decoration:  const BoxDecoration(
-
+          decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(40),
                 topRight: Radius.circular(40),
               ),
-        color: Color(0xffE1E2E4)),
+              color: Color(0xffE1E2E4)),
           child: SingleChildScrollView(
             controller: scrollController,
             child: Column(
@@ -234,191 +242,234 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   ),
                 ),
                 const SizedBox(height: 10),
-        Visibility(
-          visible: true,
-
-          child: Padding(
-          padding:  EdgeInsets.fromLTRB(0.0,20,0.0,8.0),
-          child: Row(
-
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-              Expanded(
-                flex: 2,
-                child: Container(
-                  width: deviceWidth/2 +1,
-                height: 60,
-                decoration:  const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      topLeft: Radius.circular(10),
-                    ),
-
-                    color: Color(0xFF7200CA) ),
-           child: Padding(
-             padding: const EdgeInsets.all(8.0),
-             child: Column(
-                  children: const[
-                     TitleText(
-                      text: "Minimum increment",
-                      fontSize: 12,
-                      color: Colors.white,
-                    ),
-                    SizedBox(height:10),
-                  TitleText(
-                 text: "\$ 2000 ",
-                 fontSize: 12,
-                 color:  Colors.white,
-                  ),],
-          ),
-           ))
-              ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                    height: 60,
-                  width: deviceWidth/2 +1,
-
-                    decoration:  const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        color: Colors.white ),
-           child: Padding(
-             padding: const EdgeInsets.all(8.0),
-             child: Column(
-               children: const [  TitleText(
-                 text: "Starting price ",
-                 fontSize: 12,
-                 color: Colors.black,
-               ),
-                 SizedBox(height:10),
-                 TitleText(
-                   text: "\$ 10000 ",
-                   fontSize: 12,
-                   color:  Color(0xFF7200CA),
-                 ),],
-             ),
-           )
-          ),
-              ),
-          ])),
-        ),
-
-                Container(
-                  margin: EdgeInsets.only(top: 30),
-                  height: 100,
-                  decoration:  const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                    color: Colors.white ),
-                  child: Padding(
-                    padding:  EdgeInsets.fromLTRB(8.0,20,8.0,8.0),
-                    child: Row(
-
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        _productDetailController.productDetailData!=null?
-                    Obx(() {
-                       if (_productDetailController.isLoading.value) {
-                         return const Center(child: CircularProgressIndicator());
-                       } else {
-                         return TitleText
-                        (text:_productDetailController.productDetailData!.value!.name, fontSize: 15);
-                       }}):Text("problem"),
-                        Visibility(
-                          visible:true,
+                Obx(() {
+                  if (_productDetailController.isLoading.value) {
+                    return Center(child: const CircularProgressIndicator());
+                  } else {
+                    return Visibility(
+                      visible: _productDetailController
+                              .productDetailData.value.auct !=
+                          null,
+                      child: Padding(
+                          padding: EdgeInsets.fromLTRB(0.0, 20, 0.0, 8.0),
                           child: Row(
-                              children:  [
-                                Icon(Icons.alarm,size:15),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child:
-                                   CountdownTimer(
-                                    endTime: endTime,
-                                  ),
-
-                                ),
-                              ]
-                          ),
-                        ),
-                        //productController.productData!.name
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
-                                const TitleText(
-                                  text: "\$ ",
-                                  fontSize: 15,
-                                  color: Color(0xFFF75672),
+                                Expanded(
+                                    flex: 2,
+                                    child: Container(
+                                        width: deviceWidth / 2 + 1,
+                                        height: 60,
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(10),
+                                              topLeft: Radius.circular(10),
+                                            ),
+                                            color: Color(0xFF7200CA)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: [
+                                              const TitleText(
+                                                text: "current price",
+                                                fontSize: 12,
+                                                color: Colors.white,
+                                              ),
+                                              SizedBox(height: 10),
+                                              TitleText(
+                                                text:
+                                                    "\$${_productDetailController.productDetailData.value.auct == null ? "" : _productDetailController.productDetailData.value.auct!.currentPrice.toString()}",
+                                                fontSize: 12,
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
+                                        ))),
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                      height: 60,
+                                      width: deviceWidth / 2 + 1,
+                                      decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                            bottomRight: Radius.circular(10),
+                                            topRight: Radius.circular(10),
+                                          ),
+                                          color: Colors.white),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            const TitleText(
+                                              text: "Minimum increment",
+                                              fontSize: 12,
+                                              color: Colors.black,
+                                            ),
+                                            const SizedBox(height: 10),
+                                            TitleText(
+                                              text:
+                                                  "\$${_productDetailController.productDetailData.value.auct == null ? "" : _productDetailController.productDetailData.value.auct!.step.toString()} ",
+                                              fontSize: 12,
+                                              color: Color(0xFF7200CA),
+                                            ),
+                                          ],
+                                        ),
+                                      )),
                                 ),
-                                _productDetailController.productDetailData!=null?
-                                Obx(() {
-                                  if (_productDetailController.isLoading.value) {
-                                    return Center(child: const CircularProgressIndicator());
-                                  } else {
-                                    return  TitleText(
-                                      text: _productDetailController.productDetailData!.value!.price.toString(),
-
-                                      fontSize: 15,
-                                    );
-                                  }}):
-                                    Text("hellow")
-
-                              ],
+                              ])),
+                    );
+                  }
+                }),
+                // _productDetailController.productDetailData.value!=null?Text(""):
+                Obx(() {
+                  if (_productDetailController.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return Container(
+                        margin: EdgeInsets.only(top: 30),
+                        height: 100,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20),
                             ),
+                            color: Colors.white),
+                        child: Padding(
+                            padding: EdgeInsets.fromLTRB(8.0, 20, 8.0, 8.0),
+                            child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  TitleText(
+                                      text: _productDetailController
+                                          .productDetailData.value.name,
+                                      fontSize: 15),
 
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                                  _productDetailController
+                                              .productDetailData.value.auct ==
+                                          null
+                                      ? const Text("")
+                                      : Row(children: [
+                                          const Icon(Icons.alarm, size: 15),
+                                          Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: CountdownTimer(
+                                              endTime: _productDetailController
+                                                  .productDetailData
+                                                  .value
+                                                  .auct!
+                                                  .remainingTime!
+                                                  .millisecondsSinceEpoch,
+                                            ),
+                                          ),
+                                        ]),
+                                  //productController.productData!.name
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Visibility(
+                                            visible: _productDetailController
+                                                    .productDetailData
+                                                    .value
+                                                    .auct ==
+                                                null,
+                                            child: const TitleText(
+                                              text: "\$ ",
+                                              fontSize: 15,
+                                              color: Color(0xFFF75672),
+                                            ),
+                                          ),
+                                          _productDetailController
+                                                      .productDetailData != null
+                                              ? Obx(() {
+                                                  if (_productDetailController
+                                                      .isLoading.value) {
+                                                    return const Center(
+                                                        child:
+                                                            CircularProgressIndicator());
+                                                  } else {
+                                                    return _productDetailController
+                                                                .productDetailData
+                                                                .value
+                                                                .auct ==
+                                                            null
+                                                        ? TitleText(
+                                                            text: _productDetailController
+                                                                .productDetailData
+                                                                .value
+                                                                .price
+                                                                .toString(),
+                                                            fontSize: 15,
+                                                          )
+                                                        : Column(
+                                                            children: <Widget>[
+                                                                const Text("Bids"),
+                                                                Text(_productDetailController
+                                                                    .productDetailData
+                                                                    .value
+                                                                    .auct!
+                                                                    .numOfBids
+                                                                    .toString())
+                                                              ]);
+                                                  }
+                                                })
+                                              : const Text("hellow")
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ])));
+                  }
+                }),
 
                 const SizedBox(
                   height: 40,
                 ),
-                _productDetailController.productDetailData!=null?
-        Obx(() {
-        if (_productDetailController.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
-        } else {
-        return
-          Container(
-
-            decoration:  const BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
-
-                color: Colors.white ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 1.0,
-                  crossAxisSpacing: 10.0,
-                  childAspectRatio: 1.5,
-                ),
-                itemCount: _productDetailController.productDetailData!.value!.atts!.length,//
-                physics: const BouncingScrollPhysics(),
+                _productDetailController.productDetailData.value != null
+                    ? Obx(() {
+                        if (_productDetailController.isLoading.value) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else {
+                          return Container(
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20),
+                                ),
+                                color: Colors.white),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GridView.builder(
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  mainAxisSpacing: 1.0,
+                                  crossAxisSpacing: 10.0,
+                                  childAspectRatio: 1.5,
+                                ),
+                                itemCount: _productDetailController
+                                    .productDetailData.value.atts!.length, //
+                                physics: const BouncingScrollPhysics(),
 // _productDetailController.productDetailData!.attributes!.length,
-            itemBuilder: (context,index){
-            return _availableAttribute(attributee: _productDetailController.productDetailData!.value!.atts![index]);
-
-
-            },),
-          ),
-        );
-        }}):Text("problem"),
+                                itemBuilder: (context, index) {
+                                  return _availableAttribute(
+                                      attributee: _productDetailController
+                                          .productDetailData
+                                          .value
+                                          .atts![index]);
+                                },
+                              ),
+                            ),
+                          );
+                        }
+                      })
+                    : const Text("problem"),
 
                 const SizedBox(
                   height: 40,
@@ -429,19 +480,32 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   height: 40,
                 ),
                 /////button for Auction
-                MaterialButton(
-                  onPressed: () {
-
-                  },
-                  height: 50,
-                  elevation: 0,
-                  splashColor: Color(0xFFF75672),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
-                  ),
-                  color: Color(0xFF7200CA),
-                  child: const Center(
-                    child: Text("Increase ", style: TextStyle(color: Colors.white, fontSize: 18),),
+                Visibility(
+                  visible:
+                      _productDetailController.productDetailData.value.auct !=
+                          null,
+                  child: MaterialButton(
+                    onPressed: () {
+                      _productDetailController.addBids(
+                          _productDetailController
+                              .productDetailData.value.auct!.auctionId,
+                          int.parse(_productDetailController.productDetailData
+                                  .value.auct!.currentPrice!) +
+                              int.parse(_productDetailController
+                                  .productDetailData.value.auct!.step!));
+                    },
+                    height: 50,
+                    elevation: 0,
+                    splashColor: const Color(0xFFF75672),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    color: const Color(0xFF7200CA),
+                    child: const Center(
+                      child: Text(
+                        "Increase ",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -449,7 +513,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 ),
                 CommentsList(),
                 _addcomment(),
-
               ],
             ),
           ),
@@ -459,129 +522,136 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   }
 
 ///// availableAttribute
-  Widget _availableAttribute( {Att? attributee}) {
+  Widget _availableAttribute({Att? attributee}) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-               TitleText(text:attributee!.name,fontSize: 15,),
-                const SizedBox(height:20),
-                TitleText(text:attributee.value,fontSize: 12,color: Color(0xFFF75672),),
-              ]);
-
+        children: <Widget>[
+          TitleText(
+            text: attributee!.name,
+            fontSize: 15,
+          ),
+          const SizedBox(height: 20),
+          TitleText(
+            text: attributee.value,
+            fontSize: 12,
+            color: const Color(0xFFF75672),
+          ),
+        ]);
   }
-
-
 
   //// description widget
   Widget _description() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children:  <Widget>[
-
+      children: <Widget>[
         const TitleText(
           text: "Description",
           fontSize: 15,
         ),
         const SizedBox(height: 20),
-           Obx(() {
+        Obx(() {
           if (_productDetailController.isLoading.value) {
-            return Center(child: const CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else {
-            return   Container(
-
-                decoration:  const BoxDecoration(
-                    color: Colors.white ,
-                borderRadius: BorderRadius.all(
-                Radius.circular(20),
-                )),child: Padding(
+            return Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    )),
+                child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(_productDetailController.productDetailData!.value!.desc!),
+                  child: Text(
+                      _productDetailController.productDetailData.value.desc!),
                 ));
-          }})
-
+          }
+        })
       ],
     );
   }
+
   Widget _addcomment() {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: <Widget>[
-
-        RatingBar.builder(
-        initialRating: 2,
-          minRating: 1,
-          direction: Axis.horizontal,
-          allowHalfRating: true,
-          itemCount: 5,
-          itemSize: 40,
-          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-          itemBuilder: (context, _) => const Icon(
-            Icons.star,
-            color: Colors.amber,
-          ),
-          onRatingUpdate: (rating) {
-            _productDetailController.commentVisabilte.value=true;
-            print(_productDetailController.commentVisabilte.value);
-            _productDetailController.rating=rating ;
-            print(rating);
-
-          },
-
-        ),
-            SizedBox(height: 20,),
-          Obx(() {
-            return Container(
-              width: deviceWidth/2,
-              child: Visibility(
-                 visible:_productDetailController.commentVisabilte.value,
-                 child: Row(
-                  children: <Widget>[
-                    SizedBox(width: 15,),
-                    Expanded(
-                      child: TextFormField(
-
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                         controller: _productDetailController.commentController,
-                        validator: (v){
-                           return _productDetailController.validateComment(v!);
-                        }
-                        ,
-                        decoration: const InputDecoration(
-                            hintText: "Write Comment...",
-                            hintStyle: TextStyle(color: Colors.black54),
-                            border: InputBorder.none
-                        ),
-                        onSaved: (text) {
-                          _productDetailController.comment.value=text!;
-
-                        },
-                      ),
-                    ),
-                    ///SizedBox(width: 10,),
-                    Container(
-                      height: 20,
-                      width: 20,
-                      child: FloatingActionButton(
-                        onPressed: (){
-                          _productDetailController.addcomment();
-                          _productDetailController.commentController.clear();
-                          _productDetailController.commentVisabilte.value=false;
-                        },
-                        child: Icon(Icons.send,color: Colors.white,size: 10,),
-                        backgroundColor: Colors.blue,
-
-                        elevation: 0,
-                      ),
-                    ),
-                  ],
-
+            RatingBar.builder(
+              initialRating: 2,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemSize: 40,
+              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) => const Icon(
+                Icons.star,
+                color: Colors.amber,
               ),
-               ),
-            );}),
+              onRatingUpdate: (rating) {
+                _productDetailController.commentVisabilte.value = true;
+                print(_productDetailController.commentVisabilte.value);
+                _productDetailController.rating = rating;
+                print(rating);
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Obx(() {
+              return Container(
+                width: deviceWidth / 2,
+                child: Visibility(
+                  visible: _productDetailController.commentVisabilte.value,
+                  child: Row(
+                    children: <Widget>[
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          controller:
+                              _productDetailController.commentController,
+                          validator: (v) {
+                            return _productDetailController.validateComment(v!);
+                          },
+                          decoration: const InputDecoration(
+                              hintText: "Write Comment...",
+                              hintStyle: TextStyle(color: Colors.black54),
+                              border: InputBorder.none),
+                          onSaved: (text) {
+                            _productDetailController.comment.value = text!;
+                          },
+                        ),
+                      ),
+
+                      ///SizedBox(width: 10,),
+                      Container(
+                        height: 20,
+                        width: 20,
+                        child: FloatingActionButton(
+                          onPressed: () {
+                            _productDetailController.addcomment();
+                            _productDetailController.commentController.clear();
+                            _productDetailController.commentVisabilte.value =
+                                false;
+                          },
+                          child: const Icon(
+                            Icons.send,
+                            color: Colors.white,
+                            size: 10,
+                          ),
+                          backgroundColor: Colors.blue,
+                          elevation: 0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
             const SizedBox(height: 20),
             // Text( widget.product!.category.toString()),
           ],
@@ -591,133 +661,150 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   }
   //// widget for CarouselSliderDetails
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        body: SafeArea(
+          child: Container(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+              colors: [
+                Color(0xfffbfbfb),
+                Color(0xfff7f7f7),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            )),
+            child: Stack(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    _appBar(),
+                    _productImage(),
 
-      body: SafeArea(
-        child: Container(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-            colors: [
-              Color(0xfffbfbfb),
-              Color(0xfff7f7f7),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          )),
-          child: Stack(
-            children: <Widget>[
-              Column(
-
-                children: <Widget>[
-
-                  _appBar(),
-                  _productImage(),
-
-
-
-                  // _categoryWidget(),
-                ],
-              ),
-              _detailWidget(),
-            ],
+                    // _categoryWidget(),
+                  ],
+                ),
+                _detailWidget(),
+              ],
+            ),
           ),
         ),
-      ),
-        floatingActionButton:
-       Obx((){
-    if (_productDetailController.isLoading.value) {
-    return Center(child: const CircularProgressIndicator());
-    } else {
-    return
-
-    _productDetailController.productDetailData!.value!.userId==user_id.toString()?FloatingActionButton(
-    // isExtended: true,
-    heroTag: "btn1",
-    child: Icon(Icons.chat),
-    backgroundColor: Color(0xFF7200CA),
-
-    onPressed: () {
-    chatMessageController.chat_id.value="";
-    chatMessageController.getfetchChatMessage(sender_id:user_id,reciver_id:int.parse(_productDetailController.productDetailData!.value!.userId!));
-    Navigator.push(context, MaterialPageRoute(builder: (context){
-    return ChatDetailPage(reciverName:_productDetailController.productDetailData!.value!.name!,reciverId:_productDetailController.productDetailData!.value!.userId ,);
-    },
-    ),
-    );
-    //   showAddAuctionModal();
-    }):
-    FloatingActionButton(
-    // isExtended: true,
-    heroTag: "btn2",
-    child: Icon(Icons.add),
-    backgroundColor: Color(0xFF7200CA),
-
-    onPressed: () {
-
-    showAddAuctionModal();
-    });
-    }})
-    );
-
+        floatingActionButton: Obx(() {
+          if (_productDetailController.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return _productDetailController.productDetailData.value.userId !=
+                    user_id.toString()
+                ? FloatingActionButton(
+                    // isExtended: true,
+                    heroTag: "btn1",
+                    child: const Icon(Icons.chat),
+                    backgroundColor: const Color(0xFF7200CA),
+                    onPressed: () {
+                      chatMessageController.chat_id.value = "";
+                      chatMessageController.getfetchChatMessage(
+                          sender_id: user_id,
+                          reciver_id: int.parse(_productDetailController
+                              .productDetailData.value.userId!));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ChatDetailPage(
+                              reciverName: _productDetailController
+                                  .productDetailData.value.name!,
+                              reciverId: _productDetailController
+                                  .productDetailData.value.userId,
+                            );
+                          },
+                        ),
+                      );
+                      //   showAddAuctionModal();
+                    })
+                : FloatingActionButton(
+                    // isExtended: true,
+                    heroTag: "btn2",
+                    child: const Icon(Icons.add),
+                    backgroundColor: const Color(0xFF7200CA),
+                    onPressed: () {
+                      showAddAuctionModal();
+                    });
+          }
+        }));
   }
+
   showAddAuctionModal() {
     final format = DateFormat("yyyy-MM-dd HH:mm");
 
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-      ),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       builder: (context) {
-        return StatefulBuilder(
-            builder: (context, setState) {
-              return Container(
-                padding: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
-                height: deviceHeight,
-                child: ListView(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  shrinkWrap: true,
+        return StatefulBuilder(builder: (context, setState) {
+          return Container(
+            padding: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
+            height: deviceHeight,
+            child: ListView(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              shrinkWrap: true,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Auction Option', style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
-                        MaterialButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          minWidth: 40,
-                          height: 40,
-                          color: Colors.grey.shade300,
-                          elevation: 0,
-                          padding: EdgeInsets.all(0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50)
-                          ),
-                          child: Icon(Icons.close, color: Colors.black,),
-                        )
-                      ],
+                    const Text(
+                      'Auction Option',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                     ),
-                    ///////select start date
-                    const SizedBox(height: 20,),
-                    Text('Auction start  date ', style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w300),),
-                    const SizedBox(height: 20,),
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      minWidth: 40,
+                      height: 40,
+                      color: Colors.grey.shade300,
+                      elevation: 0,
+                      padding: EdgeInsets.all(0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)),
+                      child: const Icon(
+                        Icons.close,
+                        color: Colors.black,
+                      ),
+                    )
+                  ],
+                ),
+                ///////select start date
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  'Auction start  date ',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w300),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
 
-                    Column(children: <Widget>[
+                Column(children: <Widget>[
                   DateTimeField(
                     format: format,
-                    decoration:  const InputDecoration(
-
+                    decoration: const InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF7200CA), width: 2.0),
+                        borderSide:
+                            BorderSide(color: Color(0xFF7200CA), width: 2.0),
                       ),
                       hintText: 'select start date',
                     ),
-
                     onShowPicker: (context, currentValue) async {
                       final date = await showDatePicker(
                           context: context,
@@ -727,140 +814,195 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       if (date != null) {
                         final time = await showTimePicker(
                           context: context,
-                          initialTime:
-                          TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+                          initialTime: TimeOfDay.fromDateTime(
+                              currentValue ?? DateTime.now()),
                         );
-                        _productDetailController.startDate.value=DateTimeField.combine(date, time).millisecondsSinceEpoch.toString();
-                        print(DateTimeField.combine(date, time).millisecondsSinceEpoch);
+                        _productDetailController.startDate.value =
+                            DateTimeField.combine(date, time)
+                                .millisecondsSinceEpoch
+                                .toString();
+                        print(DateTimeField.combine(date, time)
+                            .millisecondsSinceEpoch);
                         return DateTimeField.combine(date, time);
                       } else {
-
                         return currentValue;
                       }
                     },
                   ),
                 ]),
 
-                    //////select end date
+                //////select end date
 
-                    // Text("Color", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
-                    const SizedBox(height: 20,),
-                    const Text('Auction end  date ', style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w300),),
-                    const SizedBox(height: 20,),
+                // Text("Color", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  'Auction end  date ',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w300),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
 
-                    Column(children: <Widget>[
-                      DateTimeField(
-                        format: format,
-                        decoration:  const InputDecoration(
-
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF7200CA), width: 2.0),
-                          ),
-                          hintText: 'select end date',
-                        ),
-
-                        onShowPicker: (context, currentValue) async {
-                          final date = await showDatePicker(
-                              context: context,
-                              firstDate: DateTime(1900),
-                              initialDate: currentValue ?? DateTime.now(),
-                              lastDate: DateTime(2100));
-                          if (date != null) {
-                            final time = await showTimePicker(
-                              context: context,
-                              initialTime:
-                              TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-                            );
-                            _productDetailController.endDate.value=DateTimeField.combine(date, time).millisecondsSinceEpoch.toString();
-                            print(DateTimeField.combine(date, time).millisecondsSinceEpoch.toString());
-
-                            return DateTimeField.combine(date, time);
-                          } else {
-
-                            return currentValue;
-                          }
-                        },
+                Column(children: <Widget>[
+                  DateTimeField(
+                    format: format,
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color(0xFF7200CA), width: 2.0),
                       ),
-                    ]),
-
-                    // Slider start  Price
-                    SizedBox(height: 20,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('start price', style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w300),),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Obx(() => Text('\$ ${_productDetailController.startPriceSliderValue.value.toStringAsFixed(2)}', style: TextStyle(color: Colors.grey.shade500, fontSize: 12),),
-                            ) ],
-                        ),
-                      ],
+                      hintText: 'select end date',
                     ),
-                    SizedBox(height: 10,),
-                Obx(() =>Slider(
-                        max: 1000000.00,
-                        divisions: 10000,
-                        inactiveColor: Colors.grey.shade300,
-                        activeColor: const Color(0xFF7200CA),
-                        value: _productDetailController.startPriceSliderValue.value,
-                      label: _productDetailController.startPriceSliderValue.round().toString(),
-                        onChanged: (double value) {
-                        _productDetailController.startPriceSliderValue.value = value;
+                    onShowPicker: (context, currentValue) async {
+                      final date = await showDatePicker(
+                          context: context,
+                          firstDate: DateTime(1900),
+                          initialDate: currentValue ?? DateTime.now(),
+                          lastDate: DateTime(2100));
+                      if (date != null) {
+                        final time = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.fromDateTime(
+                              currentValue ?? DateTime.now()),
+                        );
+                        _productDetailController.endDate.value =
+                            DateTimeField.combine(date, time)
+                                .millisecondsSinceEpoch
+                                .toString();
+                        print(DateTimeField.combine(date, time)
+                            .millisecondsSinceEpoch
+                            .toString());
 
+                        return DateTimeField.combine(date, time);
+                      } else {
+                        return currentValue;
+                      }
                     },
+                  ),
+                ]),
 
-                )),
-                    /// slider Bid price
-                    SizedBox(height: 20,),
+                // Slider start  Price
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'start price',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300),
+                    ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('Minimum increment', style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w300),),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Obx(() =>Text('\$ ${_productDetailController.bidPriceSliderValue.toStringAsFixed(2)}', style: TextStyle(color: Colors.grey.shade500, fontSize: 12),),)
-                          ],
-                        ),
+                        Obx(
+                          () => Text(
+                            '\$ ${_productDetailController.startPriceSliderValue.value.toStringAsFixed(2)}',
+                            style: TextStyle(
+                                color: Colors.grey.shade500, fontSize: 12),
+                          ),
+                        )
                       ],
                     ),
-                    SizedBox(height: 10,),
-              Obx(() =>Slider(
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Obx(() => Slider(
                       max: 1000000.00,
                       divisions: 10000,
                       inactiveColor: Colors.grey.shade300,
                       activeColor: const Color(0xFF7200CA),
-                      value:_productDetailController.bidPriceSliderValue.value,
-                      label: _productDetailController.bidPriceSliderValue.round().toString(),
+                      value:
+                          _productDetailController.startPriceSliderValue.value,
+                      label: _productDetailController.startPriceSliderValue
+                          .round()
+                          .toString(),
                       onChanged: (double value) {
-
-                          _productDetailController.bidPriceSliderValue.value = value;
-
+                        _productDetailController.startPriceSliderValue.value =
+                            value;
                       },
+                    )),
 
-              ) ),
-                    const SizedBox(height: 20,),
-                    MaterialButton(
-                      onPressed: () {
-                        _productDetailController.addAuction(_productDetailController.productDetailData!.value!.id!);
-                      },
-                      height: 50,
-                      elevation: 0,
-                      splashColor: const Color(0xFFF75672),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)
-                      ),
-                      color: Color(0xFF7200CA),
-                      child: const Center(
-                        child: Text("Add ", style: TextStyle(color: Colors.white, fontSize: 18),),
-                      ),
+                /// slider Bid price
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Minimum increment',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Obx(
+                          () => Text(
+                            '\$ ${_productDetailController.bidPriceSliderValue.toStringAsFixed(2)}',
+                            style: TextStyle(
+                                color: Colors.grey.shade500, fontSize: 12),
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 ),
-              );
-            }
-        );
+                const SizedBox(
+                  height: 10,
+                ),
+                Obx(() => Slider(
+                      max: 1000000.00,
+                      divisions: 10000,
+                      inactiveColor: Colors.grey.shade300,
+                      activeColor: const Color(0xFF7200CA),
+                      value: _productDetailController.bidPriceSliderValue.value,
+                      label: _productDetailController.bidPriceSliderValue
+                          .round()
+                          .toString(),
+                      onChanged: (double value) {
+                        _productDetailController.bidPriceSliderValue.value =
+                            value;
+                      },
+                    )),
+                const SizedBox(
+                  height: 20,
+                ),
+                MaterialButton(
+                  onPressed: () {
+                    _productDetailController.addAuction(
+                        _productDetailController.productDetailData.value.id!);
+                  },
+                  height: 50,
+                  elevation: 0,
+                  splashColor: const Color(0xFFF75672),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  color: Color(0xFF7200CA),
+                  child: const Center(
+                    child: Text(
+                      "Add ",
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
       },
     );
   }
