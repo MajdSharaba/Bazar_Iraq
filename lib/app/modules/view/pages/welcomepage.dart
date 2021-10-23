@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
+import 'package:pazar_iraq/app/data/provider/db_provider/language_provider.dart';
 import 'package:pazar_iraq/app/modules/view/pages/homepage.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/borderedbutton.dart';
 
@@ -17,11 +18,14 @@ class WelcomePage extends StatefulWidget {
 
   final String? title;
 
+
   @override
   _WelcomePageState createState() => _WelcomePageState();
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  Language? lan = new Language();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +66,10 @@ class _WelcomePageState extends State<WelcomePage> {
                   BorderedButton(buttonText: "English", function: () async {
                     final _newLocale =  Locale('en');
                     await context.setLocale(_newLocale); // change `easy_localization` locale
-                    Get.updateLocale(_newLocale); // c
+                    Get.updateLocale(_newLocale);
+                    lan!.setPreferedLanguage('en');
+
+                    // c
                     Get.to(const HomePage());
                   }),
                   const SizedBox(
@@ -72,6 +79,8 @@ class _WelcomePageState extends State<WelcomePage> {
                     final _newLocale = Locale('ar');
                     await context.setLocale(_newLocale); // change `easy_localization` locale
                     Get.updateLocale(_newLocale); // c
+                    lan!.setPreferedLanguage('ar');
+
                     Get.to(const HomePage());
 
 
@@ -84,6 +93,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     final _newLocale = Locale('fa');
                     await context.setLocale(_newLocale); // change `easy_localization` locale
                     Get.updateLocale(_newLocale); // c
+                    lan!.setPreferedLanguage('kr');
                     Get.to(const HomePage());
                   }),
                   const SizedBox(

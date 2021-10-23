@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/model/chatroom.dart';
 import 'package:pazar_iraq/app/modules/controller/chatmeesage_controller.dart';
 import 'package:pazar_iraq/app/modules/view/pages/chatdetailpage.dart';
@@ -19,7 +20,7 @@ class _ConversationListState extends State<ConversationList> {
     return GestureDetector(
       onTap: (){
         chatMessageController.chat_id.value="";
-        chatMessageController.getfetchChatMessage(sender_id:2,reciver_id:int.parse(widget.chatRoomData!.recieverUserId!));
+        chatMessageController.getfetchChatMessage(sender_id:user_id,reciver_id:int.parse(widget.chatRoomData!.recieverUserId!));
         Navigator.push(context, MaterialPageRoute(builder: (context){
           return ChatDetailPage(reciverName:widget.chatRoomData!.recieverUserName==null?"USER":widget.chatRoomData!.recieverUserName!,reciverId:widget.chatRoomData!.recieverUserId ,);
         }));

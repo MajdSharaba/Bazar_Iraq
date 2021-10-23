@@ -60,10 +60,10 @@ class ProductProvider {
         }
       } catch (e) {
         print('getLastProduct error 401 ');
-        Get.snackbar("Error", "فشل الاتصال",
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red,
-            colorText: Colors.white);
+        // Get.snackbar("Error", "فشل الاتصال",
+        //     snackPosition: SnackPosition.TOP,
+        //     backgroundColor: Colors.red,
+        //     colorText: Colors.white);
         return Product(productData: <ProductData>[
           ProductData(
             id: 1,

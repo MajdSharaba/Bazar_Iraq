@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:pazar_iraq/app/data/provider/db_provider/language_provider.dart';
 import 'package:pazar_iraq/app/model/product.dart';
 import 'package:pazar_iraq/app/model/productdetail.dart';
 import 'package:pazar_iraq/app/modules/controller/productdetail_controller.dart';
@@ -23,6 +24,7 @@ class ProductCard extends StatelessWidget {
         aspectRatio: 1 / 1,
         child:  GestureDetector(
           onTap: () async {
+
               productDetailController.productDetailData.value= new ProductDetailData() ;
        productDetailController.fetchProductsDetail(product!.id);
 

@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
             gradient: linearGradientColor,
             items:  [
               TabItem(icon: Icons.home, title: LocaleKeys.home.translations()),
-              TabItem(icon: Icons.map, title: 'Discovery'),
+              TabItem(icon: Icons.map, title: 'Favorite'),
               TabItem(icon: Icons.add, title: LocaleKeys.add.translations()),
               TabItem(icon: Icons.message, title: 'Message'),
               TabItem(
