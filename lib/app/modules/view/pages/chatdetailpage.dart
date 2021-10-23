@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/modules/controller/chatmeesage_controller.dart';
 
   class ChatDetailPage extends StatefulWidget{
@@ -14,7 +15,7 @@ import 'package:pazar_iraq/app/modules/controller/chatmeesage_controller.dart';
 }
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
-  final String sender_id="2";
+  final String sender_id=user_id.toString();
   ChatMessageController chatMessageController =  Get.put(ChatMessageController());
 
 

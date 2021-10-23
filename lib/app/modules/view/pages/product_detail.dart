@@ -11,6 +11,7 @@ import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/core/light_color.dart';
 import 'package:pazar_iraq/app/model/product.dart';
 import 'package:pazar_iraq/app/model/productdetail.dart';
+import 'package:pazar_iraq/app/modules/controller/auth_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/chatmeesage_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/favoriteproduct_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/product_controller.dart';
@@ -19,6 +20,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:pazar_iraq/app/modules/view/pages/chatdetailpage.dart';
 import 'package:pazar_iraq/app/modules/view/pages/home_screen.dart';
 import 'package:pazar_iraq/app/modules/view/pages/homepage.dart';
+import 'package:pazar_iraq/app/modules/view/pages/signinpage.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/commint_widget/comments_list.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/title_text.dart';
 
@@ -38,6 +40,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       Get.put(ChatMessageController());
   final FavoriteProductController _favoriteProductController = Get.find();
   ProductController productController= Get.find();
+  final AuthController authController = Get.find();
+
 
 
   AnimationController? controller;
@@ -63,9 +67,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 
 
   Widget _appBar() {
-    return _productDetailController.productDetailData.value.id == null
-        ? const Text("")
-        : Container(
+    // return _productDetailController.productDetailData.value.id == null
+    //     ? const Text("")
+    //     :
+    return Container(
             padding: padding,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,44 +90,46 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                         size: 15,
                         padding: 12,
                         isOutLine: false, onPressed: () {
+                      authController.user.value.accessToken != null? {
                       if (_productDetailController.isfavorite.value) {
                         _favoriteProductController.deleteFromFavorite(
                             _productDetailController
-                                .productDetailData.value.id!);
-                        _productDetailController.isfavorite.value = false;
+                                .productDetailData.value.id!),
+                        _productDetailController.isfavorite.value = false,
                       } else {
-                        _favoriteProductController.addToFavorite(ProductData(
-                          id: _productDetailController
-                              .productDetailData.value.id,
-                          name: _productDetailController
-                              .productDetailData.value.name,
-                          price: _productDetailController
-                              .productDetailData.value.price,
-                          userId: _productDetailController
-                              .productDetailData.value.userId,
-                          categoryId: _productDetailController
-                              .productDetailData.value.categoryId,
-                          productType: _productDetailController
-                              .productDetailData.value.productType,
-                          storeId: null,
-                          createdAt: null,
-                          updatedAt: null,
-                          isFeatured: null,
-                          images: [
-                            Imagee(
-                                originalUrl: _productDetailController
-                                    .productDetailData
-                                    .value
-                                    .images!
-                                    .first
-                                    .originalUrl)
-                          ],
-                          des: _productDetailController
-                              .productDetailData.value.desc,
-                        ));
-                        _productDetailController.isfavorite.value = true;
+                      _favoriteProductController.addToFavorite(ProductData(
+                      id: _productDetailController
+                          .productDetailData.value.id,
+                      name: _productDetailController
+                          .productDetailData.value.name,
+                      price: _productDetailController
+                          .productDetailData.value.price,
+                      userId: _productDetailController
+                          .productDetailData.value.userId,
+                      categoryId: _productDetailController
+                          .productDetailData.value.categoryId,
+                      productType: _productDetailController
+                          .productDetailData.value.productType,
+                      storeId: null,
+                      createdAt: null,
+                      updatedAt: null,
+                      isFeatured: null,
+                      images: [
+                      Imagee(
+                      originalUrl: _productDetailController
+                          .productDetailData
+                          .value
+                          .images!
+                          .first
+                          .originalUrl)
+                      ],
+                      des: _productDetailController
+                          .productDetailData.value.desc,
+                      )),
+                      _productDetailController.isfavorite.value = true,
                       }
-                    });
+                    }:Get.to(SigninPage());
+                        });
                   }
                 })
               ],
@@ -603,6 +610,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 color: Colors.amber,
               ),
               onRatingUpdate: (rating) {
+                authController.user.value.accessToken == null?Get.to(SigninPage()):
                 _productDetailController.commentVisabilte.value = true;
                 print(_productDetailController.commentVisabilte.value);
                 _productDetailController.rating = rating;
@@ -688,21 +696,28 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             )),
-            child: Stack(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    _appBar(),
-                    _productImage(),
+            child:Obx(() {
+    if (_productDetailController.isLoading.value) {
+    return const Center(child: CircularProgressIndicator());
+    } else {
+    return _productDetailController.productDetailData.value.id == null?Center(child:Text("")):
+    Stack(
+    children: <Widget>[
+    Column(
+    children: <Widget>[
+    _appBar(),
+    _productImage(),
 
-                    // _categoryWidget(),
-                  ],
-                ),
-                _detailWidget(),
-              ],
-            ),
-          ),
-        ),
+    // _categoryWidget(),
+    ],
+    ),
+    _detailWidget(),
+    ],
+
+    );
+    }
+    }),
+        ),),
         floatingActionButton: Obx(() {
           if (_productDetailController.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
@@ -716,11 +731,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                     child: const Icon(Icons.chat),
                     backgroundColor: const Color(0xFF7200CA),
                     onPressed: () {
+
                       chatMessageController.chat_id.value = "";
+                      //authController.user.value.accessToken == null?Get.to(SigninPage()):
                       chatMessageController.getfetchChatMessage(
                           sender_id: user_id,
                           reciver_id: int.parse(_productDetailController
                               .productDetailData.value.userId!));
+                      authController.user.value.accessToken == null?Get.to(SigninPage()):
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -734,6 +752,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           },
                         ),
                       );
+
                       //   showAddAuctionModal();
                     })
                 : _getFAB();

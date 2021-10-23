@@ -37,14 +37,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final _pageOptions = [
       HomeScreen(),
-      FavoritPage(),
+      authController.user.value.accessToken == null
+      ?SigninPage():FavoritPage(),
       authController.user.value.accessToken == null
           ? SigninPage()
           : CreateProductPageV2(
               subCategoryList: const [],
             ),
       authController.user.value.accessToken == null
-          ? const SigninPage()
+          ? SigninPage()
           : ChatPage(),
       authController.user.value.accessToken == null
           ? const SigninPage()

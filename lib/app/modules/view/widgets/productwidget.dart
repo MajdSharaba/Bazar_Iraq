@@ -22,10 +22,10 @@ class ProductWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children:  [
                   Text(LocaleKeys.lastProducts.translations(), style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 20.0),
-                    child: Text('View all ', style: TextStyle(color: Colors.black, fontSize: 14),),
-                  ),
+                  // const Padding(
+                  //   padding: EdgeInsets.only(right: 20.0),
+                  //   child: Text('View all ', style: TextStyle(color: Colors.black, fontSize: 14),),
+                  // ),
                 ],
               ),
               const SizedBox(height: 10,),

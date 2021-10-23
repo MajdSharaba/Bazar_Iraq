@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/state_manager.dart';
+import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/data/provider/api_provider/getchatmessage_provider.dart';
 import 'package:pazar_iraq/app/model/chatmessage.dart';
 
@@ -34,7 +35,7 @@ class ChatMessageController extends GetxController {
     try {
       print (sender_id);
       isLoad(true);
-      var chatMessage = await MessageService.fetchChatMessage(sender_id,reciver_id);
+      var chatMessage = await MessageService.fetchChatMessage(user_id,reciver_id);
 
       if (chatMessage != null) {
 

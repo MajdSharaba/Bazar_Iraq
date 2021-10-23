@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pazar_iraq/app/modules/controller/auth_controller.dart';
 
 
 String baseUrl='http://184.168.97.161/public/api/';
+final AuthController authController = Get.find();
+
 
 double deviceHeight = Get.height;
 double deviceWidth = Get.width;
-int user_id=2;
+int? user_id=authController.user.value.id;
+
 
 LinearGradient linearGradientColor = const LinearGradient(
     begin: Alignment.topLeft,

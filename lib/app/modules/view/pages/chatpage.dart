@@ -89,7 +89,8 @@ class ChatPage extends StatelessWidget {
               if (chatController.isLoading.value) {
                 return const Center(child: CircularProgressIndicator());
               } else {
-                return ListView.builder(
+                return chatController.chatRoomsData==null?Center(child: Text('')):
+                 ListView.builder(
                 itemCount: chatController.chatRoomsData!.length,
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(top: 16),

@@ -40,7 +40,8 @@ class FavoritPage extends StatelessWidget {
         if (_favoriteProductController.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
         } else {
-            return ListView.builder(
+            return _favoriteProductController.favoriteProductList==null?Center(child: Text('Empty')):
+            ListView.builder(
       itemCount: _favoriteProductController.favoriteProductList!.length  ,
       itemBuilder: (context, index) {
         return Dismissible(
