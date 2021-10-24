@@ -27,9 +27,15 @@ class ProductProvider {
     if (connectivityResult != ConnectivityResult.none) {
       try {
         var response = await client
-            .get(Uri.parse('http://184.168.97.161/public/api/products?user_id=$user_id'));
+            .get(Uri.parse('http://184.168.97.161/public/api/products?user_id=$user_id') ,
+          headers: {
+        HttpHeaders.acceptLanguageHeader: "en",
+        },
+        );
+
         if (response.statusCode == 200) {
           var jsonString = response.body;
+          print(jsonString+"mkkkkkkkkkkkkkkkkkkkkkkk");
           return productFromJson(jsonString);
         } else {
           print('getLastProduct error 401 ');
@@ -135,7 +141,11 @@ class ProductProvider {
     if (connectivityResult != ConnectivityResult.none) {
       try {
         var response = await client.get(Uri.parse(
-            'http://184.168.97.161/public/api/products?user_id=$user_id&child_id=$category_id&parent_id=$parent_id&page=$page&result_num=7'));
+            'http://184.168.97.161/public/api/products?user_id=$user_id&child_id=$category_id&parent_id=$parent_id&page=$page&result_num=7'),
+          // headers: {
+          // HttpHeaders.acceptLanguageHeader: language!,
+          // },
+        );
         if (response.statusCode == 200) {
           var jsonString = response.body;
           return productFromJson(jsonString);
@@ -228,9 +238,10 @@ class ProductProvider {
       try {
         var response = await client.get(
             Uri.parse('http://184.168.97.161/public/api/products/$id?user_id=$user_id'),
-            headers: {
-              HttpHeaders.acceptLanguageHeader: 'en',
-            });
+            // headers: {
+            //   HttpHeaders.acceptLanguageHeader: language!,
+            // }
+            );
         //
         // var response = await http.get(url);
 

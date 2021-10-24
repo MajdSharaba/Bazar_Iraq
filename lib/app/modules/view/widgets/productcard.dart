@@ -44,7 +44,7 @@ class ProductCard extends StatelessWidget {
               )],
             ),
             padding: EdgeInsets.all(10),
-            child: ListView(
+            child: Column(
               children: [
 
                 Container(
@@ -84,7 +84,7 @@ class ProductCard extends StatelessWidget {
                   padding: const EdgeInsets.all(1.0),
                   child: TitleText(
                     text: product!.name!,
-                    fontSize: 14,
+                    fontSize: 10,
                     color:Colors.black ,
 
                   ),

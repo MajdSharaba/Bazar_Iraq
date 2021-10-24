@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
+import 'package:pazar_iraq/app/core/languages/locale_keys.g.dart';
 import 'package:pazar_iraq/app/modules/controller/auth_controller.dart';
 import 'package:pazar_iraq/app/modules/view/pages/homepage.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/bezierContainer.dart';
@@ -11,6 +12,7 @@ import 'package:pazar_iraq/app/modules/view/widgets/buttonwidget.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/fieldwidget.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class SigninPage extends StatefulWidget {
   const SigninPage({Key? key}) : super(key: key);
@@ -29,7 +31,7 @@ class _SigninPageState extends State<SigninPage> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
-        children: const <Widget>[
+        children:  <Widget>[
           SizedBox(
             width: 20,
           ),
@@ -42,7 +44,7 @@ class _SigninPageState extends State<SigninPage> {
             ),
           ),
           Text(
-            'or',
+            LocaleKeys.or.translations(),
             style: TextStyle(fontSize: 20),
           ),
           Expanded(
@@ -148,8 +150,8 @@ class _SigninPageState extends State<SigninPage> {
             const SizedBox(
               width: 10,
             ),
-            const Text(
-              "Signin With Google     ",
+             Text(
+              LocaleKeys.signInWithGoogle.translations(),
               style: TextStyle(fontSize: 19, color: Colors.black),
             ),
           ],
@@ -190,8 +192,8 @@ class _SigninPageState extends State<SigninPage> {
             const SizedBox(
               width: 10,
             ),
-            const Text(
-              "Signin With Facebook",
+             Text(
+              LocaleKeys.signInWithFacebook.translations(),
               style: TextStyle(fontSize: 19, color: Colors.black),
             ),
           ],
@@ -222,37 +224,15 @@ class _SigninPageState extends State<SigninPage> {
                   children: <Widget>[
                     SizedBox(height: deviceHeight / 30),
                     Image.asset("assets/logo.png",height: 200,),
-                    Stack(
-                      children: [
-                        FieldWidget(
-                          title: "Phone Number",
-                          controller: phoneController,
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: Container(
-                            width: 100,
-                            height: 60,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.zero,
-                                    bottomRight: Radius.circular(30),
-                                    topLeft: Radius.zero,
-                                    topRight: Radius.circular(30)),
-                                gradient: linearGradientColor),
-                            child: Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )
-                      ],
+                    FieldWidget(
+
+                      title: LocaleKeys.phoneNumber.translations(),
+                      controller: phoneController,
                     ),
 
                     SizedBox(height: deviceHeight / 30),
                     ButtonWidget(
-                        title: "Signin with Phone Number", function: _dialog),
+                        title: LocaleKeys.signInWithPhoneNumber.translations(), function: _dialog),
                     SizedBox(height: deviceHeight / 30),
                     _divider(),
                     SizedBox(height: deviceHeight / 30),

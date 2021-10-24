@@ -92,7 +92,8 @@ class _WelcomePageState extends State<WelcomePage> {
                   BorderedButton(buttonText: "كورد", function: () async {
                     final _newLocale = Locale('fa');
                     await context.setLocale(_newLocale); // change `easy_localization` locale
-                    Get.updateLocale(_newLocale); // c
+                    Get.updateLocale(_newLocale);
+                    lan!.setPreferedLanguage('kr');// c
                     Get.to(const HomePage());
                   }),
                   const SizedBox(
