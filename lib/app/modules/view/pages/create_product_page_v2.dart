@@ -3,10 +3,13 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
+import 'package:pazar_iraq/app/core/languages/locale_keys.g.dart';
 import 'package:pazar_iraq/app/model/category.dart';
 import 'package:pazar_iraq/app/modules/controller/categories_controller.dart';
 import 'package:pazar_iraq/app/modules/controller/create_product_controller.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/categorycard.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 
 class CreateProductPageV2 extends StatelessWidget {
   CreateProductPageV2({Key? key, this.subCategoryList}) : super(key: key);
@@ -26,9 +29,9 @@ class CreateProductPageV2 extends StatelessWidget {
             child: Container(
               height: 150,
               decoration: BoxDecoration(gradient: linearGradientColor),
-              child: const Center(
+              child:  Center(
                   child: Text(
-                "Create Product",
+                LocaleKeys.createProduct.translations(),
                 style: TextStyle(fontSize: 20, color: Colors.white),
               )),
             ),

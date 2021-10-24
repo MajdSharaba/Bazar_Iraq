@@ -1,8 +1,10 @@
 import 'package:comment_box/main.dart';
 import 'package:get/get.dart';
 import 'package:pazar_iraq/app/data/provider/api_provider/auth_provider.dart';
+import 'package:pazar_iraq/app/data/provider/db_provider/auth_provider.dart';
 import 'package:pazar_iraq/app/model/user.dart';
-import 'package:pazar_iraq/app/modules/view/pages/home_screen.dart';
+
+import 'package:pazar_iraq/app/modules/view/pages/homepage.dart';
 
 class AuthController extends GetxController {
   var isLoading=false.obs;
@@ -11,7 +13,8 @@ class AuthController extends GetxController {
 
   signIn(int signInTypeId,String otp) async {
   user.value=await Auth().signIn(signInTypeId, otp);
-  //Get.off(MyApp());
+  await AccessTokenStorage().saveAccessToken(user.value.accessToken!);
+  Get.back();
   }
 
   phoneVerification(String phoneNumber) async {

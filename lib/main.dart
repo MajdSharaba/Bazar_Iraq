@@ -22,22 +22,18 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final AuthController authController = Get.put(AuthController());
+   MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final AuthController authController = Get.put(AuthController());
-    //  authController.getUser();
+    authController.getUser();
     return GetMaterialApp(
       title: 'Iraq Bazar',
       locale: context.locale,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      theme: ThemeData(
-          // This is the theme of your application.
-          ),
-
       home:  WelcomePage(),
       debugShowCheckedModeBanner: false,
       // home: const SigninPage(title: "welcome"),

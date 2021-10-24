@@ -93,7 +93,6 @@ class _WelcomePageState extends State<WelcomePage> {
                     final _newLocale = Locale('fa');
                     await context.setLocale(_newLocale); // change `easy_localization` locale
                     Get.updateLocale(_newLocale); // c
-                    lan!.setPreferedLanguage('kr');
                     Get.to(const HomePage());
                   }),
                   const SizedBox(

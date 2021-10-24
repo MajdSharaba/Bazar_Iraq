@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
+import 'package:pazar_iraq/app/core/languages/locale_keys.g.dart';
 import 'package:pazar_iraq/app/modules/controller/chatrooms_controller.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/beziercontainer.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/conversationlist.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 
 class ChatPage extends StatelessWidget {
 
@@ -39,8 +42,8 @@ class ChatPage extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const <Widget>[
-                    Text("Conversations", style: TextStyle(
+                  children:  <Widget>[
+                    Text(LocaleKeys.conversations.translations(), style: TextStyle(
                         fontSize: 32, fontWeight: FontWeight.bold),),
                     // Container(
                     //   padding: EdgeInsets.only(

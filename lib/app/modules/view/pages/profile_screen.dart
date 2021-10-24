@@ -1,10 +1,9 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
+import 'package:pazar_iraq/app/core/languages/locale_keys.g.dart';
 import 'package:pazar_iraq/app/modules/controller/auth_controller.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/beziercontainer.dart';
 
@@ -27,7 +26,7 @@ class ProfileScreen extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              title,
+              title + " :  ",
               style: TextStyle(color: Colors.black, fontSize: 16),
             ),
             Text(
@@ -60,17 +59,18 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 ClipOval(
                     child: Image.network(
-                  "https://lh3.googleusercontent.com/ogw/ADea4I4dpy-7bbhj9xQVU3b0aBvMwOirdlYoEbj5QNaMRA=s192-c-mo",
+                  authController.user.value.photoUrl!,
                   fit: BoxFit.cover,
                   width: 120.0,
                   height: 120.0,
                 )),
-                infoCard("Name : ", authController.user.value.name ?? ""),
-                infoCard(
-                    "Phone :", authController.user.value.phone ?? "+9647515408773"),
-                infoCard("Email : ", authController.user.value.email ?? ""),
-                infoCard(
-                    "Address : ", authController.user.value.address ?? "Erbil, Iraq"),
+                infoCard(LocaleKeys.name.translations(), authController.user.value.name ?? ""),
+                infoCard(LocaleKeys.phoneNumber.translations(),
+                    authController.user.value.phone ?? ""),
+                infoCard(LocaleKeys.email.translations(),
+                    authController.user.value.email ?? ""),
+                infoCard(LocaleKeys.address.translations(),
+                    authController.user.value.address ?? "Erbil, Iraq"),
               ],
             ),
           )

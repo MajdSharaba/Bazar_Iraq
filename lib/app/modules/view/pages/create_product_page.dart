@@ -1,10 +1,10 @@
 import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:pazar_iraq/app/core/languages/locale_keys.g.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/slidertheme.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -38,16 +38,16 @@ class _CreateProductAttributePageState extends State<CreateProductAttributePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      body: Column(
         children: [
           ClipPath(
-            clipper: WaveClipperTwo(flip: false),
+            clipper: WaveClipperTwo(flip: true),
             child: Container(
               height: 150,
               decoration: BoxDecoration(gradient: linearGradientColor),
-              child: const Center(
+              child:  Center(
                   child: Text(
-                "Create Product",
+                      LocaleKeys.createProduct.translations(),
                 style: TextStyle(fontSize: 20, color: Colors.white),
               )),
             ),
@@ -56,14 +56,14 @@ class _CreateProductAttributePageState extends State<CreateProductAttributePage>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: FieldWidget(
-              title: "name",
+              title: LocaleKeys.name.translations(),
               controller: nameController,
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10),
             child: FieldWidget(
-              title: "price",
+              title: LocaleKeys.price.translations(),
               controller: priceController,
               keyboardType: TextInputType.number,
             ),
@@ -73,108 +73,119 @@ class _CreateProductAttributePageState extends State<CreateProductAttributePage>
               builder: (controller) {
                 return controller.attributes.isEmpty
                     ? Container()
-                    : ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        // to disable GridView's scrolling
-                        shrinkWrap: true,
-                        itemCount: controller.attributes.value.length,
-                        itemBuilder: (context, index) {
-                          return controller.attributes.value[index].typeId ==
-                                  "1"
-                              ? Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 27.0, vertical: 10),
-                                  child: InkWell(
-                                      onTap: () {
-                                        bottomSheet(controller
-                                            .attributes.value[index].options!);
-                                      },
-                                      child: Container(
-                                        height: 60,
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFCCCCCC)
-                                              .withOpacity(0.05),
-                                          borderRadius:
-                                              BorderRadius.circular(30.0),
-                                          border: Border.all(
-                                              color: const Color(0xFFCCCCCC),
-                                              width: 1),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 16.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Obx(() {
-                                                return Text(
-                                                  createProductController
-                                                                  .variables[
-                                                              index] !=
-                                                          null
-                                                      ? createProductController
-                                                          .variables[index]
-                                                          .value
-                                                      : controller.attributes
-                                                          .value[index].name!,
-                                                  style: const TextStyle(
-                                                      fontSize: 16),
-                                                );
-                                              })
-                                            ],
-                                          ),
-                                        ),
-                                      )),
-                                )
-                              : Obx(() {
-
-                                 int indexOfDuplicatedOption =
-                                      attributesIds.indexOf(createProductController.attributes[index].id);
-                                  return Padding(
+                    : Expanded(
+                      child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          // to disable GridView's scrolling
+                          shrinkWrap: true,
+                          itemCount: controller.attributes.value.length,
+                          itemBuilder: (context, index) {
+                            return controller.attributes.value[index].typeId ==
+                                    "1"
+                                ? Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 27.0, vertical: 10),
-                                    child: SliderTheme(
-                                        data: SliderThemeData(
-                                          trackShape:
-                                              GradientRectSliderTrackShape(
-                                                  gradient: linearGradientColor,
-                                                  darkenInactive: false),
-                                        ),
-                                        child: Slider(
-                                          min: createProductController
-                                              .attributes[index].min!,
-                                          max: createProductController
-                                              .attributes[index].max!,
-                                            onChangeEnd: (double value) {
-                                            if (indexOfDuplicatedOption == -1) {
-                                              attributesIds.add(controller
-                                                  .attributes.value[index].id);
-                                              attributesValues.add(value);
-                                            } else {
-                                              attributesValues[
-                                                      indexOfDuplicatedOption] =
-                                                  value;
-                                            }
-                                            setState(() {
-                                            });
-                                          },
-                                          value: indexOfDuplicatedOption == -1
-                                              ? createProductController
-                                                  .attributes[index].min
-                                              : attributesValues[
-                                                  indexOfDuplicatedOption], onChanged: (double value) {  },
+                                    child: InkWell(
+                                        onTap: () {
+                                          bottomSheet(controller
+                                              .attributes.value[index].options!);
+                                        },
+                                        child: Container(
+                                          height: 60,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFCCCCCC)
+                                                .withOpacity(0.05),
+                                            borderRadius:
+                                                BorderRadius.circular(30.0),
+                                            border: Border.all(
+                                                color: const Color(0xFFCCCCCC),
+                                                width: 1),
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 16.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Obx(() {
+                                                  return Text(
+                                                    createProductController
+                                                                    .variables[
+                                                                index] !=
+                                                            null
+                                                        ? createProductController
+                                                            .variables[index]
+                                                            .value
+                                                        : controller.attributes
+                                                            .value[index].name!,
+                                                    style: const TextStyle(
+                                                        fontSize: 16),
+                                                  );
+                                                })
+                                              ],
+                                            ),
+                                          ),
                                         )),
-                                  );
-                                });
-                        });
+                                  )
+                                : Obx(() {
+                                   int indexOfDuplicatedOption =
+                                        attributesIds.indexOf(createProductController.attributes[index].id);
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 27.0, vertical: 10),
+                                      child: SliderTheme(
+                                          data: SliderThemeData(
+                                            trackShape:
+                                                GradientRectSliderTrackShape(
+                                                    gradient: linearGradientColor,
+                                                    darkenInactive: false),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Text(createProductController
+                                                  .attributes[index].min!.toString()),
+                                              Expanded(
+                                                child: Slider(
+                                                  min: createProductController
+                                                      .attributes[index].min!,
+                                                  max: createProductController
+                                                      .attributes[index].max!,
+                                                    onChangeEnd: (double value) {
+                                                    if (indexOfDuplicatedOption == -1) {
+                                                      attributesIds.add(controller
+                                                          .attributes.value[index].id);
+                                                      attributesValues.add(value);
+                                                    } else {
+                                                      attributesValues[
+                                                              indexOfDuplicatedOption] =
+                                                          value;
+                                                    }
+                                                    setState(() {
+                                                    });
+                                                  },
+                                                  value: indexOfDuplicatedOption == -1
+                                                      ? createProductController
+                                                          .attributes[index].min
+                                                      : attributesValues[
+                                                          indexOfDuplicatedOption], onChanged: (double value) {  },
+                                                ),
+                                              ),
+                                              Text(createProductController
+                                                  .attributes[index].max!.toString()),
+                                            ],
+                                          )),
+                                    );
+                                  });
+                          }),
+                    );
               }),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10),
             child: FieldWidget(
-              title: "description",
+              title: LocaleKeys.description.translations(),
               keyboardType: TextInputType.multiline,
               maxLines: 5,
               controller: descriptionController,
@@ -183,7 +194,7 @@ class _CreateProductAttributePageState extends State<CreateProductAttributePage>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10),
             child: ButtonWidget(
-                title: 'Pick Images',
+                title: LocaleKeys.pickImages.translations(),
                 function: () async {
                   images = await createProductController.getImages();
                   setState(() {});
@@ -192,7 +203,7 @@ class _CreateProductAttributePageState extends State<CreateProductAttributePage>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10),
             child: ButtonWidget(
-                title: 'Add Your Advertisment',
+                title: LocaleKeys.addYourAdvertisment.translations(),
                 function: () async {
                   await createProductController.createProduct(
                       nameController.text,

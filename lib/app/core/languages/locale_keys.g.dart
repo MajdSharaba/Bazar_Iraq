@@ -24,5 +24,7 @@ abstract class  LocaleKeys {
   static const email = "Email";
   static const address = "Address";
   static const writeMessage= "Write Message ...";
+  static const message = "Message";
+  static const profile = "Profile";
 
 }

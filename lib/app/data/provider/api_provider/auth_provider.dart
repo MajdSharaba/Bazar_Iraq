@@ -99,13 +99,15 @@ class Auth {
     if(token !=null){
        response = await http.post(
         Uri.parse(baseUrl + "userprofile"),
-        body: jsonEncode({"bearer token": token}),
         headers: <String, String>{
           'Content-Type': 'application/json',
+          'Authorization' : 'Bearer $token'
         },
       );
+       print(response.body);
     }
-
-    return UserModel.fromJson(jsonDecode(response.body));
+   UserModel user= UserModel.fromJson(jsonDecode(response.body));
+    user.accessToken=token;
+    return user;
   }
 }
