@@ -66,7 +66,7 @@ class CodegenLoader extends AssetLoader {
     "Address": "العنوان",
     "Write Message ...": "كتابة رسالة ...",
     "Message" : "رسالة",
-    "Profile" : "الحساب الشخصي"
+    "Profile" : "حسابي"
   };
   static const Map<String, dynamic> fa = {
     "Last Products": "دوایین بەرهەمەکان",

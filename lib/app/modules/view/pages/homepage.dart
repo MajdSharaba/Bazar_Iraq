@@ -53,13 +53,13 @@ class _HomePageState extends State<HomePage> {
     ];
     return Scaffold(
         body: _pageOptions[selectedPage],
-        bottomNavigationBar: ConvexAppBar(
+        bottomNavigationBar: ConvexAppBar(height: 70,
             color: Colors.white,
             backgroundColor: Colors.grey,
             gradient: linearGradientColor,
             items:  [
               TabItem(icon: Icons.home, title: LocaleKeys.home.translations()),
-              TabItem(icon: Icons.map, title: LocaleKeys.favourite.translations()),
+              TabItem(icon: Icons.favorite, title: LocaleKeys.favourite.translations()),
               TabItem(icon: Icons.add, title: LocaleKeys.add.translations()),
               TabItem(icon: Icons.message, title: LocaleKeys.message.translations()),
               TabItem(

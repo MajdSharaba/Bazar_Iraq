@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:pazar_iraq/app/core/constants.dart';
 import 'package:pazar_iraq/app/core/languages/locale_keys.g.dart';
@@ -10,9 +8,8 @@ import 'package:pazar_iraq/app/modules/view/pages/homepage.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/bezierContainer.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/buttonwidget.dart';
 import 'package:pazar_iraq/app/modules/view/widgets/fieldwidget.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pinput/pin_put/pin_put.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart' as localization;
 
 class SigninPage extends StatefulWidget {
   const SigninPage({Key? key}) : super(key: key);
@@ -224,10 +221,14 @@ class _SigninPageState extends State<SigninPage> {
                   children: <Widget>[
                     SizedBox(height: deviceHeight / 30),
                     Image.asset("assets/logo.png",height: 200,),
-                    FieldWidget(
+                     Directionality(
+                        textDirection: TextDirection.ltr,
+                      child: FieldWidget(
 
-                      title: LocaleKeys.phoneNumber.translations(),
-                      controller: phoneController,
+                        title: LocaleKeys.phoneNumber.translations(),
+                        controller: phoneController,
+                        keyboardType: TextInputType.number,
+                      ),
                     ),
 
                     SizedBox(height: deviceHeight / 30),
@@ -237,8 +238,8 @@ class _SigninPageState extends State<SigninPage> {
                     _divider(),
                     SizedBox(height: deviceHeight / 30),
                     _signinWithGoogleButton(),
-                    SizedBox(height: deviceHeight / 30),
-                    _signinWithFacebookButton()
+                    //SizedBox(height: deviceHeight / 30),
+                    //_signinWithFacebookButton()
                   ],
                 ),
               ),
