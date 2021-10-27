@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:21715591397:android:bbd20d49c3dae43158b40c",
+        "mobilesdk_app_id": "1:21715591397:android:7ee56d56f35a45fe58b40c",
         "android_client_info": {
-          "package_name": "com.example.pazar_iraq"
+          "package_name": "com.yawarcompany.pazar_iraq"
         }
       },
       "oauth_client": [
         {
-          "client_id": "21715591397-aqllebcvlh5t5a8m52f9fha092cn2ejf.apps.googleusercontent.com",
+          "client_id": "21715591397-bc0qp3nnddmj09cg83oqt0oockrv4n7c.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.pazar_iraq",
+            "package_name": "com.yawarcompany.pazar_iraq",
             "certificate_hash": "27c916377926e38e775ec38de50f7725c51640b0"
           }
         },
